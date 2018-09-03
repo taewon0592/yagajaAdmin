@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>TeamProject</display-name>
+
+	<!-- 데이터베이스 연결 -->
+ 
+	<context-param>
+		<param-name>JDBCDriver</param-name>
+		<param-value>oracle.jdbc.OracleDriver</param-value>
+	</context-param>
+	<context-param>
+		<param-name>ConnectionURL</param-name>
+		<param-value>jdbc:oracle:thin:@localhost:1521:orcl</param-value>
+	</context-param>
+	
+	<!-- 관리자 로그인 -->
+	<servlet>
+		<servlet-name>AdminLogin</servlet-name>
+		<servlet-class>controller.AdminLogin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminLogin</servlet-name>
+		<url-pattern>/Administrator/AdminLogin</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 관리자 로그아웃 -->
+	<servlet>
+		<servlet-name>AdminLogout</servlet-name>
+		<servlet-class>controller.AdminLogout</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminLogout</servlet-name>
+		<url-pattern>/Administrator/AdminLogout</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 공지사항 리스트 -->
+	<servlet>
+		<servlet-name>NoticeList</servlet-name>
+		<servlet-class>controller.NoticeList</servlet-class>
+			<init-param>
+				<param-name>PAGE_SIZE</param-name>
+				<param-value>3</param-value>
+			</init-param>
+			<init-param>
+				<param-name>BLOCK_PAGE</param-name>
+				<param-value>5</param-value>
+			</init-param> 
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoticeList</servlet-name>
+		<url-pattern>/Notice/NoticeList</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 공지사항 글쓰기 -->
+	<servlet>
+		<servlet-name>NoticeWrite</servlet-name>
+		<servlet-class>controller.NoticeWrite</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoticeWrite</servlet-name>
+		<url-pattern>/Notice/NoticeWrite</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 공지사항 상세보기 -->
+	<servlet>
+		<servlet-name>NoticeView</servlet-name>
+		<servlet-class>controller.NoticeView</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoticeView</servlet-name>
+		<url-pattern>/Notice/NoticeView</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 공지사항 수정하기 -->
+	<servlet>
+		<servlet-name>NoticeEdit</servlet-name>
+		<servlet-class>controller.NoticeEdit</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoticeEdit</servlet-name>
+		<url-pattern>/Notice/NoticeEdit</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 공지사항 삭제하기 -->
+	<servlet>
+		<servlet-name>NoticeDelete</servlet-name>
+		<servlet-class>controller.NoticeDelete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoticeDelete</servlet-name>
+		<url-pattern>/Notice/NoticeDelete</url-pattern>
+	</servlet-mapping>
+
+	<!-- 회원 리스트 -->
+	<servlet>
+		<servlet-name>MemberList</servlet-name>
+		<servlet-class>controller.MemberList</servlet-class>
+		<init-param>
+			<param-name>PAGE_SIZE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>BLOCK_PAGE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberList</servlet-name>
+		<url-pattern>/Member/MemberList</url-pattern>
+	</servlet-mapping>
+
+	<!-- 회원정보 상세보기 -->
+	<servlet>
+		<servlet-name>MemberView</servlet-name>
+		<servlet-class>controller.MemberView</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberView</servlet-name>
+		<url-pattern>/Member/MemberView</url-pattern>
+	</servlet-mapping>
+
+	<!-- 회원 삭제 -->
+	<servlet>
+		<servlet-name>MemberDelete</servlet-name>
+		<servlet-class>controller.MemberDelete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberDelete</servlet-name>
+		<url-pattern>/Member/MemberDelete</url-pattern>
+	</servlet-mapping>
+
+	<!-- 탈퇴 회원 리스트 -->
+	<servlet>
+		<servlet-name>LeaveMemberList</servlet-name>
+		<servlet-class>controller.LeaveMemberList</servlet-class>
+		<init-param>
+			<param-name>PAGE_SIZE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>BLOCK_PAGE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LeaveMemberList</servlet-name>
+		<url-pattern>/Member/LeaveMemberList</url-pattern>
+	</servlet-mapping>
+
+	<!-- 탈퇴 회원 상세보기 -->
+	<servlet>
+		<servlet-name>LeaveMemberView</servlet-name>
+		<servlet-class>controller.LeaveMemberView</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LeaveMemberView</servlet-name>
+		<url-pattern>/Member/LeaveMemberView</url-pattern>
+	</servlet-mapping>
+
+	<!-- 탈퇴 회원 삭제 -->
+	<servlet>
+		<servlet-name>LeaveMemberDelete</servlet-name>
+		<servlet-class>controller.LeaveMemberDelete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LeaveMemberDelete</servlet-name>
+		<url-pattern>/Member/LeaveMemberDelete</url-pattern>
+	</servlet-mapping>
+
+	<!-- 숙박시설 리스트 -->
+	<servlet>
+		<servlet-name>LodgeList</servlet-name>
+		<servlet-class>controller.lodge_ListCtrl</servlet-class>
+		<init-param>
+			<param-name>PAGE_SIZE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>BLOCK_PAGE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LodgeList</servlet-name>
+		<url-pattern>/lodge/lodge_list</url-pattern>
+	</servlet-mapping>
+
+	<!-- 숙박시설 상세보기 -->
+	<servlet>
+		<servlet-name>LodgeView</servlet-name>
+		<servlet-class>controller.lodge_ViewCtrl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LodgeView</servlet-name>
+		<url-pattern>/lodge/lodge_view</url-pattern>
+	</servlet-mapping>
+
+	<!-- 숙박시설 삭제 -->
+	<servlet>
+		<servlet-name>LodgeDelete</servlet-name>
+		<servlet-class>controller.lodge_DeleteCtrl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LodgeDelete</servlet-name>
+		<url-pattern>/lodge/lodge_delete</url-pattern>
+	</servlet-mapping>
+
+	<!-- 숙박시설 등록 -->
+	<servlet>
+		<servlet-name>LodgeWrite</servlet-name>
+		<servlet-class>controller.lodge_WriteCtrl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LodgeWrite</servlet-name>
+		<url-pattern>/lodge/lodge_write</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 숙박시설 수정 -->
+	<servlet>
+		<servlet-name>LodgeModify</servlet-name>
+		<servlet-class>controller.lodge_ModifyCtrl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LodgeModify</servlet-name>
+		<url-pattern>/lodge/lodge_modify</url-pattern>
+	</servlet-mapping>
+<!-- 	
+	숙박시설 -> 객실
+	<servlet>
+		<servlet-name>lodgeWriteChange</servlet-name>
+		<servlet-class>controller.WriteChange</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>lodgeWriteChange</servlet-name>
+		<url-pattern>/lodge/writeChange</url-pattern>
+	</servlet-mapping>
+ -->
+	<!-- 객실 등록 -->
+	<servlet>
+		<servlet-name>RoomWrite</servlet-name>
+		<servlet-class>controller.room_WriteCtrl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RoomWrite</servlet-name>
+		<url-pattern>/lodge/room_write</url-pattern>
+	</servlet-mapping>
+  
+  	<!-- 객실 상세보기 -->
+  	<servlet>
+		<servlet-name>RoomView</servlet-name>
+		<servlet-class>controller.room_ViewCtrl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RoomView</servlet-name>
+		<url-pattern>/lodge/room_view</url-pattern>
+	</servlet-mapping>
+  
+  
+  
+	<!-- 옥션등록 -->
+	<servlet>
+ 		<servlet-name>YagajaAuctionWrite</servlet-name>
+ 		<servlet-class>controller.AuctionWrite</servlet-class>
+ 	</servlet>
+	<servlet-mapping>
+ 		<servlet-name>YagajaAuctionWrite</servlet-name>
+ 		<url-pattern>/Yagaja/AuctionWrite</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 진행중 경매 리스트 보기 -->
+	<servlet>
+ 		<servlet-name>YagajaAuctionList</servlet-name>
+ 		<servlet-class>controller.AuctionList</servlet-class>
+ 	</servlet>
+	<servlet-mapping>
+ 		<servlet-name>YagajaAuctionList</servlet-name>
+ 		<url-pattern>/Yagaja/AuctionList</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- 마감된 경매 리스트 보기 -->
+	<servlet>
+ 		<servlet-name>YagajaAuction_EndList</servlet-name>
+ 		<servlet-class>controller.Auction_EndList</servlet-class>
+ 	</servlet>
+	<servlet-mapping>
+ 		<servlet-name>YagajaAuction_EndList</servlet-name>
+ 		<url-pattern>/Yagaja/Auction_EndList</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 핫딜 숙소검색해서 입력폼에 전달하기 -->
+	<servlet>
+		<servlet-name>AuctionLodgeSearch</servlet-name>
+		<servlet-class>controller.LodgeSearch</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuctionLodgeSearch</servlet-name>
+		<url-pattern>/Yagaja/LodgeSearch</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 핫딜 찾은 숙소타입으로 룸타입을 알아내기위한 서블릿 -->
+	
+
+	<!-- 핫딜리스트 -->
+	<servlet>
+		<servlet-name>HotDealList</servlet-name>
+		<servlet-class>controller.HotdealList</servlet-class>
+		<init-param>
+			<param-name>PAGE_SIZE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>BLOCK_PAGE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HotDealList</servlet-name>
+		<url-pattern>/HotDeal/HotDealList</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 핫딜 EndList -->
+	<servlet>
+		<servlet-name>HotDealEndList</servlet-name>
+		<servlet-class>controller.HotdealEndList</servlet-class>
+		<init-param>
+			<param-name>PAGE_SIZE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>BLOCK_PAGE</param-name>
+			<param-value>3</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HotDealEndList</servlet-name>
+		<url-pattern>/HotDeal/HotDealEndList</url-pattern>
+	</servlet-mapping>
+
+	<!-- 핫딜 등록하기 -->
+	<servlet>
+		<servlet-name>HotDealWrite</servlet-name>
+		<servlet-class>controller.HotdealWrite</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HotDealWrite</servlet-name>
+		<url-pattern>/HotDeal/HotDealWrite</url-pattern>
+	</servlet-mapping>
+
+	<!-- 핫딜 상세보기 -->
+	<servlet>
+		<servlet-name>HotDealView</servlet-name>
+		<servlet-class>controller.HotdealView</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HotDealView</servlet-name>
+		<url-pattern>/HotDeal/HotdealView</url-pattern>
+	</servlet-mapping>
+
+	<!-- 핫딜 수정하기 -->
+	<servlet>
+		<servlet-name>HotDealEdit</servlet-name>
+		<servlet-class>controller.HotdealEdit</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HotDealView</servlet-name>
+		<url-pattern>/HotDeal/HotDealEdit</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 핫딜 숙소검색해서 입력폼에 전달하기 -->
+	<servlet>
+		<servlet-name>LodgeSearch</servlet-name>
+		<servlet-class>controller.LodgeSearch</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LodgeSearch</servlet-name>
+		<url-pattern>/HotDeal/LodgeSearch</url-pattern>
+	</servlet-mapping>
+  
+  <!-- 옥션 게시판 페이지 설정 -->
+  <context-param>
+  	<param-name>PAGE_SIZE</param-name>
+  	<param-value>3</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>BLOCK_PAGE</param-name>
+  	<param-value>3</param-value>
+  </context-param>
+  
+	<!-- 주변시설 리스트 -->
+   <servlet>
+   	<servlet-name>RegistList</servlet-name>
+   	<servlet-class>controller.regist_List</servlet-class>
+   	  <init-param>
+	  	<param-name>PAGE_SIZE</param-name>
+	  	<param-value>10</param-value>
+	  </init-param>
+	  <init-param>
+	  	<param-name>BLOCK_PAGE</param-name>
+	  	<param-value>2</param-value>
+	  </init-param>  
+   </servlet>
+   <servlet-mapping>
+   	<servlet-name>RegistList</servlet-name>
+   	<url-pattern>/lodge/registList</url-pattern>
+   </servlet-mapping>
+   
+   <!-- 주변시설 등록하기 -->
+  <servlet>
+  	<servlet-name>registWrite</servlet-name>
+  	<servlet-class>controller.regist_Write</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>registWrite</servlet-name>
+  	<url-pattern>/lodge/registWrite</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 주변시설 상세보기 -->
+  <servlet>
+    <servlet-name>registView</servlet-name>
+    <servlet-class>controller.regist_View</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>registView</servlet-name>
+    <url-pattern>/lodge/registView</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 주변시설 수정하기 -->
+  <servlet>
+  	<servlet-name>registModify</servlet-name>
+  	<servlet-class>controller.regist_Modify</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>registModify</servlet-name>
+  	<url-pattern>/lodge/registModify</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 주변시설 삭제하기 -->
+  <servlet>
+  	<servlet-name>registDelete</servlet-name>
+  	<servlet-class>controller.regist_Delete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>registDelete</servlet-name>
+  	<url-pattern>/lodge/registDelete</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 주변시설 체크박스 삭제하기 -->
+  <servlet>
+  	<servlet-name>checkDelete</servlet-name>
+  	<servlet-class>controller.check_Delete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>checkDelete</servlet-name>
+  	<url-pattern>/lodge/checkDelete</url-pattern>
+  </servlet-mapping>
+	
+	
+  
+  
+   
+   
+  
+  
+   
+  
+  
+  
+  
+  
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
+
