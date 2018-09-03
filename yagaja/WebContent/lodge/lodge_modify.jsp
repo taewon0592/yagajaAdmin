@@ -33,8 +33,8 @@ function zipcodeFind()
     new daum.Postcode({
         	oncomplete: function(data) {
             	var fn = document.writeFrm;
-            	fn.addr_num.value = data.zonecode; //우편번호
-            	fn.addr_sido.value = data.address; //기본주소
+            	fn.addr_zipcode.value = data.zonecode; //우편번호
+            	fn.addr_common.value = data.address; //기본주소
             	fn.addr_detail.focus(); //상세주수로 포커스 이동
         	}
     	}).open();	
@@ -207,11 +207,11 @@ for(String s : iArr2){
 		                        		
 	                        			<td>
 										<!-- 우편번호 -->
-										<input type="text" name="addr_num" value=""  class="join_input" style="width:100px;" />
+										<input type="text" name="addr_zipcode" value=""  class="join_input" style="width:100px;" />
 										<a href="javascript:;" title="새 창으로 열림" style="color:black;" onclick="zipcodeFind();" onkeypress="">[우편번호검색]</a>
 										<br/>
 										<!-- 주소 -->
-										<input type="text" name="addr_sido" value=""  class="join_input" style="width:550px; margin-top:5px;" /><br>
+										<input type="text" name="addr_common" value=""  class="join_input" style="width:550px; margin-top:5px;" /><br>
 										<input type="text" name="addr_detail" value=""  class="join_input" style="width:550px; margin-top:5px;" />
 										</td>
 		                        	</tr>

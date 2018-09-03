@@ -23,12 +23,11 @@ public class LodgeDTO {
 	//특징 추가
 	private String lodge_feature;
 	//주소 추가	
-	private String ADDR_common;  
-	private String ADDR_GUGUN;  
-	private String ADDR_DETAIL; 
-	private String ADDR_LAT;  
-	private String ADDR_LONG; 
-	private String ADDR_NUM;
+	private String addr_zipcode;
+	private String addr_common;  
+	private String addr_detail; 
+	private String addr_lat;  
+	private String addr_long; 
 	
 	//기본생성자
 	public LodgeDTO() {}
@@ -37,7 +36,7 @@ public class LodgeDTO {
 			String lodge_tag, String lodge_photo, String lodge_thema, String lodge_note,
 			String room_no, String room_type, String room_person, String room_photo, 
 			String d_sleep_price, String w_sleep_price, String d_rent_price, String w_rent_price, String lodge_feature,
-			String ADDR_common, String ADDR_GUGUN ,String ADDR_DETAIL,String ADDR_LAT, String ADDR_LONG, String ADDR_NUM) {
+			String addr_common, String addr_detail,String addr_lat, String addr_long, String addr_zipcode) {
 		this.lodge_no = lodge_no;
 		this.lodge_type = lodge_type;
 		this.lodge_name = lodge_name;
@@ -56,7 +55,11 @@ public class LodgeDTO {
 		this.d_rent_price = d_rent_price;
 		this.w_rent_price = w_rent_price;
 		this.lodge_feature = lodge_feature;
-		this.ADDR_NUM = ADDR_NUM;
+		this.addr_common = addr_common;
+		this.addr_detail = addr_detail;
+		this.addr_lat = addr_lat;
+		this.addr_long = addr_long;
+		this.addr_zipcode = addr_zipcode;
 	}
 	//getter/setter
 	public String getLodge_no() {
@@ -167,42 +170,37 @@ public class LodgeDTO {
 	public void setLodge_feature(String lodge_feature) {
 		this.lodge_feature = lodge_feature;
 	}
-	public String getADDR_common() {
-		return ADDR_common;
+	public String getAddr_zipcode() {
+		return addr_zipcode;
 	}
-	public void setADDR_common(String aDDR_common) {
-		ADDR_common = aDDR_common;
+	public void setAddr_zipcode(String addr_zipcode) {
+		this.addr_zipcode = addr_zipcode;
 	}
-	public String getADDR_GUGUN() {
-		return ADDR_GUGUN;
+	public String getAddr_common() {
+		return addr_common;
 	}
-	public void setADDR_GUGUN(String aDDR_GUGUN) {
-		ADDR_GUGUN = aDDR_GUGUN;
+	public void setAddr_common(String addr_common) {
+		this.addr_common = addr_common;
 	}
-	public String getADDR_DETAIL() {
-		return ADDR_DETAIL;
+	public String getAddr_detail() {
+		return addr_detail;
 	}
-	public void setADDR_DETAIL(String aDDR_DETAIL) {
-		ADDR_DETAIL = aDDR_DETAIL;
+	public void setAddr_detail(String addr_detail) {
+		this.addr_detail = addr_detail;
 	}
-	public String getADDR_LAT() {
-		return ADDR_LAT;
+	public String getAddr_lat() {
+		return addr_lat;
 	}
-	public void setADDR_LAT(String aDDR_LAT) {
-		ADDR_LAT = aDDR_LAT;
+	public void setAddr_lat(String addr_lat) {
+		this.addr_lat = addr_lat;
 	}
-	public String getADDR_LONG() {
-		return ADDR_LONG;
+	public String getAddr_long() {
+		return addr_long;
 	}
-	public void setADDR_LONG(String aDDR_LONG) {
-		ADDR_LONG = aDDR_LONG;
+	public void setAddr_long(String addr_long) {
+		this.addr_long = addr_long;
 	}
-	public String getADDR_NUM() {
-		return ADDR_NUM;
-	}
-	public void setADDR_NUM(String aDDR_NUM) {
-		ADDR_NUM = aDDR_NUM;
-	}
+	
 	
 	
 

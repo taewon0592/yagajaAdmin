@@ -29,8 +29,8 @@ function zipcodeFind()
     new daum.Postcode({
            oncomplete: function(data) {
                var fn = document.writeFrm;
-               fn.addr_num.value = data.zonecode; //우편번호
-               fn.addr_sido.value = data.address; //기본주소
+               fn.addr_zipcode.value = data.zonecode; //우편번호
+               fn.addr_common.value = data.address; //기본주소
                fn.addr_detail.focus(); //상세주수로 포커스 이동
            }
        }).open();   
@@ -48,7 +48,7 @@ function frmValidate(f){
       return false;
    }
    
-   var frmArray = ["addr_num", "addr_sido", "addr_detail", "tel1", "tel2", "tel3", "lodge_roomcount", "lodge_tag"];
+   var frmArray = ["addr_zipcode", "addr_common", "addr_detail", "tel1", "tel2", "tel3", "lodge_roomcount", "lodge_tag"];
    var txtArray = ["우편번호", "숙소 주소", "숙소 상세주소", "전화번호1", "전화번호2", "전화번호3", "룸 개수", "태그"];
    for(var i=0 ; i<frmArray.length ; i++) {
       if(eval("f." + frmArray[i] + ".type")=="text") {
@@ -171,11 +171,11 @@ function commonFocusMove(obj, m_length, next_obj){
                                     
                                     <td>
                               <!-- 우편번호 -->
-                              <input type="text" name="addr_num" id="addr_num" value=""  class="join_input" style="width:100px;" size="5" maxlength="5" onkeyup="commonFocusMove(this, 5 , 'addr_sido');"/>
+                              <input type="text" name="addr_zipcode" id="addr_zipcode" value=""  class="join_input" style="width:100px;" size="5" maxlength="5" onkeyup="commonFocusMove(this, 5 , 'addr_common');"/>
                               <a href="javascript:;" title="새 창으로 열림" style="color:black;" onclick="zipcodeFind();" onkeypress="">[우편번호검색]</a>
                               <br/>
                               <!-- 주소 -->
-                              <input type="text" name="addr_sido" id="addr_sido" value=""  class="join_input" style="width:550px; margin-top:5px;" /><br>
+                              <input type="text" name="addr_common" id="addr_common" value=""  class="join_input" style="width:550px; margin-top:5px;" /><br>
                               <input type="text" name="addr_detail" value=""  class="join_input" style="width:550px; margin-top:5px;" />
                               </td>
                                  </tr>
