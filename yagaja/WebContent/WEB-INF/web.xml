@@ -184,6 +184,16 @@
 		<servlet-name>LodgeList</servlet-name>
 		<url-pattern>/lodge/lodge_list</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 리스트에서 객실 추가등록 -->
+	<servlet>
+      <servlet-name>RoomWrite2</servlet-name>
+      <servlet-class>controller.room_WriteCtrl2</servlet-class>
+	</servlet>
+	<servlet-mapping>
+      <servlet-name>RoomWrite2</servlet-name>
+      <url-pattern>/lodge/room_write2</url-pattern>
+   </servlet-mapping>
 
 	<!-- 숙박시설 상세보기 -->
 	<servlet>

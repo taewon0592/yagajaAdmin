@@ -45,7 +45,7 @@ public class lodge_WriteCtrl extends HttpServlet {
 			String lodge_note = mr.getParameter("lodge_note");
 			String lodge_photo = mr.getFilesystemName("lodge_photo");
 			String addr_num = mr.getParameter("addr_num");
-			String addr_common = mr.getParameter("addr_common");
+			String addr_sido = mr.getParameter("addr_sido");
 			//String addr_gugun = mr.getParameter("addr_gugun");
 			String addr_detail = mr.getParameter("addr_detail");
 			String[] frature = mr.getParameterValues("lodge_feature");
@@ -88,7 +88,7 @@ public class lodge_WriteCtrl extends HttpServlet {
 			dto.setLodge_note(lodge_note);
 			dto.setLodge_photo(lodge_photo);
 			dto.setADDR_NUM(addr_num);
-			dto.setADDR_common(addr_common);
+			dto.setADDR_SIDO(addr_sido);
 			//dto.setADDR_GUGUN(addr_gugun);
 			dto.setADDR_DETAIL(addr_detail);
 			/*dto.setLodge_no(lodge_no);*/

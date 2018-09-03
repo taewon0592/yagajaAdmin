@@ -9,7 +9,7 @@
 		<c:set var="sucmsg" value="수정성공함" />
 		<c:set var="failmsg" value="수정실패함" />
 		<c:set var="sucurl" 
-		value="../lodge/lodge_view?lodge_no=${lodge_no}" />
+		value="../lodge/room_view?lodge_no=${lodge_no}&room_no=${room_no }" />
 	</c:when>
 	<c:otherwise>
 		<c:set var="sucmsg" value="삭제성공함" />

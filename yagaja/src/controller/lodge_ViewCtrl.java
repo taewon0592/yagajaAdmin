@@ -71,11 +71,6 @@ public class lodge_ViewCtrl extends HttpServlet {
 		String pagingImg = PagingUtil.pagingImgServlet(totalRecordCount,pageSize,blockPage, nowPage,"../lodge/lodge_list?"+addQueryString);
 		
 		
-		
-		
-		
-		
-		
 		LodgeDTO dto = dao.selectView(lodge_no);
 		/*	dto.setLodge_note(dto.getLodge_note().replaceAll("\r\n", "<br/>"));*/
 		dao.close();

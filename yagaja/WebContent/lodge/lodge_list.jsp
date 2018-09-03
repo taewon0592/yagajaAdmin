@@ -19,43 +19,95 @@
 
 <!-- Custom Fonts -->
 <link href="../vendor/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css">
-	
+   rel="stylesheet" type="text/css">
+
 <script src="../vendor/bootstrap3.3.7/jquery/jquery-3.2.1.min.js"></script>
 
 <!-- 전체선택체크되면 체크박스 모두 체크되기 -->
 <script type="text/javascript">
-    /* $(document).ready(function(){
-        $('#checkall').click(function(){
-            if($('#checkall').is(':checked')){
-                //전체체크
-                console.log('1');
-                $('input:checkbox[name=all]').prop('checked', true);
-            }
-            else {
-                //전체체크해제
-                console.log('2');
-                $('input:checkbox[name=all]').prop('checked', false);            
-            }
-        });
-    }); */
-    var chkArr = document.getElementsByName("check");
-    function allChecked(){
-    	for(var i=0 ; i<chkArr.length ; i++){
-    		
-    		if(chkArr[i].checked==true){
-				//체크된 항목이라면 체크해제
-				chkArr[i].checked = false;
-			}
-			else{
-				//체크가 안된 항목이라면 체크
-				chkArr[i].checked = true;
-			}
-		}
-    }
-    
-  
+
+function allCheckFunc( obj ) {
+      $("[name=checkDel]").prop("checked", $(obj).prop("checked") );
+}
+
+/* 체크박스 체크시 전체선택 체크 여부 */
+function oneCheckFunc( obj )
+{
+   var allObj = $("[name=checkAll]");
+   var objName = $(obj).attr("name");
+
+   if( $(obj).prop("checked") )
+   {
+      checkBoxLength = $("[name="+ objName +"]").length;
+      checkedLength = $("[name="+ objName +"]:checked").length;
+
+      if( checkBoxLength == checkedLength ) {
+         allObj.prop("checked", true);
+      } else {
+         allObj.prop("checked", false);
+      }
+   }
+   else
+   {
+      allObj.prop("checked", false);
+   }
+}
+
+$(function(){
+   $("[name=checkAll]").click(function(){
+      allCheckFunc( this );
+   });
+   $("[name=checkDel]").each(function(){
+      $(this).click(function(){
+         oneCheckFunc( $(this) );
+      });
+   });
+});
+
+//체크박스 회원 삭제 경고창
+$(function(){
+   $("#delUser").click(function(){
+      var selectedCheck = new Array();
+      $('.inputchk:checked').each(function(){
+         selectedCheck.push(this.value);
+      });
+      
+      if(selectedCheck.length<1){
+         alert("삭제할 시설을 선택해 주세요.");
+         return false;
+      }
+      
+      var chk=confirm("삭제하시겠습니까?");
+      if(chk){
+         
+         document.delfrm.action="../lodge/lodge_delete";
+         document.delfrm.submit();
+         alert("삭제 완료 되었습니다.");
+      }
+      else{
+         alert("삭제 취소 되었습니다.");
+         return false;
+      }         
+   });
+});
+
+
+function searchCheck(f){
+
+   if(f.searchColumn.value == "0"){
+      alert("검색조건을 선택하세요.");
+      return false;
+   }   
+   
+   if(f.searchWord.value==""){
+      alert("검색어를 입력하세요.");
+      return false;
+   }
+   document.searchFrm.submit();
+} 
+
 </script>
+
 </head>
 <body>
    <div id="wrapper">
@@ -63,7 +115,7 @@
         <%@include file="../include/adminTop.jsp" %>
             <!-- /.navbar-top-links -->
 
-		<%@include file="../include/adminLeftMenu.jsp" %>
+      <%@include file="../include/adminLeftMenu.jsp" %>
             <!-- /.navbar-static-side -->
           
         <div id="page-wrapper">
@@ -82,71 +134,91 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                        	
-                        	<form action="">
-	                            <table width="100%" class="table table-striped table-bordered table-hover center" style="text-align:center;">
-	                                <thead>
-	                                <!-- 굵기넣기 -->
-	                                    <tr style="font-weight:bold" >
-	                                    	<td colspan="2">
-	                                    		<button type="button" class="btn btn-info" onclick="location.href='../lodge/lodge_write';">
-	                                    			숙박 업소 등록하기
-	                                    		</button>
-	                                    	</td>
-	                                    	<td >숙박 시설 검색</td>
-	                                    	<td >
-	                                    		<select name="lodge_list" id="">
-	                                    			<option value="lodge">모텔</option>
-	                                    			<option value="lodge">호텔/리조트</option>
-	                                    			<option value="lodge">펜션/풀빌라</option>
-	                                    			<option value="lodge">게스트하우스</option>
-	                                    		</select>
-	                                    	</td>
-	                                    	<!-- 검색창 넣어줘야함 뭐로검색할건지 -->
-	                                    	<td colspan="3"><input type="text" name="search_lodge" /><button type="button" class="btn btn-success">검색</button></td>
-	                                    	<td>
-	                                    		<button type="button" class="btn btn-danger" onclick="location.href='../lodge/lodge_delete?lodge_no=${row.lodge_no }&mode=delete&nowPage=${map.nowPage }';">삭제</button>
-	                                    		<button type="button" class="btn btn-waring" onclick="allChecked()">
-	                                        		전체선택
-	                                        	</button></td>
-	                                  	  </tr>
-	                                </thead>
-							</form>
+                           
+                           <form name="searchFrm" method="post" onsubmit="return searchCheck(this);">
+                               <table width="100%" class="table table-striped table-bordered table-hover center" style="text-align:center;">
+                                   <thead>
+                                   <!-- 굵기넣기 -->
+                                       <tr style="font-weight:bold" >
+                                       <td>
+                                          <p >                                   
+                                   <button type="button" id="delUser" class="btn btn-danger">삭제</button>
+                                </p>
+                                             <%-- <button type="button" class="btn btn-danger" onclick="location.href='../lodge/lodge_delete?lodge_no=${row.lodge_no }&mode=delete&nowPage=${map.nowPage }';">삭제</button> --%>
+                                             </td>
+                                          <td colspan="2">
+                                             <button type="button" class="btn btn-info" onclick="location.href='../lodge/lodge_write';">
+                                                숙박 업소 등록하기
+                                             </button>
+                                          </td>
+                                          <td >숙박 시설 검색</td>
+                                          <td >                                                                                       
+                                             <select name="searchColumn" id="">
+                                                <option value="0">검색조건</option>
+                                                <option value="lodge_type">숙소종류</option>
+                                                <option value="lodge_name">숙소명</option>
+                                                <option value="addr_sido">숙소주소</option>
+                                             </select>
+                                             <!-- 
+                                             <select name="lodge_list" id="">
+                                                <option value="lodge">모텔</option>
+                                                <option value="lodge">호텔/리조트</option>
+                                                <option value="lodge">펜션/풀빌라</option>
+                                                <option value="lodge">게스트하우스</option>
+                                             </select>
+                                              -->
+                                          </td>
+                                          <!-- 검색창 넣어줘야함 뭐로검색할건지 -->
+                                          <td colspan="3">
+                                          <input type="search" name="searchWord" placeholder="검색어를 입력하세요." autofocus />
+                                          <button type="submit" id="btn_search" class="btn btn-success">검색</button>
+                                          </td>
+                                                                                       
+                                          </tr>
+                                   </thead>
+                     </form>
+                     <form name="delfrm" method="post">
                                 <tbody>
                                 
-                                	<tr style="font-weight:bold">
+                                   <tr style="font-weight:bold">
+                                      <td style="width:50px;">
+                                          <label><input type="checkbox" name="checkAll" /></label>
+                                       </td>
                                         <td>번호</td>
-                                        <td>숙박타입</td>
+                                        <td>숙소종류</td>
                                         <td colspan="2" >숙소명</td>
                                         <td>숙소주소</td>
                                         <td>숙소번호</td>
-                                        <td>방개수</td>
-                                      	<td>선택</td>
+                                        <td>방개수</td>                                         
                                     </tr>
                                     <tr class="odd gradeX">
-										<c:choose>
-		                                	<c:when test="${empty lists }">
-		                                		<tr>
-		                                			<td colspan="8">
-		                                				등록된 글이 없습니다.
-		                                			</td>
-		                                		</tr>
-		                                	</c:when>
-		                                	<c:otherwise>
-		                                		<c:forEach items="${lists }" var="row" varStatus="loop">
-			                                        <td>${map.totalCount - (((map.nowPage-1) * map.pageSize) + loop.index) }</td>
-			                                        <td>${row.lodge_type }</td>
-			                                        <td colspan="2"><a href="./lodge_view?lodge_no=${row.lodge_no }&nowPage=${map.nowPage}" style="color:black;">${row.lodge_name }</a></td>
-			                                       
-			                                        <td class="center">${row.ADDR_common }</td>
-			                                        <td class="center">${row.lodge_tel }</td>
-			                                        <td class="center">${row.lodge_roomcount }</td>
-			                                        <td><input type="checkbox" name="check"/></td>
-		                                		
-			                                    </tr>
-		                                		</c:forEach>
-		                                	</c:otherwise>
-		                               	</c:choose>
+                              <c:choose>
+                                         <c:when test="${empty lists }">
+                                            <tr>
+                                               <td colspan="8">
+                                                  등록된 글이 없습니다.
+                                               </td>
+                                            </tr>
+                                         </c:when>
+                                         <c:otherwise>
+                                            <c:forEach items="${lists }" var="row" varStatus="loop">
+                                               <td>
+                        <label><input type="checkbox" class="inputchk" name="checkDel" value="${row.lodge_no}"/></label>
+                     </td>
+                     <input type="hidden" name="lodge_no" value="${row.lodge_no }" />
+                                                 <td>${row.lodge_no }</td>
+                                                 <td>${row.lodge_type }</td>
+                                                 <td colspan="2"><a href="./lodge_view?lodge_no=${row.lodge_no }&nowPage=${map.nowPage}" style="color:black;">${row.lodge_name }</a></td>
+                                                
+                                                 <td class="center">${row.lodge_tag }</td>
+                                                 <td class="center">${row.lodge_tel }</td>
+                                                 <td class="center">${row.lodge_roomcount }</td>
+                                                 
+                                            
+                                             </tr>
+                                            </c:forEach>
+                                         </c:otherwise>
+                                        </c:choose>
                                    <!-- <tr class="even gradeC">
                                          <td>2</td>
                                         <td>호텔</td>
@@ -185,20 +257,21 @@
                                     </tr> -->
                                   
                                 </tbody>
+                                </form>
                             </table>
                             
                             <div class="row text-center">
-								<ul class="pagination">
-									${pagingImg }
-									<!-- <li><span class="glyphicon glyphicon-fast-backward"></span></li>
-									<li class="active"><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><span class="glyphicon glyphicon-fast-forward"></span></li> -->
-								</ul>
-							
+                        <ul class="pagination">
+                           ${pagingImg }
+                           <!-- <li><span class="glyphicon glyphicon-fast-backward"></span></li>
+                           <li class="active"><a href="#">1</a></li>
+                           <li><a href="#">2</a></li>
+                           <li><a href="#">3</a></li>
+                           <li><a href="#">4</a></li>
+                           <li><a href="#">5</a></li>
+                           <li><span class="glyphicon glyphicon-fast-forward"></span></li> -->
+                        </ul>
+                     
                             <!-- /.table-responsive -->
                             
                         </div>

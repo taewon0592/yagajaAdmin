@@ -173,9 +173,7 @@ $( document ).ready( function() {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           회원 목록보기                               
-                        </div>
+
                         <!-- /.panel-heading -->
                         
                         <div class="panel-body">

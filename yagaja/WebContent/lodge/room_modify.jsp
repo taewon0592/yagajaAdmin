@@ -2,6 +2,7 @@
 <%@page import="model.LodgeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,39 +52,36 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         	<div class="table-responsive">
-                        	
+                        	<form action="<c:url value="../lodge/room_modify" />" name="writeFrm2" method="post" enctype="multipart/form-data" >
                             <table width="70%" class="table table-bordered table-hover center" style="text-align:center;">
                                 <thead>
                                 <!-- 굵기넣기 -->
-                                <input type="hid den" name="lodge_no" value="${dto.lodge_no }"/>
-                                <input type="hid den" value="${dto.room_no }" />   
-                                <input type="hid den" value="${dto.lodge_no }" />   
-                                
+                                <input type="hid den" name="room_no" value="${dto.room_no }" />   
+                                <input type="hid den" name="lodge_no" value="${dto.lodge_no }" />   
+                                <input type="hid den" name="originalfile" value="${dto.room_photo }"/>
                                 </thead>
                                 <tbody>
                                 	<tr>
                                         <td style="font-weight:bold">객실 타입</td>
-                                        <td colspan="3">${dto.room_type }</td>
-                                    </tr>
-                                    <tr class="even gradeC">
+                                        <td><input type="text" name="room_type" value="${dto.room_type }" /></td>
                                        	<td style="font-weight:bold">객실 인원</td>
-                                        <td colspan="3">${dto.room_person }</td>
+                                        <td ><input type="text" name="room_person" value="${dto.room_person }" /></td>
                                     </tr>
                                     <tr class="even gradeC" >
                                         <td style="font-weight:bold">주중 숙박가격</td>
-                                        <td>${dto.d_sleep_price }</td>
+                                        <td><input type="text" name="d_sleep_price" value="${dto.d_sleep_price }" /></td>
                                         <td style="font-weight:bold">주중 대실가격</td>
-                                        <td>${dto.d_rent_price }</td>
+                                        <td><input type="text" name="d_rent_price" value="${dto.d_rent_price }" /></td>
                                     </tr>
                                     <tr class="even gradeC" >
                                         <td style="font-weight:bold;" >주말 숙박가격</td>
-                                        <td>${dto.w_sleep_price }</td>
+                                        <td><input type="text" name="w_sleep_price" value="${dto.w_sleep_price }" /></td>
                                         <td style="font-weight:bold ">주말 대실가격</td>
-                                        <td>${dto.w_rent_price }</td>
+                                        <td><input type="text" name="w_rent_price" value="${dto.w_rent_price }" /></td>
                                     </tr>
                                     <tr class="even gradeC" >
                                         <td style="font-weight:bold">객실 사진</td>
-                                        <td colspan="3"><img src="../Upload/${dto.room_photo }" /></td>
+                                        <td colspan="3"><input type="file" name="room_photo" value="${dto.room_photo }"/></td>
                                     </tr>
                                     
                                     		
@@ -93,13 +91,12 @@
                             </table>
 	                            <div class="row" style="text-align:center;">
 		                            <p>
-			                            <button  type="button" class="btn btn-success" onclick="location.href='../lodge/room_modify?lodge_no=${dto.lodge_no }&room_no=${dto.room_no }';">
-			                           		수정
+			                            <button  type="submit" class="btn btn-success">
+			                           		수정 완료
 			                           	</button>
-			                    		<button type="button" class="btn btn-danger"onclick="location.href='../lodge/room_delete?lodge_no=${dto.lodge_no }&room_no=${dto.room_no }';">
-			                     			삭제
-			                     		</button>
+			                    		
 		                     		</p>
+		                     		</form>	
                      			</div>
                             
                                     	

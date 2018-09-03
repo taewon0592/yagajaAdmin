@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,81 +53,83 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         	<div class="table-responsive">
-                        	
-                            <table width="70%" class="table table-bordered table-hover center" style="text-align:center;">
-                                <thead>
-                                <!-- 굵기넣기 -->
-                                    <tr>
-                                    	<td style="font-weight:bold">객실타입</td>
-                                    	<td>
-                                   			<input type="text" /><button type="button" class="btn btn-default">검색</button>
-                                    	</td>
-                                    	<td>
-                                    		<button type="button" class="btn btn-success" onclick="location.href='../lodge/lodge_modify?lodge_no=${dto.lodge_no}';">수정</button>
-                                    	</td>
-                                    	<td>
-                                    		<button type="button" class="btn btn-danger" onclick="location.href='../lodge/lodge_delete?lodge_no=${dto.lodge_no }';">
-                                    			삭제
-                                    		</button>
-                                    	</td>
-                                    	
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <input type="hid den" value="${lodge_no }" />
-                                	<tr>
-                                        <td style="font-weight:bold">숙소명</td>
-                                        <td colspan="3">${dto.lodge_name }</td>
-                                    </tr>
-                                    <tr class="odd gradeX">
-                                        <td style="font-weight:bold">숙박업소 종류</td>
-                                        <td colspan="3">${dto.lodge_type }</td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                       	<td style="font-weight:bold">숙소 주소</td>
-                                        <td colspan="3">${dto.ADDR_SIDO }&nbsp;&nbsp;${dto.ADDR_DETAIL } </td>
-                                    </tr>
-                                   <tr class="even gradeC">
-                                       	<td style="font-weight:bold">전화번호</td>
-                                        <td colspan="3">
-                                        	<p>
-                                        		${dto.lodge_tel }
-                                        	</p>
-                                        </td>
-                                    </tr>
-                                    <tr class="even gradeC" >
-                                        <td style="font-weight:bold">방 개수</td>
-                                        <td colspan="3">${dto.lodge_roomcount }</td>
-                                        
-                                    </tr>
-                                    <tr class="even gradeC" >
-                                        <td style="font-weight:bold;" >태그</td>
-                                        <td colspan="3">${dto.lodge_tag }</td>
-                                        
-                                    </tr>
-                                    <tr class="even gradeC" >
-                                        <td style="font-weight:bold">룸 테마</td>
-                                        <td colspan="3">${dto.lodge_thema }</td>
-                                        
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td style="font-weight:bold">숙소 특징</td>
-                                        <td colspan="3">${dto.lodge_feature }</td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td style="font-weight:bold">숙소 정보</td>
-                                        <td colspan="3">${dto.lodge_note }</td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                    	<td style="font-weight:bold">숙소 대표사진</td>
-                                    	<td colspan="3"><img src="../Upload/${dto.lodge_photo }"  /></td>
-                                    </tr>
-                                  
-                                  
-                                </tbody>
-                            </table>
-                            <!-- /.table-responsive -->
-                            
+                        	<form action=""  >
+	                            <table width="70%" class="table table-bordered table-hover center" style="text-align:center;">
+	                                <thead>
+	                                <!-- 굵기넣기 -->
+	                                    <tr>
+	                                    	<td style="font-weight:bold"></td>
+	                                    	<td>
+	                                   			<button type="button" class="btn btn-info" onclick="location.href='../lodge/room_write2?lodge_no=${lodge_no}';">방 등록</button>
+	                                    	</td>
+	                                    	<td>
+	                                    		<button type="button" class="btn btn-success" onclick="location.href='../lodge/lodge_modify?lodge_no=${lodge_no}';">수정</button>
+	                                    	</td>
+	                                    	<td>
+	                                    		<button type="button" class="btn btn-danger" onclick="location.href='../lodge/lodge_delete?lodge_no=${lodge_no }';">
+	                                    			삭제
+	                                    		</button>
+	                                    	</td>
+	                                    	
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+	                                <input type="hid den" value="${lodge_no }" />
+	                                <input type="hid den" value="${dto.lodge_name }" />
+	                                <input type="hid den" value="${dto.lodge_thema }" />
+	                                	<tr>
+	                                        <td style="font-weight:bold">숙소명</td>
+	                                        <td colspan="3">${dto.lodge_name }</td>
+	                                    </tr>
+	                                    <tr class="odd gradeX">
+	                                        <td style="font-weight:bold">숙박업소 종류</td>
+	                                        <td colspan="3">${dto.lodge_type }</td>
+	                                    </tr>
+	                                    <tr class="even gradeC">
+	                                       	<td style="font-weight:bold">숙소 주소</td>
+	                                        <td colspan="3">${dto.ADDR_SIDO }&nbsp;&nbsp;${dto.ADDR_DETAIL } </td>
+	                                    </tr>
+	                                   <tr class="even gradeC">
+	                                       	<td style="font-weight:bold">전화번호</td>
+	                                        <td colspan="3">
+	                                        	<p>
+	                                        		${dto.lodge_tel }
+	                                        	</p>
+	                                        </td>
+	                                    </tr>
+	                                    <tr class="even gradeC" >
+	                                        <td style="font-weight:bold">방 개수</td>
+	                                        <td colspan="3">${dto.lodge_roomcount }</td>
+	                                        
+	                                    </tr>
+	                                    <tr class="even gradeC" >
+	                                        <td style="font-weight:bold;" >태그</td>
+	                                        <td colspan="3">${dto.lodge_tag }</td>
+	                                        
+	                                    </tr>
+	                                    <tr class="even gradeC" >
+	                                        <td style="font-weight:bold">룸 테마</td>
+	                                        <td colspan="3">${dto.lodge_thema }</td>
+	                                        
+	                                    </tr>
+	                                    <tr class="even gradeC">
+	                                        <td style="font-weight:bold">숙소 특징</td>
+	                                        <td colspan="3">${dto.lodge_feature }</td>
+	                                    </tr>
+	                                    <tr class="even gradeC">
+	                                        <td style="font-weight:bold">숙소 정보</td>
+	                                        <td colspan="3">${dto.lodge_note }</td>
+	                                    </tr>
+	                                    <tr class="even gradeC">
+	                                    	<td style="font-weight:bold">숙소 대표사진</td>
+	                                    	<td colspan="3"><img src="../Upload/${dto.lodge_photo }"  /></td>
+	                                    </tr>
+	                                  
+	                                  
+	                                </tbody>
+	                            </table>
+                            	<!-- /.table-responsive -->
+                            </form>
                             <form action="">
                         		<table class="table table-striped table-bordered table-hover center" style=" width:100%; ">
 	                       			<tr class="odd gradeX">
@@ -151,8 +154,12 @@
 		                                	<c:otherwise>
 		                                		<c:forEach items="${lists }" var="row" varStatus="loop">
 			                                        <td>${row.room_no }</td>
-			                                        <td><a href="./room_view?lodge_no=${lodge_no }">${row.room_type }</a></td>
+			                                        <td><a href="./room_view?lodge_no=${lodge_no }&room_no=${row.room_no}">${row.room_type }</a></td>
 			                                        <td>${row.room_person}</td>
+			                                       <%--  <td><fmt:formatNumber value="${row.d_rent_price }" groupingUsed="true"/></td>
+			                                        <td><fmt:formatNumber value="${row.d_sleep_price }" groupingUsed="true"/></td>
+			                                        <td><fmt:formatNumber value="${row.w_rent_price }" groupingUsed="true"/></td>
+			                                        <td><fmt:formatNumber value="${row.w_sleep_price }" groupingUsed="true"/></td> --%>
 			                                        <td>${row.d_rent_price }</td>
 			                                        <td>${row.d_sleep_price }</td>
 			                                        <td>${row.w_rent_price }</td>
@@ -188,22 +195,7 @@
 		                        	</tr>-->
 	                        	</table>
                         	</form>
-                        	<div class="row text-center">
-								<ul class="pagination">
-									${pagingImg } 
-									<!-- <li><span class="glyphicon glyphicon-fast-backward"></span></li>
-									<li class="active"><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><span class="glyphicon glyphicon-fast-forward"></span></li> --> 
-								</ul>
-							
-                            <!-- /.table-responsive -->
-                            
-                        	</div>
-                        	
+                        
                         </div>
                         <!-- /.panel-body -->
                     </div>

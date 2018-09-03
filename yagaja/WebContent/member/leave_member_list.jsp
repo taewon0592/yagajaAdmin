@@ -7,7 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 
 <script src="../vendor/bootstrap3.3.7/jquery/jquery-3.2.1.js"></script>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
 <title>탈퇴 회원 관리</title>
 <link href="../vendor/bootstrap3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
-
+ 
 <!-- MetisMenu CSS (세로드롭메뉴바)-->
 <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
@@ -105,10 +105,9 @@
 			alert("삭제 취소 되었습니다.");
 			return;
 		}
-	} */
+	} */ 
 	
 
-	<!-- 데이트피커 -->
 
 	$( document ).ready( function() {
 	   

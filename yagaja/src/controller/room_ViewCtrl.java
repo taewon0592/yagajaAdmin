@@ -21,12 +21,9 @@ public class room_ViewCtrl extends HttpServlet {
 	public void service(ServletRequest req, ServletResponse resp) throws ServletException, IOException {
 		
 		String lodge_no = req.getParameter("lodge_no");
-		
+		String room_no = req.getParameter("room_no");
 		LodgeDAO dao = new LodgeDAO();
-				
-		
-		
-		LodgeDTO dto = dao.selectView(lodge_no);
+		LodgeDTO dto = dao.selectRoomView(lodge_no,room_no);
 		/*	dto.setLodge_note(dto.getLodge_note().replaceAll("\r\n", "<br/>"));*/
 		dao.close();
 		
