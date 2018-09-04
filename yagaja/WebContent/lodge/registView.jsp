@@ -40,14 +40,14 @@
 	                    <h1 class="page-header">상세보기</h1>
 	                </div>
 	                <!-- /.col-lg-12 -->
-	            </div>
+	            </div> 
 	            <!-- /.row -->
 	            <div class="row">
-	                <div class="col-lg-12">
+	                <div class="col-lg-7">
 	                	<div class="panel panel-default">	
 	                	<div class="panel-body">
 	                
-	                	<table width="100%" class="table table-striped table-bordered table-hover center" style=" width:60%;">
+	                	<table class="table table-striped table-bordered table-hover center" style=" width:100%;">
 	                	
 	                	<tr class="odd gradeX">
 							<td style="font-weight:bold; vertical-align:middle; width:40%; font-size:1em; text-align:center;">시설 종류</td>
@@ -65,7 +65,7 @@
 						<tr class="odd gradeX">
 							<td style="font-weight:bold; vertical-align:middle; width:40%; font-size:1em; text-align:center;">전화번호</td>
 							<td style="width:100px;">
-								${dto.surround_tel }
+								${dto.surround_tel } - ${dto.surround_tel2 } - ${dto.surround_tel3 }
 							</td>
 						</tr>
 						
@@ -99,22 +99,19 @@
 								${dto.surround_long }
 							</td>
 						</tr>
-						<tr  class="odd gradeX">
-							<td  colspan="3" style="text-align:right;">
-								<button type="button" class="btn btn-success" onclick="location.href='../lodge/registModify?surround_no=${param.surround_no}&mode=update&nowPage=${param.nowPage }';">
-									수정하기
-								</button>
-							
-								<button type="button" class="btn btn-info"onclick="location.href='../lodge/registDelete?surround_no=${param.surround_no}&mode=delete&nowPage=${param.nowPage }';">
-									삭제하기 </button>
-							
-								<button type="button" class="btn btn-danger" onclick="location.href='./registList?nowPage=${param.nowPage}';">
-									리스트보기</button>
-							</td>
-							
-						</tr>
 						<%-- <input type="hid den" value ="${param.surround_no }" /> --%>
 						</table>
+						<button type="button" class="btn btn-success" onclick="location.href='../lodge/registModify?surround_no=${param.surround_no}&mode=update&nowPage=${param.nowPage }';">
+						<i class="glyphicon glyphicon-edit"></i>&nbsp;수정하기
+						</button>
+							
+						<button type="button" class="btn btn-danger"onclick="location.href='../lodge/registDelete?surround_no=${param.surround_no}&mode=delete&nowPage=${param.nowPage }';">
+						<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기 
+						</button>
+							
+						<button type="button" class="btn btn-warning" onclick="location.href='./registList?nowPage=${param.nowPage}';">
+						<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기
+						</button>
                      	
                      	</div>
                        </div>

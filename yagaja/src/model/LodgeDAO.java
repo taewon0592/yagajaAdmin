@@ -77,15 +77,16 @@ public class LodgeDAO {
 		List<LodgeDTO> bbs = new Vector<LodgeDTO>();
 		
 		String sql = "SELECT * FROM ("
-				+ " SELECT Tb.*, rownum rNum FROM ( "  
-				+ "      SELECT * FROM lodge " ;  
+	            + " SELECT Tb.*, rownum rNum FROM ( "  
+	            + " SELECT l.* , a.addr_common FROM lodge l inner join lodge_addr a"
+	            + " on l.lodge_no = a.lodge_no  " ;  
 				
 		if(map.get("Word")!=null) {
 			sql += " WHERE "+map.get("Column")+" "
 					+ "LIKE '%"+map.get("Word")+"%' ";
 		}
 		//sql += " ORDER BY bgroup DESC, bstep ASC"
-		sql += " ORDER BY lodge_no DESC "
+		sql += " ORDER BY l.lodge_no DESC "
 				 +"    ) Tb"
                  +" ) "
                  +" WHERE rNum BETWEEN ? and ?";
@@ -107,18 +108,16 @@ public class LodgeDAO {
 				// 결과셋을 DTO객체에 담는다.
 				LodgeDTO dto = new LodgeDTO();
 				
-				
-				
-				
-				dto.setLodge_no(rs.getString(1));
-				dto.setLodge_type(rs.getString(2));
-				dto.setLodge_name(rs.getString(3));
-				dto.setLodge_tel(rs.getString(4));
-				dto.setLodge_roomcount(rs.getString(5));
-				dto.setLodge_tag(rs.getString(6));
-				dto.setLodge_photo(rs.getString(7));
-				dto.setLodge_thema(rs.getString(8));
-				dto.setLodge_note(rs.getString(9));
+				dto.setLodge_no(rs.getString("lodge_no"));
+	            dto.setLodge_type(rs.getString("lodge_type"));
+	            dto.setLodge_name(rs.getString("lodge_name"));
+	            dto.setLodge_tel(rs.getString("lodge_tel"));
+	            dto.setLodge_roomcount(rs.getString("lodge_roomcount"));
+	            dto.setLodge_tag(rs.getString("lodge_tag"));
+	            dto.setLodge_photo(rs.getString("lodge_photo"));
+	            dto.setLodge_thema(rs.getString("lodge_thema"));
+	            dto.setLodge_note(rs.getString("lodge_note"));
+	            dto.setAddr_common(rs.getString("addr_common"));
 		
 				
 				//DTO객체를 컬렉션에 추가
@@ -363,6 +362,7 @@ public class LodgeDAO {
 				dto.setLodge_feature(rs.getString("lodge_feature"));
 				dto.setLodge_note(rs.getString("lodge_note"));
 				dto.setLodge_photo(rs.getString("lodge_photo"));
+				dto.setAddr_zipcode(rs.getString("addr_zipcode"));
 			}
 		}
 		catch(Exception e){

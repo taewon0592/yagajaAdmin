@@ -137,18 +137,13 @@ function commonFocusMove(obj, m_length, next_obj){
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           숙박 시설 등록 페이지
-                        </div>
+
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                           <div class="table-responsive">    
+
                            <form name="writeFrm" action="<c:url value="../lodge/lodge_write" />" onsubmit="return frmValidate(this);" method="post" enctype="multipart/form-data" >
                               <table class="table table-striped table-bordered table-hover center" style=" width:100%; ">
                                  <tr class="even gradeC">
-                                    <td colspan="2">
-                                       <h4><b>숙소 등록</b></h4>
-                                    </td>
                                  </tr>
                                  <tr class="odd gradeX">
                                     <td style="font-weight:bold; vertical-align:middle; width:20%; font-size:1.2em; text-align:center;">숙소명</td>
@@ -248,15 +243,11 @@ function commonFocusMove(obj, m_length, next_obj){
                                     </td>
                                  </tr>
                               </table>
-                              <button type="submit" class="btn btn-info">등록하기</button>
+                              <button type="submit" class="btn btn-info">
+                              	<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+                              </button>
                            </form>   
-                           
-                           
-                           
-                           
-                           
-                        
-                                 </div>
+
                               <!-- /.panel-body -->
                              </div>
                           <!-- /.panel -->
@@ -264,16 +255,7 @@ function commonFocusMove(obj, m_length, next_obj){
                       <!-- /.col-lg-12 -->
                        </div>
                      <!-- /.row -->
-                     <div class="row">
-                         <div class="col-lg-6">
-                             <div class="panel panel-default">
-                      
-                          
-                               </div>
-                               <!-- /.table-responsive -->
-                           </div>
-                        <!-- /.panel-body -->
-                       </div>
+   
                        <!-- /.panel -->
                    </div>
                    <!-- /.col-lg-6 -->

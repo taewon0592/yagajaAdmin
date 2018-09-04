@@ -129,179 +129,106 @@ function searchCheck(f){
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           숙박 시설 리스트 페이지
-                        </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <div class="panel-body">	
+                        
+                        <!-- 검색기능 -->
+                        	<div class="row text-left"
+								style="margin-bottom: 20px; padding-left: 15px;">
+								<form class="form-inline" name="searchFrm" method="post" action="" onsubmit="return searchCheck(this);">
+									<div class="form-group" style="padding-left: 1px;">
+										<select name="searchColumn" class="form-control">
+											<option value="direct_input">검색조건</option>
+											<option value="lodge_type">숙소종류</option>
+											<option value="lodge_name">숙소명</option>
+											<option value="addr_common">숙소주소</option>
+										</select>
+									</div>
+									<div class="input-group" style="padding-left: 1px;">
+										<input type="search" name="searchWord" class="form-control" placeholder="검색어를 입력하세요." autofocus />
+										<div class="input-group-btn" style="padding-left: 2px;">
+											<button type="submit" id="btn_search" class="btn btn-default">
+												<i class="glyphicon glyphicon-search"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
                            
-                           <form name="searchFrm" method="post" onsubmit="return searchCheck(this);">
+                           
                                <table width="100%" class="table table-striped table-bordered table-hover center" style="text-align:center;">
                                    <thead>
-                                   <!-- 굵기넣기 -->
-                                       <tr style="font-weight:bold" >
-                                       <td>
-                                          <p >                                   
-                                   <button type="button" id="delUser" class="btn btn-danger">삭제</button>
-                                </p>
-                                             <%-- <button type="button" class="btn btn-danger" onclick="location.href='../lodge/lodge_delete?lodge_no=${row.lodge_no }&mode=delete&nowPage=${map.nowPage }';">삭제</button> --%>
-                                             </td>
-                                          <td colspan="2">
-                                             <button type="button" class="btn btn-info" onclick="location.href='../lodge/lodge_write';">
-                                                숙박 업소 등록하기
-                                             </button>
-                                          </td>
-                                          <td >숙박 시설 검색</td>
-                                          <td >                                                                                       
-                                             <select name="searchColumn" id="">
-                                                <option value="0">검색조건</option>
-                                                <option value="lodge_type">숙소종류</option>
-                                                <option value="lodge_name">숙소명</option>
-                                                <option value="addr_sido">숙소주소</option>
-                                             </select>
-                                             <!-- 
-                                             <select name="lodge_list" id="">
-                                                <option value="lodge">모텔</option>
-                                                <option value="lodge">호텔/리조트</option>
-                                                <option value="lodge">펜션/풀빌라</option>
-                                                <option value="lodge">게스트하우스</option>
-                                             </select>
-                                              -->
-                                          </td>
-                                          <!-- 검색창 넣어줘야함 뭐로검색할건지 -->
-                                          <td colspan="3">
-                                          <input type="search" name="searchWord" placeholder="검색어를 입력하세요." autofocus />
-                                          <button type="submit" id="btn_search" class="btn btn-success">검색</button>
-                                          </td>
-                                                                                       
-                                          </tr>
                                    </thead>
-                     </form>
+                     
                      <form name="delfrm" method="post">
                                 <tbody>
                                 
-                                   <tr style="font-weight:bold">
-                                      <td style="width:50px;">
+                                   <tr style="font-weight:bold;">
+                                      <td style="width:50px; vertical-align:middle;">
                                           <label><input type="checkbox" name="checkAll" /></label>
                                        </td>
-                                        <td>번호</td>
-                                        <td>숙소종류</td>
-                                        <td colspan="2" >숙소명</td>
-                                        <td>숙소주소</td>
-                                        <td>숙소번호</td>
-                                        <td>방개수</td>                                         
+                                        <td style="vertical-align:middle;">번호</td>
+                                        <td style="vertical-align:middle;">숙소종류</td>
+                                        <td colspan="2" style="vertical-align:middle;">숙소명</td>
+                                        <td style="vertical-align:middle;">숙소주소</td>
+                                        <td style="vertical-align:middle;">숙소번호</td>
+                                        <td style="vertical-align:middle;">방개수</td>                                         
                                     </tr>
                                     <tr class="odd gradeX">
                               <c:choose>
                                          <c:when test="${empty lists }">
                                             <tr>
-                                               <td colspan="8">
+                                               <td colspan="8" style="vertical-align:middle;">
                                                   등록된 글이 없습니다.
                                                </td>
                                             </tr>
                                          </c:when>
                                          <c:otherwise>
                                             <c:forEach items="${lists }" var="row" varStatus="loop">
-                                               <td>
-                        <label><input type="checkbox" class="inputchk" name="checkDel" value="${row.lodge_no}"/></label>
-                     </td>
-                     <input type="hidden" name="lodge_no" value="${row.lodge_no }" />
-                                                 <td>${row.lodge_no }</td>
-                                                 <td>${row.lodge_type }</td>
-                                                 <td colspan="2"><a href="./lodge_view?lodge_no=${row.lodge_no }&nowPage=${map.nowPage}" style="color:black;">${row.lodge_name }</a></td>
+                                               <td style="vertical-align:middle;">
+                        							<label><input type="checkbox" class="inputchk" name="checkDel" value="${row.lodge_no}"/></label>
+							                     </td>
+							                     <input type="hidden" name="lodge_no" value="${row.lodge_no }" />
+                                                 <td style="vertical-align:middle;">${map.totalCount - (((map.nowPage -1) * map.pageSize) + loop.index) }</td>
+                                                 <td style="vertical-align:middle;">${row.lodge_type }</td>
+                                                 <td colspan="2" style="vertical-align:middle;"><a href="./lodge_view?lodge_no=${row.lodge_no }&nowPage=${map.nowPage}" style="color:black;">${row.lodge_name }</a></td>
                                                 
-                                                 <td class="center">${row.lodge_tag }</td>
-                                                 <td class="center">${row.lodge_tel }</td>
-                                                 <td class="center">${row.lodge_roomcount }</td>
+                                                 <td class="center" style="vertical-align:middle;">${row.addr_common }</td>
+                                                 <td class="center" style="vertical-align:middle;">${row.lodge_tel }</td>
+                                                 <td class="center" style="vertical-align:middle;">${row.lodge_roomcount }</td>
                                                  
                                             
                                              </tr>
                                             </c:forEach>
                                          </c:otherwise>
-                                        </c:choose>
-                                   <!-- <tr class="even gradeC">
-                                         <td>2</td>
-                                        <td>호텔</td>
-                                        <td colspan="2">요요요요요요요요</td>
-                                        <td class="center">주소</td>
-                                        <td class="center">02-111-1111</td>
-                                        <td class="center">20</td>
-                                        <td><input type="checkbox" name="check"/></td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>3</td>
-                                        <td>호텔</td>
-                                        <td colspan="2">요요요요요요요요</td>
-                                        <td class="center">주소</td>
-                                        <td class="center">02-111-1111</td>
-                                        <td class="center">20</td>
-                                         <td><input type="checkbox" name="check"/></td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>4</td>
-                                        <td>호텔</td>
-                                        <td colspan="2">요요요요요요요요</td>
-                                        <td class="center">주소</td>
-                                        <td class="center">02-111-1111</td>
-                                        <td class="center">20</td>
-                                         <td><input type="checkbox" name="check"/></td>
-                                    </tr>
-                                    <tr class="even gradeC">
-                                        <td>5</td>
-                                        <td>호텔</td>
-                                        <td colspan="2">요요요요요요요요</td>
-                                        <td class="center">주소</td>
-                                        <td class="center">02-111-1111</td>
-                                        <td class="center">20</td>
-                                        <td><input type="checkbox" name="check"/></td>
-                                    </tr> -->
-                                  
+                                        </c:choose>     
                                 </tbody>
                                 </form>
                             </table>
-                            
-                            <div class="row text-center">
-                        <ul class="pagination">
-                           ${pagingImg }
-                           <!-- <li><span class="glyphicon glyphicon-fast-backward"></span></li>
-                           <li class="active"><a href="#">1</a></li>
-                           <li><a href="#">2</a></li>
-                           <li><a href="#">3</a></li>
-                           <li><a href="#">4</a></li>
-                           <li><a href="#">5</a></li>
-                           <li><span class="glyphicon glyphicon-fast-forward"></span></li> -->
-                        </ul>
-                     
-                            <!-- /.table-responsive -->
-                            
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                      
-                          
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /#page-wrapper -->
+                             <button type="button" id="delUser" class="btn btn-danger">
+                             	<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
+                             </button>
+                             <button type="button" class="btn btn-info" onclick="location.href='../lodge/lodge_write';">
+                             	<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+                             </button>
+	                       <!-- /.panel-body -->
+	                   </div>
+	                   <!-- /.panel -->	
+	               </div>
+	               <!-- /.col-lg-12 -->
+	           </div>           
+	           <!-- /.row -->
+	        </div>
+	          <div class="row text-center">
+                 <ul class="pagination">
+                    ${pagingImg }
 
-   
-    <!-- /#wrapper -->
+                 </ul>
+     		 </div>
+	    <!-- /pageWrapper -->
+	    </div>
+	  <!-- /#wrapper --> 
+    </div>
 
     
 

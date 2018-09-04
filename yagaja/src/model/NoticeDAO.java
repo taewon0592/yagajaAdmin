@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
@@ -20,19 +19,18 @@ public class NoticeDAO {
 
 	public NoticeDAO() {
 		
-		try 
-		{
-			Class.forName("oracle.jdbc.OracleDriver");
-			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-			String id = "yagaja";
-			String pw = "1119";
-			con = DriverManager.getConnection(url, id, pw);
-			System.out.println("DB 연결 성공");
-		    
+		try {
+			
+			Context ctx = new InitialContext();
+			DataSource source = (DataSource) ctx.lookup("java:comp/env/jdbc/myoracle");
+
+			con = source.getConnection();
+			System.out.println("DBCP연결성공");
 		} 
-		catch (Exception e) 
-		{
-			System.out.println("DB 연결 실패");
+		catch (Exception e) {
+			
+			System.out.println("DBCP연결실패");
+			e.printStackTrace();
 		}
 	}
 
@@ -199,7 +197,7 @@ public class NoticeDAO {
 	
 	// 공지사항 상세보기(view)
 	public NoticeDTO selectView(String idx) {
-		
+		System.out.println("셀렉idx:"+idx);
 		NoticeDTO dto = null;
 
 		String sql = "SELECT * FROM notice " + " WHERE notice_no=?";
@@ -258,14 +256,16 @@ public class NoticeDAO {
 	// 게시물 삭제하기
 	public int delete(String idx) {
 		
+		String[] checkDel = idx.split(",");
+		
 		int affected = 0;
 		
 		try {
 			
-			String sql = "DELETE FROM notice " + " WHERE notice_no=?";
+			String sql = "DELETE FROM notice WHERE notice_no=?";
 
 			psmt = con.prepareStatement(sql);
-			psmt.setString(1, idx);
+			psmt.setString(1, checkDel[0]);
 
 			affected = psmt.executeUpdate();
 			

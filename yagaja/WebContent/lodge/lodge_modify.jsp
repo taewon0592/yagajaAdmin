@@ -41,6 +41,78 @@ function zipcodeFind()
 }
 </script>
 
+<script>
+function frmValidate(f){
+   if(f.lodge_name.value==""){
+      alert("숙소명을 입력하세요");
+      f.lodge_name.focus();
+      return false;
+   }
+   if(f.lodge_type.value==""){
+      alert("숙소 타입을 선택하세요");
+      f.lodge_type[0].focus();
+      return false;
+   }
+   
+   var frmArray = ["addr_zipcode", "addr_common", "addr_detail", "tel1", "tel2", "tel3", "lodge_roomcount", "lodge_tag"];
+   var txtArray = ["우편번호", "숙소 주소", "숙소 상세주소", "전화번호1", "전화번호2", "전화번호3", "룸 개수", "태그"];
+   for(var i=0 ; i<frmArray.length ; i++) {
+      if(eval("f." + frmArray[i] + ".type")=="text") {
+         if(eval("f." + frmArray[i] + ".value")=="") {
+            alert(txtArray[i] + "를 입력하세요");
+            eval("f." + frmArray[i] + ".focus()");
+            return false;
+         }
+      }
+   }
+   if(f.lodge_roomcount.value==""){
+      alert("룸 개수를 입력하세요");
+      f.lodge_roomcount.focus();
+      return false;
+   }
+   if(f.lodge_tag.value==""){
+      alert("태그를 입력하세요");
+      f.lodge_tag.focus();
+      return false;
+   }
+   var chk = document.writeFrm;
+   var checked_items = 0;
+   for(i=0; i<chk.elements.length; i++){
+      if((chk.elements[i].name =="lodge_thema")&&(chk.elements[i].checked)){
+         checked_items++;
+      }      
+   }
+   if(checked_items==0){
+      alert("룸 테마를 선택하세요.");
+      f.lodge_thema[0].focus();      
+      return false;
+   }
+      
+   var checked_items1 = 0;
+   for(i=0; i<chk.elements.length; i++){
+      if((chk.elements[i].name =="lodge_feature")&&(chk.elements[i].checked)){
+         checked_items1++;
+      }      
+   }
+   if(checked_items1==0){
+      alert("숙소 특징을 선택하세요");
+      f.lodge_feature[0].focus();
+      return false;
+   }
+   
+   if(f.lodge_note.value==""){
+      alert("숙소 정보를 입력하세요");
+      f.lodge_note.focus();
+      return false;
+   }
+   if(f.lodge_photo.value==""){
+      alert("대표사진을 업로드하세요");
+      f.lodge_photo.focus();
+      return false;
+   }
+}
+</script>
+
 <%
 String lodge_no = request.getParameter("lodge_no");
 
@@ -162,7 +234,7 @@ for(String s : iArr2){
          <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">숙박 업소 등록</h1>
+                    <h1 class="page-header">숙박 업소 수정하기</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -170,23 +242,17 @@ for(String s : iArr2){
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           숙박 시설 등록 페이지
-                        </div>
+
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         	<div class="table-responsive">    
-                        	<form action="<c:url value="../lodge/lodge_modify" />" name="writeFrm" method="post" enctype="multipart/form-data" >
-                        		<input type="hid den" name="lodge_no" value="<%=lodge_no %>" />
-                        		<input type="hid den" name="nowPage"  value="<%=lodge_type%>"/>
-                        		<input type="hid den" name="h_lodge_thema"  value="<%=lodge_thema%>"/>
-                        		<input type="hid den" name="originalfile" value="${dto.lodge_photo }" />
+                        	<form action="<c:url value="../lodge/lodge_modify" />" name="writeFrm" method="post" enctype="multipart/form-data" onsubmit="return frmValidate(this);" >
+                        		<input type="hidden" name="lodge_no" value="<%=lodge_no %>" />
+                        		<input type="hidden" name="nowPage"  value="<%=lodge_type%>"/>
+                        		<input type="hidden" name="h_lodge_thema"  value="<%=lodge_thema%>"/>
+                        		<input type="hidden" name="originalfile" value="${dto.lodge_photo }" />
 	                        	<table class="table table-striped table-bordered table-hover center" style=" width:100%; ">
-	                        		<tr class="even gradeC">
-		                        		<td colspan="2">
-		                        			<h4><b>숙소 등록</b></h4>
-		                        		</td>
-		                        	</tr>
+
 		                        	<tr class="odd gradeX">
 		                        		<td style="font-weight:bold; vertical-align:middle; width:20%; font-size:1.2em; text-align:center;">숙소명</td>
 		                        		<td style="width:60%;">
@@ -207,12 +273,12 @@ for(String s : iArr2){
 		                        		
 	                        			<td>
 										<!-- 우편번호 -->
-										<input type="text" name="addr_zipcode" value=""  class="join_input" style="width:100px;" />
+										<input type="text" name="addr_zipcode" value="${dto.addr_zipcode }"  class="join_input" style="width:100px;" />
 										<a href="javascript:;" title="새 창으로 열림" style="color:black;" onclick="zipcodeFind();" onkeypress="">[우편번호검색]</a>
 										<br/>
 										<!-- 주소 -->
-										<input type="text" name="addr_common" value=""  class="join_input" style="width:550px; margin-top:5px;" /><br>
-										<input type="text" name="addr_detail" value=""  class="join_input" style="width:550px; margin-top:5px;" />
+										<input type="text" name="addr_common" value="${dto.addr_common }"  class="join_input" style="width:550px; margin-top:5px;" /><br>
+										<input type="text" name="addr_detail" value="${dto.addr_detail }"  class="join_input" style="width:550px; margin-top:5px;" />
 										</td>
 		                        	</tr>
 		                        	<tr class="even gradeC">
@@ -279,7 +345,9 @@ for(String s : iArr2){
 		                        		</td>
 		                        	</tr>
                         		</table>
-                        		<button type="submit" class="btn btn-info">수정 완료</button>
+                        		<button type="submit" class="btn btn-success">
+                        			<i class="glyphicon glyphicon-edit"></i>&nbsp;수정하기
+                        		</button>
                         	</form>	
                         	
                         	
@@ -295,16 +363,7 @@ for(String s : iArr2){
                 		<!-- /.col-lg-12 -->
            				</div>
             			<!-- /.row -->
-            			<div class="row">
-                			<div class="col-lg-6">
-                    			<div class="panel panel-default">
-                      
-                          
-                            	</div>
-                            	<!-- /.table-responsive -->
-                        	</div>
-                        <!-- /.panel-body -->
-                    	</div>
+
                     	<!-- /.panel -->
                 	</div>
                 	<!-- /.col-lg-6 -->

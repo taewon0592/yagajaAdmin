@@ -52,17 +52,83 @@ public class YagajaMemberDAO {
 	{
 		int totalCount = 0;
 		try{
-			String sql 
+			String sql = "SELECT COUNT(*) FROM member ";
 			
-			= "SELECT COUNT(*) FROM member ";
-										
-			if(map.get("Word")!=null){
-				sql +=" WHERE "+map.get("Column")+" "
-					+ " LIKE '%"+map.get("Word")+"%' AND authority LIKE 'user' ";				
+			//검색어가 없고
+			if(map.get("Word")=="" || map.get("Word")==null) {
+				//검색어 X + 시작 일자
+				if(map.get("search_sday")!=null && map.get("search_eday")=="") {
+					sql +=" WHERE authority LIKE 'user' AND regidate >= "
+						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+				}
+				//검색어 X + 종료 일자
+				else if(map.get("search_sday")=="" && map.get("search_eday")!=null) {
+					sql +=" WHERE authority LIKE 'user'  AND regidate <= "
+						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+				}		
+				//검색어 X + 시작/종료일자
+				else if(map.get("search_sday")!=null && map.get("search_eday")!=null) {
+				
+					sql +=" WHERE authority LIKE 'user' "
+						+ " AND regidate >= "
+						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+						+ " AND regidate <= "
+						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";							
+												
+				}
+						 
+				//검색어 X + 기간 없음(전체검색)
+				else {
+					sql += " WHERE authority LIKE 'user' ";					
+				}
 			}
-			else {
-				sql += " WHERE authority LIKE 'user' ";
+			
+			//검색어가 있고
+			else if(map.get("Word")!="" || map.get("Word")!=null) {
+				//단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
+				if(map.get("Column").equals("direct_input")) {
+					sql +=" WHERE authority LIKE 'user'  AND "
+						+ " "
+						+ " (id LIKE '%" + map.get("Word")+ "%' "
+						+ " OR "
+						+ " nickname LIKE '%" + map.get("Word")+ "%' "
+						+ " OR"
+						+ " email LIKE '%" + map.get("Word")+ "%') "
+						+ " AND (regidate >= "
+						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+						+ " AND regidate <= "
+						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
+				}	
+				//검색어  + 시작 일자
+				else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) {
+					sql +=" WHERE authority LIKE 'user'  AND "+map.get("Column")+" "
+						+ " LIKE '%"+map.get("Word")+"%' "
+						+ " AND regidate >= "
+						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+				}
+				//검색어  + 종료 일자 
+				else if(map.get("search_sday")=="" && map.get("search_eday")!="") {
+					sql +=" WHERE authority LIKE 'user'  AND "+map.get("Column")+" "
+						+ " LIKE '%"+map.get("Word")+"%' "
+						+ " AND regidate <= "
+						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+				}				
+				//검색어 + 시작/종료일자
+				else if(map.get("search_sday")!="" && map.get("search_eday")!="") {
+					sql +=" WHERE authority LIKE 'user'  AND "+map.get("Column")+" "
+						+ " LIKE '%"+map.get("Word")+"%' "
+						+ " AND regidate >= "
+						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+						+ " AND regidate <= "
+						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+				}							
+				//검색어 + 기간 없음(전체검색)
+				else {
+					sql +=" WHERE authority LIKE 'user'  AND "+map.get("Column")+" "
+						+ " LIKE '%"+map.get("Word")+"%' ";				
+				}
 			}
+
 			
 			sql +=" ORDER BY member_no DESC ";
 			
@@ -80,60 +146,112 @@ public class YagajaMemberDAO {
 	{
 		List<YagajaMemberDTO> ygj = new Vector<YagajaMemberDTO>();		
 		
-			String sql = " SELECT * FROM ( SELECT * FROM ("
-						+"    SELECT Tb.*, rownum rNum FROM ( "
-						+ " SELECT * FROM member ";
-				
-			if(map.get("Word")!=null){
-				sql +=" WHERE "+map.get("Column")+" "
-					+ " LIKE '%"+map.get("Word")+"%' AND authority LIKE 'user' "							
-					+ " ORDER BY member_no DESC "
-					+"    ) Tb"
-					+" ) "
-					+" WHERE rNum BETWEEN ? and ? "	;
-					//기간 검색
-					if(map.get("search_sday")!="" && map.get("search_eday")!=""){ 
-						sql +=" ) WHERE regidate >= "
-								+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-										+ " AND regidate <= "
-										+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd') ";
-					}
-					//전체 기간 검색
-					else {
-						sql +=" ) WHERE 1=1 ";
-					}					
-			}
-			
-			else {
-				sql += " WHERE authority LIKE 'user' "
-						+ " ORDER BY member_no DESC "
-						+"    ) Tb "
-						+" ) WHERE rNum BETWEEN ? and ? "
-						+ " ) WHERE 1=1 ";							
-			}					
 	
-				System.out.println("쿼리문:"+sql);
+		String sql = " SELECT * FROM ("
+					+"    SELECT Tb.*, rownum rNum FROM ( "
+					+ " SELECT * FROM member"
+					+ " ";	
+		
+		//검색어가 없고
+		if(map.get("Word")=="" || map.get("Word")==null) 
+		{
+			//검색어 X + 시작 일자
+			if(map.get("search_sday")!=null && map.get("search_eday")=="") 
+			{
+				sql +=" WHERE authority LIKE 'user' AND regidate >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+			}
+			//검색어 X + 종료 일자
+			else if(map.get("search_sday")=="" && map.get("search_eday")!=null) 
+			{
+				sql +=" WHERE authority LIKE 'user'  AND regidate <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+			}		
+			//검색어 X + 시작/종료일자
+			else if(map.get("search_sday")!=null && map.get("search_eday")!=null) 
+			{
+			
+				sql +=" WHERE authority LIKE 'user' "
+					+ " AND regidate >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+					+ " AND regidate <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";							
+											
+			}
+					 
+			//검색어 X + 기간 없음(전체검색)
+			else {
+				sql += " WHERE authority LIKE 'user' ";					
+			}
+		}
+		
+		//검색어가 있고
+		else if(map.get("Word")!="" || map.get("Word")!=null) 
+		{
+			//단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
+			if(map.get("Column").equals("direct_input")) 
+			{
+				sql +=" WHERE authority LIKE 'user'  AND "
+					+ " "
+					+ " (id LIKE '%" + map.get("Word")+ "%' "
+					+ " OR "
+					+ " nickname LIKE '%" + map.get("Word")+ "%' "
+					+ " OR"
+					+ " email LIKE '%" + map.get("Word")+ "%') "
+					+ " AND (regidate >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+					+ " AND regidate <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
+			}	
+			//검색어  + 시작 일자
+			else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) 
+			{
+				sql +=" WHERE authority LIKE 'user'  AND "+map.get("Column")+" "
+					+ " LIKE '%"+map.get("Word")+"%' "
+					+ " AND regidate >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+			}
+			//검색어  + 종료 일자 
+			else if(map.get("search_sday")=="" && map.get("search_eday")!="") 
+			{
+				sql +=" WHERE authority LIKE 'user'  AND "+map.get("Column")+" "
+					+ " LIKE '%"+map.get("Word")+"%' "
+					+ " AND regidate <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+			}				
+			//검색어 + 시작/종료일자
+			else if(map.get("search_sday")!="" && map.get("search_eday")!="") 
+			{
+				sql +=" WHERE authority LIKE 'user'  AND "+map.get("Column")+" "
+					+ " LIKE '%"+map.get("Word")+"%' "
+					+ " AND regidate >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+					+ " AND regidate <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+			}							
+			//검색어 + 기간 없음(전체검색)
+			else {
+				sql +=" WHERE authority LIKE 'user'  AND "+map.get("Column")+" "
+					+ " LIKE '%"+map.get("Word")+"%' ";				
+			}
+		}
+			
+		sql += " ORDER BY member_no DESC "
+				+"    ) Tb "
+				+" ) WHERE rNum BETWEEN ? and ? ";	
+			
+		System.out.println("쿼리문:"+sql);
 
 		try{
 			//3.prepare 객체생성 및 실행
-			psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(sql);			
 			
 			
-			if(map.get("Word")!=null){
-				psmt.setInt(1, 
-					Integer.parseInt(map.get("start").toString()));
-				psmt.setInt(2, 
-					Integer.parseInt(map.get("end").toString()));
+			psmt.setInt(1, 
+				Integer.parseInt(map.get("start").toString()));
+			psmt.setInt(2, 
+				Integer.parseInt(map.get("end").toString()));
 
-			}
-			else {
-				psmt.setInt(1, 
-					Integer.parseInt(map.get("start").toString()));
-				psmt.setInt(2, 
-					Integer.parseInt(map.get("end").toString()));
-			}
-			
-			
 			rs = psmt.executeQuery();
 			while(rs.next())
 			{

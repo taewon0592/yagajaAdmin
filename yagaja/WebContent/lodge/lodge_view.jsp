@@ -47,36 +47,28 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           숙박 시설 상세보기
-                        </div>
+
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                        	<div class="table-responsive">
+                        	
+                        	<div style="padding-bottom:15px;">
+                        		<button type="button" class="btn btn-info" onclick="location.href='../lodge/room_write2?lodge_no=${lodge_no}';">
+                        			<i class="glyphicon glyphicon-pencil"></i>&nbsp;방 등록하기
+                        		</button>
+                        		<button type="button" class="btn btn-success" onclick="location.href='../lodge/lodge_modify?lodge_no=${lodge_no}';">
+                        			<i class="glyphicon glyphicon-edit"></i>&nbsp;수정하기
+                        		</button>
+                        		<button type="button" class="btn btn-danger" onclick="location.href='../lodge/lodge_delete?lodge_no=${lodge_no }';">
+                            		<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
+	                            </button>
+	                        </div>
                         	<form action=""  >
 	                            <table width="70%" class="table table-bordered table-hover center" style="text-align:center;">
-	                                <thead>
-	                                <!-- 굵기넣기 -->
-	                                    <tr>
-	                                    	<td style="font-weight:bold"></td>
-	                                    	<td>
-	                                   			<button type="button" class="btn btn-info" onclick="location.href='../lodge/room_write2?lodge_no=${lodge_no}';">방 등록</button>
-	                                    	</td>
-	                                    	<td>
-	                                    		<button type="button" class="btn btn-success" onclick="location.href='../lodge/lodge_modify?lodge_no=${lodge_no}';">수정</button>
-	                                    	</td>
-	                                    	<td>
-	                                    		<button type="button" class="btn btn-danger" onclick="location.href='../lodge/lodge_delete?lodge_no=${lodge_no }';">
-	                                    			삭제
-	                                    		</button>
-	                                    	</td>
-	                                    	
-	                                    </tr>
-	                                </thead>
+
 	                                <tbody>
-	                                <input type="hid den" value="${lodge_no }" />
-	                                <input type="hid den" value="${dto.lodge_name }" />
-	                                <input type="hid den" value="${dto.lodge_thema }" />
+	                                <input type="hidden" value="${lodge_no }" />
+	                                <input type="hidden" value="${dto.lodge_name }" />
+	                                <input type="hidden" value="${dto.lodge_thema }" />
 	                                	<tr>
 	                                        <td style="font-weight:bold">숙소명</td>
 	                                        <td colspan="3">${dto.lodge_name }</td>
@@ -87,7 +79,7 @@
 	                                    </tr>
 	                                    <tr class="even gradeC">
 	                                       	<td style="font-weight:bold">숙소 주소</td>
-	                                        <td colspan="3">${dto.ADDR_SIDO }&nbsp;&nbsp;${dto.ADDR_DETAIL } </td>
+	                                        <td colspan="3">${dto.addr_common }&nbsp;&nbsp;${dto.addr_detail } </td>
 	                                    </tr>
 	                                   <tr class="even gradeC">
 	                                       	<td style="font-weight:bold">전화번호</td>
@@ -204,16 +196,6 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                      
-                          
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->

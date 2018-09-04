@@ -78,7 +78,7 @@ $(function(){
 $(function(){
    $("#delUser").click(function(){
       var selectedCheck = new Array();
-      $('#inputchk:checked').each(function(){
+      $('.inputchk:checked').each(function(){
          selectedCheck.push(this.value);
       });
       
@@ -146,10 +146,6 @@ function searchCheck(f){
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default" style="margin-top:1px;">
-                        <div class="panel-heading">
-                          시설 리스트
-                           
-                        </div>
                       
                         <!-- /.panel-heading -->
                         <div class="panel-body " >
@@ -164,8 +160,8 @@ function searchCheck(f){
 			                     </div>
 			                     <div class="input-group" style="padding-bottom:15px">
 			                        <input type="search" name="searchWord" class="form-control" placeholder="검색어를 입력하세요" autofocus />
-			                        <div class="input-group-btn">
-			                           <button type="submit" class="btn btn-info" id="btn_search">
+			                        <div class="input-group-btn" style="padding-left:2px;">
+			                           <button type="submit" class="btn btn-default" id="btn_search">
 			                              <i class="glyphicon glyphicon-search">
 			                              </i>                           
 			                           </button>
@@ -200,57 +196,44 @@ function searchCheck(f){
                                                 </td>
                                              </tr>
                                           </c:when>
-                                          <c:when test="${(map.totalCount - (((map.nowPage-1) * map.pageSize) + loop.index))%2 eq 0 }">
+                                          <c:otherwise>
                                              <c:forEach items="${lists }" var="row" varStatus="loop">
                                                 <tr class="odd gradeX">
                                                 	<td>
-								<label><input type="checkbox"  id=”inputchk” name="checkDel" value="${row.surround_no }"/></label>
-							</td>
-							<input type="hidden" name="surround_no" value="${row.surround_no }" />
-                                                   <td>${map.totalCount - (((map.nowPage-1) * map.pageSize) + loop.index) }</td>
-                                                   <td><a href="../lodge/registView?surround_no=${row.surround_no }&nowPage=${param.nowPage}" style="color:black">${row.surround_name }</a></td>
-                                                   <td>${row.surround_tel }</td>
-                                                   <td class="center">${row.surround_addr }</td>
-                                                   <td>${row.surround_type }</td>   
+                                                		<label><input type="checkbox" class="inputchk" name="checkDel" value="${row.surround_no }" /></label>
+                                                	</td>
+													<input type="hidden" name="surround_no" value="${row.surround_no }" />
+                                                    <td>${map.totalCount - (((map.nowPage-1) * map.pageSize) + loop.index) }</td>
+                                                    <td><a href="../lodge/registView?surround_no=${row.surround_no }&nowPage=${param.nowPage}" style="color:black">${row.surround_name }</a></td>
+                                                    <td>${row.surround_tel }</td>
+                                                    <td class="center">${row.surround_addr }</td>
+                                                    <td>${row.surround_type }</td>   
                                                 </tr>
                                              </c:forEach>
-                                          </c:when>
-                                          <c:when test="${!((map.totalCount - (((map.nowPage-1) * map.pageSize) + loop.index))%2 eq 0) }">
-                                             <c:forEach items="${lists }" var="row" varStatus="loop">
-                                                <tr class="odd gradeX">
-                                                	<td>
-								<label><input type="checkbox"  class=”inputchk” name="checkDel" value="${row.surround_no }"/></label>
-							</td>
-                                                   <td>${map.totalCount - (((map.nowPage-1) * map.pageSize) + loop.index) }</td>
-                                                   <td><a href="../lodge/registView?surround_no=${row.surround_no }&nowPage=${param.nowPage}" style="color:black">${row.surround_name }</a></td>
-                                                   <td>${row.surround_tel }</td>
-                                                   <td class="center">${row.surround_addr }</td>
-                                                   <td>${row.surround_type }</td>
-                                                </tr>
-                                             </c:forEach>
-                                          </c:when>                        
+                                          </c:otherwise>
                                        </c:choose>   
                                 </tbody>                                
                             </table>
                             </div>
-                            </form>
-                            <!-- /.table-responsive -->
-                          	                   		
+                         </form>
+                         <button type="button" id="delUser" class="btn btn-danger">
+		                       		<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
+		                       </button>
+                         
+                        <div class="row">
+
+		                       
+                          <!-- /.table-responsive -->
+	                    </div>              		
                         </div>
-                        
                         <!-- /.panel-body -->
+                        
                     </div>
                     <!-- /.panel -->
                    
                 </div>
                 
-                <div class="row" style="text-align:center;">
-                                <p >                                   
-                                   <button type="submit" id="delUser" class="btn btn-danger">삭제</button>
-                                </p>
-                                
-                                <!-- 페이지번호 -->
-                                </div>
+                	
 
                 <!-- /.col-lg-12 -->
                       <!-- 페이지번호 -->

@@ -93,12 +93,11 @@ String nowPage = request.getParameter("nowPage");
 		                        			${dto.notice_contents }
 		                        		</td>
 		                        	</tr>
-		                        	
                         		</table>
 
 		<!-- 각종 버튼 부분 -->
 		<button type="button" class="btn btn-info" onclick="location.href='./NoticeEdit?notice_no=${param.notice_no}&nowPage=${param.nowPage }';" >수정하기</button>
-		<button type="button" class="btn btn-danger" onclick="location.href='./NoticeDelete';" >삭제하기</button>
+		<button type="button" class="btn btn-danger" onclick="location.href='./NoticeDelete?notice_no=${param.notice_no}&nowPage=${param.nowPage }';" >삭제하기</button>
 		<button type="button" class="btn btn-warning" onclick="location.href='./NoticeList?nowPage=${param.nowPage}';" >리스트</button>
 		
 

@@ -86,22 +86,14 @@ String lodge_no = request.getParameter("lodge_no");
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           숙박 시설 등록 페이지
-                        </div>
+ 
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                            <div class="table-responsive">    
                            <form name="writeFrm2" method="post" action="<c:url value="../lodge/room_write2" />"  onsubmit="return frmValidate(this);" enctype="multipart/form-data">
-                           <input type="hid den" name="lodge_no" value="${param.lodge_no }" />
-                           
+                           <input type="hidden" name="lodge_no" value="${param.lodge_no }" />
+                           	
                               <table class="table table-striped table-bordered table-hover center" style=" width:100%; ">
-                                 <tr class="odd gradeX">
-                                    <td colspan="2">
-                                       
-                                       <button type="submit" class="btn btn-info" >완료</button>
-                                    </td>
-                                 </tr>
                                  <tr class="even gradeC">
                                     <td style="font-weight:bold; vertical-align:middle; font-size:1.2em; width:20%; text-align:center;">객실 타입(인원)</td>
                                     <td >
@@ -168,6 +160,13 @@ String lodge_no = request.getParameter("lodge_no");
                                     </td>
                                  </tr>
                               </table>
+                              
+
+                           		<button type="submit" class="btn btn-info">
+	                               <i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+	                            </button>
+
+
                            </form>
                            
                         
@@ -176,19 +175,10 @@ String lodge_no = request.getParameter("lodge_no");
                              </div>
                           <!-- /.panel -->
                          </div>
-                      <!-- /.col-lg-12 -->
+                      <!-- /.col-lg-12 --> 
                        </div>
                      <!-- /.row -->
-                     <div class="row">
-                         <div class="col-lg-6">
-                             <div class="panel panel-default">
-                      
-                          
-                               </div>
-                               <!-- /.table-responsive -->
-                           </div>
-                        <!-- /.panel-body -->
-                       </div>
+
                        <!-- /.panel -->
                    </div>
                    <!-- /.col-lg-6 -->

@@ -25,28 +25,98 @@
 	
 <script src="../vendor/bootstrap3.3.7/jquery/jquery-3.2.1.min.js"></script>
 
-<!-- 전체선택체크되면 체크박스 모두 체크되기 -->
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#checkall').click(function(){
-            if($('#checkall').is(':checked')){
-                //전체체크
-                console.log('1');
-                $('input:checkbox[name=all]').prop('checked', true);
-            }
-            else {
-                //전체체크해제
-                console.log('2');
-                $('input:checkbox[name=all]').prop('checked', false);            
-            }
-        });
-    });
-</script>
-</head>
-
 <%
 String nowPage = request.getParameter("nowPage");
 %>
+<!-- 전체선택체크되면 체크박스 모두 체크되기 -->
+<script type="text/javascript">
+
+function allCheckFunc( obj ) {
+		$("[name=checkDel]").prop("checked", $(obj).prop("checked") );
+}
+
+/* 체크박스 체크시 전체선택 체크 여부 */
+function oneCheckFunc( obj )
+{
+	var allObj = $("[name=checkAll]");
+	var objName = $(obj).attr("name");
+
+	if( $(obj).prop("checked") )
+	{
+		checkBoxLength = $("[name="+ objName +"]").length;
+		checkedLength = $("[name="+ objName +"]:checked").length;
+
+		if( checkBoxLength == checkedLength ) {
+			allObj.prop("checked", true);
+		} else {
+			allObj.prop("checked", false);
+		}
+	}
+	else
+	{
+		allObj.prop("checked", false);
+	}
+}
+
+$(function(){
+	$("[name=checkAll]").click(function(){
+		allCheckFunc( this );
+	});
+	$("[name=checkDel]").each(function(){
+		$(this).click(function(){
+			oneCheckFunc( $(this) );
+		});
+	});
+});
+
+////////////////////////////////////////////////////////체크박스 회원 삭제 경고창
+$(function(){
+	$("#NoticeDel").click(function(){
+		var selectedCheck = new Array();
+		$('.inputchk:checked').each(function(){
+			selectedCheck.push(this.value);
+		});
+		
+		if(selectedCheck.length<1){
+			alert("삭제할 공지사항을 선택해 주세요.");
+			return false;
+		}
+		
+		var chk=confirm("삭제하시겠습니까?");
+		if(chk){
+			
+			document.delfrm.submit();
+
+		}
+		else{
+			alert("공지사항 삭제를 실패했습니다.");
+			return false;
+		}	
+		
+	});
+});
+
+<script type="text/javascript">
+
+function searchCheck(f){
+	if(f.searchColumn.value=="0"){
+		alert("검색조건을 선택하세요");
+		return false;
+	}
+	if(f.searchWord.value==""){
+		alert("검색어를 입력하세요");
+		return false;
+	}
+	document.searchFrm.submit();
+}
+
+</script>
+
+</script>
+
+</head>
+
+
 <body>
    <div id="wrapper">
         <!-- Navigation -->
@@ -67,64 +137,38 @@ String nowPage = request.getParameter("nowPage");
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           공지사항 리스트 페이지
-                        </div>
+
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                        	<div class="table-responsive">
-                        	
+ 	                        <form class="form-inline" name="searchFrm" method="post" onsubmit="return searchCheck(this);" >
+			                     <div class="form-group" style="padding-bottom:15px">
+			                        <select name="searchColumn" class="form-control">
+			                           <option value="0">검색조건</option>
+			                           <option value="notice_title">제목</option>
+			                           <option value="notice_contents">내용</option>
+			                        </select>
+			                     </div>
+			                     <div class="input-group" style="padding-bottom:15px">
+			                        <input type="search" name="searchWord" class="form-control" placeholder="검색어를 입력하세요" autofocus />
+			                        <div class="input-group-btn" style="padding-left:2px;">
+			                           <button type="submit" class="btn btn-default" id="btn_search">
+			                              <i class="glyphicon glyphicon-search">
+			                              </i>                           
+			                           </button>
+			                        </div>
+			                     </div>
+	                  		</form>
+
+                        	<form action="../Notice/NoticeDelete?nowPage=${map.nowPage }" name="delfrm" method="post">
                             <table width="100%" class="table table-striped table-bordered table-hover center" style="text-align:center;">
-                                <thead>
-                                <!-- 굵기넣기 -->
-                                    <tr style="font-weight:bold" >
-                                    	<td style="vertical-align: middle;">
-                                    		<button type="submit" class="btn btn-info" onclick="location.href='../notice/notice_write.jsp';">
-                                    			공지사항 등록하기
-                                    		</button>
-                                    	</td>
-                                    	
-                                    	<td colspan="3" >
-
-
-												<div class="row text-right"
-													style="padding-right:30px; padding-top:10px; ">
-													<!-- 검색부분 -->
-													<form class="form-inline" >
-														<div class="form-group" >
-															<select name="searchColumn" class="form-control">
-																<option value="notice_title">제목</option>
-																<option value="notice_contents">내용</option>
-															</select>
-														</div>
-														<div class="input-group">
-															<input type="text" name="searchWord" class="form-control" />
-															<div class="input-group-btn">
-																<button type="submit" class="btn btn-default">
-																	<i class="glyphicon glyphicon-search"></i>
-																</button>
-															</div>
-														</div>
-													</form>
-												</div>
-
-										</td>
-
-                                    	
-                                    	<td>삭제<br />
-                                    		<button type="submit" class="btn btn-waring">
-                                        		전체선택
-                                        	</button>
-                                        </td>
-                                  	  </tr>
-                                </thead>
                                 <tbody>
                                 	<tr style="font-weight:bold">
-                                        <td style="width:15%;">번호</td>
-                                        <td>제목</td>
+                                		<td style="width:10%;"><input type="checkbox" name="checkAll"/></td>
+                                        <td style="width:10%;">번호</td>
+                                        <td style="width:40%;">제목</td>
                                         <td style="width:15%;">작성자</td>
                                         <td style="width:15%;">작성일</td>
-                                      	<td style="width:10%;">선택</td>
+                                      	
                                     </tr>
 		<c:choose>
 			<c:when test="${empty lists }">
@@ -137,6 +181,7 @@ String nowPage = request.getParameter("nowPage");
 				<!-- 등록된 글이 있을때 반복하면서 리스트 출력 -->
 				<c:forEach items="${lists }" var="row" varStatus="loop">
 					<tr>
+						<td><input type="checkbox" class="inputchk" name="checkDel" value="${row.notice_no }"/></td>
 						<td class="text-center">${map.totalCount - (((map.nowPage-1) * map.pageSize) + loop.index) }
 						</td>
 						<td class="text-left"><a
@@ -144,20 +189,27 @@ String nowPage = request.getParameter("nowPage");
 								${row.notice_title } </a></td>
 						<td class="text-center">${row.notice_name }</td>
 						<td class="text-center">${row.notice_regidate }</td>
-						<td><input type="checkbox" name="check"/></td>
-					</tr>
+						
+					</tr>	
 				</c:forEach>
+				
 			</c:otherwise>
 		</c:choose>
 
                               
                                 </tbody>
-                            </table>
+                            </table> 
                             <!-- /.table-responsive -->
-							
-							</div>
+							</form>
+							<button type="button" class="btn btn-info" onclick="location.href='../notice/notice_write.jsp';">
+              			<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+              		</button>&nbsp;&nbsp;
+              		<button type="button" id="NoticeDel" class="btn btn-danger" >
+              			<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
+              		</button>
                         <!-- /.panel-body -->
                     </div>
+                    
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->

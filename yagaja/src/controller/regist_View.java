@@ -1,6 +1,10 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,7 +29,16 @@ public class regist_View extends HttpServlet {
 		SurroundDAO dao = new SurroundDAO();
 		SurroundDTO dto = dao.selectView(surround_no);
 		
-
+		String[] telArr = dto.getSurround_tel().split("-");
+		
+		for(int i = 0 ; i<telArr.length ; i++)
+		{
+			dto.setSurround_tel(telArr[0]);
+			dto.setSurround_tel2(telArr[1]);
+			dto.setSurround_tel3(telArr[2]);
+		}
+		
+		
 		//리퀘스트 영역에 저장
 		req.setAttribute("dto", dto);		
 		

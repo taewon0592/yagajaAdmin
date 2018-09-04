@@ -88,7 +88,7 @@ function isValidate(fn){
 	            </div>
 	            <!-- /.row -->
 	            <div class="row">
-	                <div class="col-lg-12">
+	                <div class="col-lg-7">
 	                    <div class="panel panel-default">
 
 	                        <div class="panel-body">
@@ -96,9 +96,13 @@ function isValidate(fn){
 	                        	
 	                        	<form action="../lodge/registModify" method="post" name="writeFrm" onsubmit="return isValidate(this);">
 	                        	<input type="hidden" name="surround_no" value="${param.surround_no }" />
-		                            <table width="100%" class="table table-striped table-bordered table-hover center" style=" width:60%;" >
+		                            <table width="100%" class="table table-striped table-bordered table-hover center" >
+		                            	<colgroup>
+		                            		<col width="30%"/>
+		                            		<col width="70%"/>
+		                            	</colgroup>
 		                            	<tr class="odd gradeX">
-			                        		<td style="font-weight:bold; vertical-align:middle; width:40%; font-size:1em; text-align:center;">유형</td>
+			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; text-align:center;">유형</td>
 			                        		<td style="width:60%;">
 												<select name="surround_type" id="" style="width:100%; vertical-align:middle;"  >
 													<option value="sel">선택하세요</option>
@@ -110,19 +114,19 @@ function isValidate(fn){
 			                        		</td>
 			                        	</tr>
 			                        	<tr class="even gradeC">
-			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; width:40%; text-align:center;">편의시설명</td>
+			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; text-align:center;">편의시설명</td>
 			                        		<td >
 	                        					<input type="text" style="width:100%" name="surround_name" value="${dto.surround_name }" />
 			                        		</td>
 			                        	</tr>
 			                        	<tr class="odd gradeX">
-			                        		<td style="font-weight:bold; vertical-align:middle; width:40%; font-size:1em; text-align:center;">편의시설 전화번호</td>
+			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; text-align:center;">편의시설 전화번호</td>
 			                        		<td>
-												<input type="text" style="width:100px;" name="surround_tel" value="${dto.surround_tel }" />
+												<input type="text" style="width:100px;" name="tel1" value="${dto.surround_tel }" /> - <input type="text" style="width:100px;" name="tel2" value="${dto.surround_tel2 }" /> - <input type="text" style="width:100px;" name="tel3" value="${dto.surround_tel3 }" />
 			                        		</td>
 			                        	</tr>
 			                        	<tr class="even gradeC">
-			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; width:30%; text-align:center;">편의시설주소</td>
+			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; text-align:center;">편의시설주소</td>
 			                        		
 		                        			<td>
 											<!-- 우편번호 -->
@@ -130,33 +134,30 @@ function isValidate(fn){
 											<a href="javascript:;" title="새 창으로 열림" style="color:black;" onclick="zipcodeFind();" onkeypress="">[우편번호검색]</a>
 											<br/>
 											<!-- 주소 -->
-											<input type="text" name="surround_addr" value="${dto.surround_addr }"  class="join_input" style="width:550px; margin-top:5px;" /><br>
-											<input type="text" name="surround_detail" value="${dto.surround_detail }"  class="join_input" style="width:550px; margin-top:5px;" /><br>
+											<input type="text" name="surround_addr" value="${dto.surround_addr }"  class="join_input" style="width:100%; margin-top:5px;" /><br>
+											<input type="text" name="surround_detail" value="${dto.surround_detail }"  class="join_input" style="width:100%; margin-top:5px;" /><br>
 											</td>
 			                        	</tr>
 			                        	<tr class="odd gradeX">
-			                        		<td style="font-weight:bold; vertical-align:middle; width:40%; font-size:1em; text-align:center;">편의시설 위도</td>
+			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; text-align:center;">편의시설 위도</td>
 			                        		<td>
 												<input type="text" style="width:100%;" name="surround_lat" value="${dto.surround_lat }" />
 			                        		</td>
 			                        	</tr>
 			                        	<tr class="even gradeC">
-			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; width:40%; text-align:center;">편의시설 경도</td>
+			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; text-align:center;">편의시설 경도</td>
 			                        		<td >
 	                        					<input type="text" style="width:100%" name="surround_long" value="${dto.surround_long }" />
 			                        		</td>
 			                        	</tr>
-			                        	<tr class="odd gradeX">
-			                        		<td colspan="2" style="text-align:right;">
-			                        			<button type="submit" class="btn btn-info">등록하기</button>
-												<button type="button" class="btn btn-danger" onclick="location.href='./registList?nowPage=${param.nowPage}';">리스트보기</button>
-			                        		</td>
-			                        	</tr>
-			                        	
-		
-		
 		                            </table>
 		                            <!-- /.table-responsive -->
+		                            <button type="submit" class="btn btn-info">
+		                            	<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+		                            </button>
+									<button type="button" class="btn btn-warning" onclick="location.href='./registList?nowPage=${param.nowPage}';">
+										<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기
+									</button>
 	                            </form>
 	                            
 	                        </div>
@@ -165,18 +166,9 @@ function isValidate(fn){
 	                    <!-- /.panel -->
 	                </div>
 	                <!-- /.col-lg-12 -->
-	            </div>
+	            </div> 
 	            <!-- /.row -->
-	            <div class="row">
-	                <div class="col-lg-6">
-	                    <div class="panel panel-default">
-	                      
-	                          
-	                            </div>
-	                            <!-- /.table-responsive -->
-	                        </div>
-	                        <!-- /.panel-body -->
-	                    </div>
+
 	                    <!-- /.panel -->
 	                </div>
 	                <!-- /.col-lg-6 -->

@@ -46,9 +46,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           숙박 시설 상세보기
-                        </div>
+
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         	<div class="table-responsive">

@@ -59,13 +59,13 @@ public class NoticeList extends HttpServlet {
 
 		System.out.println("전체레코드수:" + totalRecordCount);
 		System.out.println("전체페이지수:" + totalPage);
-
+		
+		
 		/*
 		 * 4.페이지번호를 파라미터로 받는다. 단, 최초 접속시에는 페이지번호가 없으므로 무조건 1페이지로 설정한다.
 		 */
-		int nowPage = (req.getParameter("nowPage") == null || req.getParameter("nowPage").equals("")) ? 1
-				: Integer.parseInt(req.getParameter("nowPage"));
-
+		int nowPage = (req.getParameter("nowPage") == null || req.getParameter("nowPage").equals("")) ? 1 : Integer.parseInt(req.getParameter("nowPage"));
+	
 		/*
 		 * 5.가져올 레코드의 구간을 결정하기 위한 연산
 		 */
@@ -85,7 +85,7 @@ public class NoticeList extends HttpServlet {
 		param.put("nowPage", nowPage);// 현재페이지
 		param.put("totalCount", totalRecordCount);// 전체레코드갯수
 		param.put("pageSize", pageSize);// 한페이지에 출력할 게시물갯수
-
+		
 		// DAO호출하여 레코드 가져오기(페이지처리O)
 		List<NoticeDTO> lists = dao.selectPaging(param);
 
@@ -104,6 +104,8 @@ public class NoticeList extends HttpServlet {
 
 		RequestDispatcher dis = req.getRequestDispatcher("/notice/notice_list.jsp");
 		dis.forward(req, resp);
+		
+		
 	}
 
 }

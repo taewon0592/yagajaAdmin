@@ -38,6 +38,12 @@ function zipcodeFind()
 </script>
 <script>
 function isValidate(fn){
+	if(fn.surround_type.value="sel"){
+		alert("시설 타입을 선택하세요");
+		fn.surround_type.focus();
+		return false;
+	}
+	
 	if(fn.surround_name.value==""){
 		alert("시설 이름을 입력하세요");
 		fn.surround_name.focus();
@@ -74,6 +80,14 @@ function isValidate(fn){
 		return false;
 	}
 	
+}
+
+//최대 글자 입력 후 다음 포커스로 자동으로 이동 
+function commonFocusMove(obj, m_length, next_obj){
+    var strLength=obj.value.length;
+    if(strLength==m_length){
+       document.getElementById(next_obj).focus();
+    }       
 }
 </script>
 </head>
@@ -125,7 +139,7 @@ function isValidate(fn){
 			                        	<tr class="odd gradeX">
 			                        		<td style="font-weight:bold; vertical-align:middle; width:40%; font-size:1em; text-align:center;">전화번호</td>
 			                        		<td>
-												<input type="text" style="width:100px;" name="surround_tel" />
+												<input type="text" style="width:100px;" name="tel1" id="tel1" maxlength="3" size="3" onkeyup="commonFocusMove(this, 3 , 'tel2' );"/> - <input type="text" style="width:100px;" name="tel2" id="tel2" maxlength="4" size="4" onkeyup="commonFocusMove(this, 4 , 'tel3' );"/> - <input type="text" style="width:100px;" name="tel3" id="tel3" maxlength="4" /> 
 			                        		</td>
 			                        	</tr>
 			                        	<tr class="even gradeC">
@@ -144,17 +158,17 @@ function isValidate(fn){
 			                        	<tr class="odd gradeX">
 			                        		<td style="font-weight:bold; vertical-align:middle; width:40%; font-size:1em; text-align:center;">위도</td>
 			                        		<td>
-												<input type="text" style="width:100%;" name="surround_lat" />
+												<input type="text" style="width:100%;" name="surround_lat" class="form-control"/>
 			                        		</td>
 			                        	</tr>
 			                        	<tr class="even gradeC">
 			                        		<td style="font-weight:bold; vertical-align:middle; font-size:1em; width:40%; text-align:center;">경도</td>
 			                        		<td >
-	                        					<input type="text" style="width:100%" name="surround_long" />
+	                        					<input type="text" style="width:100%" name="surround_long" class="form-control" />
 			                        		</td>
 			                        	</tr>
 			                        	<tr class="odd gradeX">
-			                        		<td colspan="2" style="text-align:right;">
+			                        		<td colspan="2" >
 			                        			<button type="submit" class="btn btn-info">등록하기</button>
 			                        		</td>
 			                        	</tr>

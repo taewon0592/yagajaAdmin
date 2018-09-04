@@ -242,43 +242,33 @@ public class HotdealDAO {
 		return dto;
 	}
 	// 수정하기
-		public int update(HotdealDTO dto) {
-			int affected = 0;// 적용된 행의갯수
-				String sql = " "
-					+ " UPDATE hotdeal SET"
-					+ " hotdeal_stime=TO_DATE('"+dto.getHotdeal_stime()+"','yyyy-mm-dd hh24:mi:ss'),"
-					+ " hotdeal_etime=TO_DATE('"+dto.getHotdeal_etime()+"','yyyy-mm-dd hh24:mi:ss'),"
-					+ " hotdeal_price=?, hotdeal_buy=?,hotdeal_sell=?, "
-					+ " hotdeal_date=TO_DATE('"+dto.getHotdeal_date()+"','yyyy-mm-dd'),"
-					+ " hotdeal_sday=TO_DATE('"+dto.getHotdeal_sday()+"','yyyy-mm-dd'), "
-					+ " hotdeal_eday=TO_DATE('"+dto.getHotdeal_eday()+"','yyyy-mm-dd')"
-					+ " WHERE hotdeal_no=? ";
-			
-				try {
-					psmt = con.prepareStatement(sql); 
-					System.out.println("핫딜넘버:"+dto.getHotdeal_no());
-					System.out.println("롯지넘버:"+dto.getLodge_no());
-					/*System.out.println( dto.getHotdeal_stime());
-					System.out.println( dto.getHotdeal_price());
-					System.out.println( dto.getHotdeal_date());*/
-					psmt.setString(1, dto.getHotdeal_price());
-					psmt.setString(2, dto.getHotdeal_buy());
-					psmt.setString(3, dto.getHotdeal_sell());
-					psmt.setString(4, dto.getHotdeal_no());
-				/*	psmt.setString(5, dto.getLodge_no());
-					psmt.setString(6, dto.getRoom_no());*/
-					
-					System.out.println(sql);
-					affected = psmt.executeUpdate();
-					
-					System.out.println(affected);
-					
-				} catch (Exception e) {
-					System.out.println("글 수정 중 오류발생.");
-					e.printStackTrace();
-				}
-				return affected;
+	public int update(HotdealDTO dto) {
+		int affected = 0;// 적용된 행의갯수
+		String sql = " " + " UPDATE hotdeal SET" + " hotdeal_stime=TO_DATE('" + dto.getHotdeal_stime()
+				+ "','yyyy-mm-dd hh24:mi:ss')," + " hotdeal_etime=TO_DATE('" + dto.getHotdeal_etime()
+				+ "','yyyy-mm-dd hh24:mi:ss')," + " hotdeal_price=?, hotdeal_buy=?,hotdeal_sell=?, "
+				+ " hotdeal_date=TO_DATE('" + dto.getHotdeal_date() + "','yyyy-mm-dd')," + " hotdeal_sday=TO_DATE('"
+				+ dto.getHotdeal_sday() + "','yyyy-mm-dd'), " + " hotdeal_eday=TO_DATE('" + dto.getHotdeal_eday()
+				+ "','yyyy-mm-dd')" + " WHERE hotdeal_no=? ";
+
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, dto.getHotdeal_price());
+			psmt.setString(2, dto.getHotdeal_buy());
+			psmt.setString(3, dto.getHotdeal_sell());
+			psmt.setString(4, dto.getHotdeal_no());
+
+			System.out.println(sql);
+			affected = psmt.executeUpdate();
+
+			System.out.println(affected);
+
+		} catch (Exception e) {
+			System.out.println("글 수정 중 오류발생.");
+			e.printStackTrace();
 		}
+		return affected;
+	}
 		
 	//EndList 핫딜게시판 총레코드 수 가져오기
 	public int endListgetTotalRecordCount(Map<String,Object> map)
@@ -364,6 +354,27 @@ public class HotdealDAO {
 			e.printStackTrace();
 		}
 		return bbs;
+	}
+	
+	// 삭제하기 (delete)
+	public int delete(String hotdeal_no) {
+		int affected = 0;// 적용된 행의갯수
+	
+		try {
+			String sql = "DELETE FROM hotdeal WHERE hotdeal_no=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, hotdeal_no);
+			affected = psmt.executeUpdate();
+			System.out.println("-----------------------dao");
+			System.out.println("hotdeal_no:" + hotdeal_no);
+			System.out.println("sql" + sql);
+	
+		} catch (Exception e) {
+			System.out.println("글 삭제중 오류가 발생했습니다.");
+			e.printStackTrace();
+	
+		}
+		return affected;
 	}
 	
 }

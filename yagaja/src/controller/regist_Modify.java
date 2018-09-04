@@ -22,6 +22,14 @@ public class regist_Modify extends HttpServlet{
 		SurroundDAO dao = new SurroundDAO();
 		SurroundDTO dto = dao.selectView(surround_no);
 		
+		String[] telArr = dto.getSurround_tel().split("-");
+		
+		for(int i = 0 ; i<telArr.length ; i++)
+		{
+			dto.setSurround_tel(telArr[0]);
+			dto.setSurround_tel2(telArr[1]);
+			dto.setSurround_tel3(telArr[2]);
+		}
 		
 		req.setAttribute("dto", dto);
 		
@@ -50,12 +58,13 @@ public class regist_Modify extends HttpServlet{
 		//나머지 파라미터를 MultipartRequest객체를 통해받음
 		String surround_type = req.getParameter("surround_type");
 		String surround_name = req.getParameter("surround_name");
-		String surround_tel = req.getParameter("surround_tel");
+		String surround_tel = req.getParameter("tel1")+"-"+req.getParameter("tel2")+"-"+req.getParameter("tel3");
 		String surround_zipcode = req.getParameter("surround_zipcode");
 		String surround_addr = req.getParameter("surround_addr");
 		String surround_detail = req.getParameter("surround_detail");
 		String surround_lat = req.getParameter("surround_lat");
 		String surround_long = req.getParameter("surround_long");
+		System.out.println("surround_tel:"+surround_tel);
 		
 		//만약 첨부한 파일이 없다면 기존파일 유지
 		SurroundDTO dto = new SurroundDTO();

@@ -49,11 +49,9 @@
             <!-- /.row -->
             
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           회원 상세보기
-                        </div>
+
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         	<div class="table-responsive">
@@ -92,6 +90,13 @@
                             </table>
                             <!-- /.table-responsive -->
                         </div>
+
+                        	<button type="button" class="btn btn-warning" onclick="location.href='../Member/MemberList?nowPage=${map.nowPage}';">
+								<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기
+							</button>   
+							<button type="submit" id="submit" class="btn btn-danger" onclick="location.href='../Member/MemberDelete?member_no=${dto.member_no }&id=${dto.id }';">
+								<i class="glyphicon glyphicon-trash"></i>&nbsp;회원삭제
+							</button>  
                         <!-- /.panel-body -->
                     </div>
                     
@@ -100,15 +105,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row" style="text-align:center;">
-                       <!-- 버튼들 테이블 아래로 내려야함 ㅠ -->
-                                <p >
-                                <button type="button" class="btn btn-warning" 
-		onclick="location.href='../Member/MemberList?nowPage=${map.nowPage}';">목록보기</button>   
-								<button type="submit" id="submit" class="btn btn-danger" onclick="location.href='../Member/MemberDelete?member_no=${dto.member_no }&id=${dto.id }';">회원삭제</button>  
-								<%-- <button type="submit" class="btn btn-danger" onclick="location.href='../Member/MemberDelete?member_no=${dto.member_no }&id=${dto.id }';">회원삭제</button> --%>  
-                                </p>
-            </div>
+            
 <c:url value="../Member/MemberDelete?member_no=${dto.member_no }&id=${dto.id }" var="url"></c:url>
 
 <script type="text/javascript">
@@ -128,16 +125,7 @@ $(function(){
 	});
 });
 </script>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                      
-                          
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
+           
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->

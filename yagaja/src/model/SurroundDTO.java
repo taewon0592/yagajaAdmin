@@ -5,6 +5,8 @@ public class SurroundDTO {
 	private int surround_no;
 	private String surround_name;
 	private String surround_tel;
+	private String surround_tel2;
+	private String surround_tel3;
 	private String surround_type;
 	private String surround_addr;
 	private String surround_detail;
@@ -16,15 +18,15 @@ public class SurroundDTO {
 	public SurroundDTO() {
 		
 	}
-
-
-	public SurroundDTO(int surround_no, String surround_name, String surround_tel, String surround_type,
-			String surround_addr, String surround_detail, String surround_lat, String surround_long,
-			String surround_zipcode) {
+	public SurroundDTO(int surround_no, String surround_name, String surround_tel, String surround_tel2,
+			String surround_tel3, String surround_type, String surround_addr, String surround_detail,
+			String surround_lat, String surround_long, String surround_zipcode) {
 		super();
 		this.surround_no = surround_no;
 		this.surround_name = surround_name;
 		this.surround_tel = surround_tel;
+		this.surround_tel2 = surround_tel2;
+		this.surround_tel3 = surround_tel3;
 		this.surround_type = surround_type;
 		this.surround_addr = surround_addr;
 		this.surround_detail = surround_detail;
@@ -32,7 +34,6 @@ public class SurroundDTO {
 		this.surround_long = surround_long;
 		this.surround_zipcode = surround_zipcode;
 	}
-
 
 	public int getSurround_no() {
 		return surround_no;
@@ -122,6 +123,19 @@ public class SurroundDTO {
 	public void setSurround_zipcode(String surround_zipcode) {
 		this.surround_zipcode = surround_zipcode;
 	}
+	public String getSurround_tel2() {
+		return surround_tel2;
+	}
+	public void setSurround_tel2(String surround_tel2) {
+		this.surround_tel2 = surround_tel2;
+	}
+	public String getSurround_tel3() {
+		return surround_tel3;
+	}
+	public void setSurround_tel3(String surround_tel3) {
+		this.surround_tel3 = surround_tel3;
+	}
+	
 	
 
 	

@@ -44,15 +44,12 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           탈퇴 회원 상세보기
-                        </div>
+
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                        	<div class="table-responsive">
-                        	
+
                             <table width="100%" class="table table-striped table-bordered table-hover center" style="text-align:center;">
                                     <!-- 검색창 만들어야함 -->
                                     <tr >
@@ -76,6 +73,13 @@
                                 <!-- 페이징처리넣어줘야함  -->
                             </table>
                             <!-- /.table-responsive -->
+                                <button type="button" class="btn btn-warning" onclick="location.href='../Member/LeaveMemberList?nowPage=${map.nowPage}';">
+									<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기
+								</button>   
+								<button type="button" id="submit" class="btn btn-danger" onclick="location.href='../Member/LeaveMemberDelete?member_no=${dto.member_no}';">
+									<i class="glyphicon glyphicon-trash"></i>&nbsp;회원삭제
+								</button>  
+
                             
                         </div>
                         <!-- /.panel-body -->
@@ -85,14 +89,6 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row" style="text-align:center;">
-                       <!-- 버튼들 테이블 아래로 내려야함 ㅠ -->
-                                <p >
-                                <button type="button" class="btn btn-warning" 
-		onclick="location.href='../Member/LeaveMemberList?nowPage=${map.nowPage}';">목록보기</button>   
-								<button type="button" id="submit" class="btn btn-danger" onclick="location.href='../Member/LeaveMemberDelete?member_no=${dto.member_no}';">회원삭제</button>  
-                                </p>
-            </div>
             
             <c:url value="../Member/LeaveMemberDelete?member_no=${dto.member_no }" var="url"></c:url>
 
@@ -113,16 +109,7 @@ $(function(){
 	});
 });
 </script>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                      
-                          
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
+
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->
