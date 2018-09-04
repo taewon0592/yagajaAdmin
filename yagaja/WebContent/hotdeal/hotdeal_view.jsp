@@ -128,7 +128,7 @@
 										<tr>
 											<td style="font-weight: bold">핫딜 등록된 사진</td>
 											<td colspan="3">
-												등록된사진이 떠야함
+												<img src="../Upload/${dto.lodge_photo }"  />
 											</td>
 										</tr>
 									</tbody>
