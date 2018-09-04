@@ -1,3 +1,8 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="model.YagajaMemberDTO"%>
+<%@page import="model.YagajaMemberDAO"%>
+<%@page import="model.LodgeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,8 +25,86 @@
 <!-- Custom Fonts -->
 <link href="../vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
-	
+
 <script src="../vendor/bootstrap3.3.7/jquery/jquery-3.2.1.min.js"></script>
+
+<%
+request.setCharacterEncoding("UTF-8");
+
+YagajaMemberDAO dao = new YagajaMemberDAO();
+LodgeDAO ldao = new LodgeDAO();
+
+Map param = new HashMap();
+
+String mc = "모텔";
+String hc = "호텔";
+String pc = "펜션";
+String gc = "게스트하우스";
+
+int memberCount = dao.getTotalRecordCount(param);
+int lodgeCount = ldao.getTotalRecordCount(param);
+int motelCount = ldao.getTotalRecordCount(mc);
+int hotelCount = ldao.getTotalRecordCount(hc);
+int pensionCount = ldao.getTotalRecordCount(pc);
+int guesthouseCount = ldao.getTotalRecordCount(gc);
+%>
+
+
+<script type="text/javascript">
+$(function() {
+	Morris.Donut({
+	    element: 'morris-donut-chart',
+	    data: [{
+	        label: "Motel",
+	        value: <%=motelCount %>
+	    }, {
+	        label: "Hotel",
+	        value: <%=hotelCount %>
+	    }, {
+	        label: "Pension",
+	        value: <%=pensionCount %>
+	    }, {
+	        label: "GuestHouse",
+	        value: <%=guesthouseCount %>
+	    }],
+	    resize: true
+	});
+});
+
+$(function(){
+	Morris.Bar({
+        element: 'morris-bar-chart',
+        data: [{
+            y: 'Motel',
+            a: 100,
+            b: 90
+        }, {
+            y: 'Hotel',
+            a: 75,
+            b: 65
+        }, {
+            y: 'Pension',
+            a: 50,
+            b: 40
+        }, {
+            y: 'GuestHouse',
+            a: 75,
+            b: 65
+        }],
+        xkey: 'y',
+        ykeys: ['a', 'b'],
+        labels: ['예약현황', '남은예약'],
+        hideHover: 'auto',
+        resize: true
+    });
+});
+
+</script>
+<!-- 
+방 개수로 구분하자.
+예약현황  +  빈방
+-->
+
 </head>
 <body>
     <div id="wrapper">
@@ -31,31 +114,30 @@
 
 		<%@include file="../include/adminLeftMenu.jsp" %>
             <!-- /.navbar-static-side -->
-            
-            
-            
+
             <!-- 콘텐츠 영역 -->     
             
-    
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">관리자메인페이지</h1>
-                </div>
-                <!-- 콘텐츠 상단 아이콘 start-->
+
+				<!-- Main 상단 주석 처리 -->
+                <!-- <div class="col-lg-12" style="color:graytext; ; ;">
                 
+                    <h1 class="page-header"> <i class="fa fa-home"></i> Main</h1>
+                </div> -->
+                <!-- 콘텐츠 상단 start-->
+                <br />
                 <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-krw fa-4x"></i>
+                                    <i class="fa fa-krw fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div>전일 결제 : 21건</div>
-                                    <div>전일 매출 : 3,250,000원</div>
+                                	<div> reserve<br /> <big>90</big></div>
                                 </div>
                             </div>
                         </div>
@@ -73,12 +155,10 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-calendar fa-4x"></i>
+                                    <i class="fa fa-calendar fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                   <div></div>
-                                   <div>이달 결제 : 1500건</div>
-                                   <div>이달 매출 : 117,000,000원</div>
+                                	<div> sales<br /> <i class="fa fa-krw"> </i><big> 3,190,000</big></div>
                                 </div>
                             </div>
                         </div>
@@ -96,15 +176,14 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-user fa-4x"></i>
+                                    <i class="fa fa-user fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                   <div>전일가입회원 : 12명</div>
-                                   <div>전체가입회원 : 98652명</div>
+                                	<div>member<br /> <big><%=memberCount %></big></div>
                                 </div>
                             </div>
                         </div>
-                        <a href="./member_list.jsp">
+                        <a href="../Member/MemberList">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -118,11 +197,10 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-building-o fa-4x"></i>
+                                    <i class="fa fa-building-o fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                   <div>전일업체등록 : 10건</div>
-                                   <div>전체가입업체 : 3333</div>
+                                	<div>client<br /> <big><%=lodgeCount %></big></div>
                                 </div>
                             </div>
                         </div>
@@ -136,155 +214,52 @@
                     </div>
                 </div>
             </div>
+            <!-- 콘텐츠 상단 end -->
+
+
+            <!-- 차트 start -->
             <div class="row">
-                <div class="col-lg-6">
+            	 <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            회원관리
-                            <a href="../Member/MemberList"> 
-                                <span class="pull-right"> <i class="fa fa-arrow-circle-right"> </i></span>    
-                                 <span class="pull-right" > View Details </span>                                                            
-                             </a>
-                            <!-- 상세보기버튼을 같은라인에 만들어서 바로페이지이동할수있게할 예정 -->
+                            숙박시설
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                           <table class="table table-bordered table-hover" style="width:50%; text-align:center;" >
-                           <colgroup>
-                           <col width="50%;">
-                           <col width="*;">
-                           </colgroup>
-                           		<tr>
-                           			<td>회원현황 </td>
-                           			<td>인원</td>
-                           		</tr>
-                           		<tr>
-                           			<td>신규회원 </td>
-                           			<td>12</td>
-                           		</tr>
-                           		<tr>
-                           			<td>탈퇴회원 </td>
-                           			<td>3</td>
-                           		</tr>
-                           		<tr>
-                           			<td>가입회원 </td>
-                           			<td>98652</td>
-                           		</tr>
-                           </table>
+                            <div id="morris-donut-chart"></div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-6 -->
-                <div class="col-lg-6">
+                <!-- /.col-lg-6 --> 
+            	<div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            핫딜관리
-                            <a href="#"> 
-                                <span class="pull-right"> <i class="fa fa-arrow-circle-right"> </i></span>    
-                                 <span class="pull-right" > View Details </span>                                                            
-                             </a>
+                            예약현황
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                        	<table class="table table-bordered table-hover" style="text-align:center;" >
-                           <colgroup>
-                           <col width="20%;">
-                           <col width="40%;">
-                           <col width="40%;">
-                           </colgroup>
-                           		<tr>
-                           			<td>숙소명</td>
-                           			<td>남은시간</td>
-                           			<td>구매가능수</td>
-                           		</tr>
-                           		<tr>
-                           			<td>가놀자</td>
-                           			<td>07:05:05</td>
-                           			<td style="color:red; font-weight:bold;">1</td>
-                           		</tr>
-                           		<tr>
-                           			<td>나놀자</td>
-                           			<td>08:05:05</td>
-                           			<td>25</td>
-                           		</tr>
-                           		<tr>
-                           			<td>다놀자</td>
-                           			<td>12:05:05</td>
-                           			<td>36</td>
-                           		</tr>
-                           </table>
-                        
-                            <!-- <div id="morris-bar-chart"></div> -->
+                            <div id="morris-bar-chart"></div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-6 -->
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            시설관리
-                            <a href="#"> 
-                                <span class="pull-right"> <i class="fa fa-arrow-circle-right"> </i></span>    
-                                 <span class="pull-right" > View Details </span>                                                            
-                             </a>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                        	<table class="table table-bordered table-hover" style="text-align:center;" >
-                           <colgroup>
-                           <col width="20%;">
-                           <col width="40%;">
-                           <col width="40%;">
-                           </colgroup>
-                          		<tr>
-                           			<td rowspan="2" ><br /> 숙소명</td>
-                           			<td colspan="2">보유수</td>
-                           		</tr>
-                           		<tr>                           			
-                           			<td>신규등록수</td>
-                           			<td>가입숙박업소</td>
-                           		</tr>
-                           		<tr>
-                           			<td>모텔</td>
-                           			<td>5</td>
-                           			<td>1800건</td>
-                           		</tr>
-                           		<tr>
-                           			<td>호텔/리조트</td>
-                           			<td>4</td>
-                           			<td>900건</td>
-                           		</tr>
-                           		<tr>
-                           			<td>펜션/풀빌라</td>
-                           			<td>2</td>
-                           			<td>400건</td>
-                           		</tr>
-                           		<tr>
-                           			<td>게스트하우스</td>
-                           			<td>1</td>
-                           			<td>233건</td>
-                           		</tr>
-                           </table>
-                        
-                           <!--  <div id="morris-line-chart"></div> -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-                <div class="col-lg-6">
+                <!-- /.col-lg-6 --> 
+            </div>
+            <!-- /.row -->   
+            <!-- 차트 end -->      
+
+            <div class="row">
+            <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             경매관리
-                            <a href="#"> 
-                                <span class="pull-right"> <i class="fa fa-arrow-circle-right"> </i></span>    
+                             <a href="./acution_list.jsp"> 
+                            	 <span class="pull-right"> <i class="fa fa-arrow-circle-right"> </i></span>    
                                  <span class="pull-right" > View Details </span>                                                            
-                             </a>
+                   		    </a>  
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -323,42 +298,69 @@
                            			<td>2</td>
                            		</tr>
                            </table>
-                        
-                            <!-- <div id="morris-donut-chart"></div> -->
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-6 -->
-                <div class="col-lg-12">
+                <!-- /.col-lg-6 -->            
+                <div class="col-lg-6">
                     <div class="panel panel-default">
-                      
+                        <div class="panel-heading">
+                            핫딜관리
+                             <a href="./hotdeal_list.jsp"> 
+                            	 <span class="pull-right"> <i class="fa fa-arrow-circle-right"> </i></span>    
+                                 <span class="pull-right" > View Details </span>                                                            
+                   		    </a>  
+                        </div>
                         <!-- /.panel-heading -->
+                        <div class="panel-body">
+                        	<table class="table table-bordered table-hover" style="text-align:center;" >
+                           <colgroup>
+                           <col width="20%;">
+                           <col width="40%;">
+                           <col width="40%;">
+                           </colgroup>
+                           		<tr>
+                           			<td rowspan="2"><br />숙소명</td>
+                           			<td colspan="2">실시간현황</td>
+                           		</tr>
+                           		<tr>
+                           			<td>남은시간</td>
+                           			<td>구매가능수</td>
+                           		</tr>
+                           		<tr>
+                           			<td>가놀자</td>
+                           			<td>07:05:05</td>
+                           			<td style="color:red; font-weight:bold;">1</td>
+                           		</tr>
+                           		<tr>
+                           			<td>나놀자</td>
+                           			<td>08:05:05</td>
+                           			<td>25</td>
+                           		</tr>
+                           		<tr>
+                           			<td>다놀자</td>
+                           			<td>12:05:05</td>
+                           			<td>36</td>
+                           		</tr>
+                           		<tr>
+                           			<td>라놀자</td>
+                           			<td>12:05:05</td>
+                           			<td>36</td>
+                           		</tr>                           		
+                           </table>                        
+                            <!-- <div id="morris-bar-chart"></div> -->
+                        </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-6 -->
+                <!-- /.col-lg-6 -->               
             </div>
             <!-- /.row -->  
-                
-                
-                <!-- 콘텐츠 상단 아이콘 end -->
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
             </div>
             <!-- /.row -->
-            
-            
         </div>
         <!-- /#page-wrapper -->
 
@@ -381,6 +383,15 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+    
+    <!-- Flot Charts JavaScript -->
+    <script src="../vendor/flot/excanvas.min.js"></script>
+    <script src="../vendor/flot/jquery.flot.js"></script>
+    <script src="../vendor/flot/jquery.flot.pie.js"></script>
+    <script src="../vendor/flot/jquery.flot.resize.js"></script>
+    <script src="../vendor/flot/jquery.flot.time.js"></script>
+    <script src="../vendor/flot-tooltip/jquery.flot.tooltip.min.js"></script>
+    <script src="../data/flot-data.js"></script>
 
 </body>
 </html>
