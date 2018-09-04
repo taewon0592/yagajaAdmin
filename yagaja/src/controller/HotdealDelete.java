@@ -52,6 +52,6 @@ public class HotdealDelete extends HttpServlet {
 		//컬렉션풀에 자원반납
 		dao.close();
 		
-		req.getRequestDispatcher("/HotDeal/HotDealList").forward(req, resp);
+		resp.sendRedirect("../HotDeal/HotDealList");
 	}
 }

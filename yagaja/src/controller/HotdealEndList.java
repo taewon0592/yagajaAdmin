@@ -89,7 +89,7 @@ public class HotdealEndList extends HttpServlet{
 	
 	// 페이지 처리를 위한 문자열 생성
 	String pagingImg = PagingUtil.pagingImgServlet(totalRecordCount, pageSize, blockPage, nowPage,
-			"../HotDeal/HotDealList?" + addQueryString);
+			"../HotDeal/HotDealEndList?" + addQueryString);
 	
 	dao.close();
 	

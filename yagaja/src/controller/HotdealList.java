@@ -32,13 +32,28 @@ public class HotdealList extends HttpServlet{
 	String searchColumn = req.getParameter("searchColumn");
 	String searchWord = req.getParameter("searchWord");
 	
-	if (searchColumn != null) {
-		addQueryString = String.format("searchColumn=%s" + "&searchWord=%s&", searchColumn, searchWord);
-
-		// 맵에 저장
+	//기간검색 추가
+	String search_sday = req.getParameter("search_sday");
+	String search_eday = req.getParameter("search_eday");
+	
+	if(searchColumn!=null)
+	{
+		//파라미터 추가(문자열 검색 파라미터를 페이지 처리)
+		/*addQueryString = String.format("searchColumn=%s"
+			+"&searchWord=%s&",
+			searchColumn, searchWord);*/
+					
+		addQueryString = String.format("searchColumn=%s"
+				+"&searchWord=%s&"
+				+ "search_sday=%s" 
+				+ "&search_eday=%s&",
+				searchColumn, searchWord,search_sday,search_eday);
+		
+		//입력된 검색어가 있다면 맵에 저장
 		param.put("Column", searchColumn);
 		param.put("Word", searchWord);
-
+		param.put("search_sday", search_sday);
+		param.put("search_eday", search_eday);
 	}
 	
 	

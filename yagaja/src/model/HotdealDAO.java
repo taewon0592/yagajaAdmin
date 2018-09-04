@@ -69,11 +69,69 @@ public class HotdealDAO {
 	{
 		int totalCount = 0;
 		try{
-			String sql = "SELECT COUNT(*) FROM hotdeal WHERE 1=1";
+			String sql = "SELECT COUNT(*) FROM hotdeal H inner join lodge L on H.lodge_no = L.lodge_no"
+					+ " inner join room R on H.room_no = R.room_no WHERE 1=1";
 										
-			if(map.get("Word")!=null){
-				sql +=" AND "+map.get("Column")+" "
-					+ " LIKE '%"+map.get("Word")+"%' ";				
+			//검색어가 없고
+			if(map.get("Word")=="" || map.get("Word")==null) {
+				//검색어 X + 시작 일자
+				if(map.get("search_sday")!=null && map.get("search_eday")=="") {
+					sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+				}
+				//검색어 X + 종료 일자
+				else if(map.get("search_sday")=="" && map.get("search_eday")!=null) {
+					sql +=" AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+				}		
+				//검색어 X + 시작/종료일자
+				else if(map.get("search_sday")!=null && map.get("search_eday")!=null) {
+				
+					sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+						+ " AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";													
+				}
+			}
+			
+			//검색어가 있고
+			else if(map.get("Word")!="" || map.get("Word")!=null) {
+				//단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
+				if(map.get("Column").equals("direct_input")) {
+					sql +=" AND (lodge_name LIKE '%" + map.get("Word")+ "%' "
+						+ " OR "
+						+ " lodge_type LIKE '%" + map.get("Word")+ "%' "
+						+ " OR"
+						+ " room_type LIKE '%" + map.get("Word")+ "%') "
+						+ " AND (hotdeal_date >= "
+						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+						+ " AND hotdeal_date <= "
+						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
+				}	
+				//검색어  + 시작 일자
+				else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) {
+					sql +=" AND "+map.get("Column")+" "
+						+ " LIKE '%"+map.get("Word")+"%' "
+						+ " AND hotdeal_date >= "
+						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+				}
+				//검색어  + 종료 일자 
+				else if(map.get("search_sday")=="" && map.get("search_eday")!="") {
+					sql +=" AND "+map.get("Column")+" "
+						+ " LIKE '%"+map.get("Word")+"%' "
+						+ " AND hotdeal_date <= "
+						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+				}				
+				//검색어 + 시작/종료일자
+				else if(map.get("search_sday")!="" && map.get("search_eday")!="") {
+					sql +=" AND "+map.get("Column")+" "
+						+ " LIKE '%"+map.get("Word")+"%' "
+						+ " AND hotdeal_date >= "
+						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+						+ " AND hotdeal_date <= "
+						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+				}							
+				//검색어 + 기간 없음(전체검색)
+				else {
+					sql +=" AND "+map.get("Column")+" "
+						+ " LIKE '%"+map.get("Word")+"%' ";				
+				}
 			}
 			
 			sql += " and (hotdeal_etime-sysdate) > 0 ";
@@ -99,12 +157,76 @@ public class HotdealDAO {
 				+ "			hotdeal H INNER JOIN lodge L"
 				+ "				ON H.lodge_no=L.lodge_no"
 				+ "					INNER JOIN room R"
-				+ "						ON H.room_no = r.room_no"
-				+ "					WHERE (hotdeal_etime-sysdate) > 0"
-				+ " 					ORDER BY hotdeal_no DESC"
-				+"    ) Tb"
-				+" )"
-				+" WHERE rNum BETWEEN ? and ?";
+				+ "						ON H.room_no = r.room_no WHERE 1=1";
+		
+				//검색어가 없고
+				if(map.get("Word")=="" || map.get("Word")==null) {
+					//검색어 X + 시작 일자
+					if(map.get("search_sday")!=null && map.get("search_eday")=="") {
+						sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+					}
+					//검색어 X + 종료 일자
+					else if(map.get("search_sday")=="" && map.get("search_eday")!=null) {
+						sql +=" AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+					}		
+					//검색어 X + 시작/종료일자
+					else if(map.get("search_sday")!=null && map.get("search_eday")!=null) {
+					
+						sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+							+ " AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";													
+					}
+				}
+				
+				//검색어가 있고
+				else if(map.get("Word")!="" || map.get("Word")!=null) {
+					//단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
+					if(map.get("Column").equals("direct_input")) {
+						sql +=" AND (lodge_name LIKE '%" + map.get("Word")+ "%' "
+							+ " OR "
+							+ " lodge_type LIKE '%" + map.get("Word")+ "%' "
+							+ " OR"
+							+ " room_type LIKE '%" + map.get("Word")+ "%') "
+							+ " AND (hotdeal_date >= "
+							+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+							+ " AND hotdeal_date <= "
+							+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
+					}	
+					//검색어  + 시작 일자
+					else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) {
+						sql +=" AND "+map.get("Column")+" "
+							+ " LIKE '%"+map.get("Word")+"%' "
+							+ " AND hotdeal_date >= "
+							+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+					}
+					//검색어  + 종료 일자 
+					else if(map.get("search_sday")=="" && map.get("search_eday")!="") {
+						sql +=" AND "+map.get("Column")+" "
+							+ " LIKE '%"+map.get("Word")+"%' "
+							+ " AND hotdeal_date <= "
+							+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+					}				
+					//검색어 + 시작/종료일자
+					else if(map.get("search_sday")!="" && map.get("search_eday")!="") {
+						sql +=" AND "+map.get("Column")+" "
+							+ " LIKE '%"+map.get("Word")+"%' "
+							+ " AND hotdeal_date >= "
+							+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+							+ " AND hotdeal_date <= "
+							+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+					}							
+					//검색어 + 기간 없음(전체검색)
+					else {
+						sql +=" AND "+map.get("Column")+" "
+							+ " LIKE '%"+map.get("Word")+"%' ";				
+					}
+				}				
+				
+				
+				sql += "					AND (hotdeal_etime-sysdate) > 0"
+					+ " 					ORDER BY hotdeal_no DESC"
+					+"    ) Tb"
+					+" )"
+					+" WHERE rNum BETWEEN ? and ?";
 		
 		
 		

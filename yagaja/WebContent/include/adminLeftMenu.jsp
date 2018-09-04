@@ -88,7 +88,7 @@
                                     <a href="../HotDeal/HotDealList">진행중 핫딜목록</a>
                                 </li>
                                 <li>
-                                    <a href="../HotDeal/HotDealEndList">마감된 핫딜목록</a>
+                                    <a href="../HotDeal/HotDealEndList?mode=0">마감된 핫딜목록</a>
                                 </li>
                                  <!--
     								드롭다운안의 드롭다운                             

@@ -23,6 +23,7 @@
 	rel="stylesheet" type="text/css">
 
 <script src="../vendor/bootstrap3.3.7/jquery/jquery-3.2.1.min.js"></script>
+<%@include file="../include/datetimepicker.jsp"%>
 
 <script type="text/javascript">
 <c:forEach items="${lists }" var="row" varStatus="loop">
@@ -78,6 +79,113 @@ window.onload = function()
 
 </script>
 
+<script type="text/javascript">
+	function allCheckFunc(obj) {
+		$("[name=checkDel]").prop("checked", $(obj).prop("checked"));
+	}
+
+	/* 체크박스 체크시 전체선택 체크 여부 */
+	function oneCheckFunc(obj) {
+		var allObj = $("[name=checkAll]");
+		var objName = $(obj).attr("name");
+
+		if ($(obj).prop("checked")) {
+			checkBoxLength = $("[name=" + objName + "]").length;
+			checkedLength = $("[name=" + objName + "]:checked").length;
+
+			if (checkBoxLength == checkedLength) {
+				allObj.prop("checked", true);
+			} else {
+				allObj.prop("checked", false);
+			}
+		} else {
+			allObj.prop("checked", false);
+		}
+	}
+
+	$(function() {
+		$("[name=checkAll]").click(function() {
+			allCheckFunc(this);
+		});
+		$("[name=checkDel]").each(function() {
+			$(this).click(function() {
+				oneCheckFunc($(this));
+			});
+		});
+	});
+
+	//체크박스 회원 삭제 경고창
+	$(function() {
+		$("#delUser").click(function() {
+			var selectedCheck = new Array();
+			$('.inputchk:checked').each(function() {
+				selectedCheck.push(this.value);
+			});
+
+			if (selectedCheck.length < 1) {
+				alert("삭제할 핫딜 목록을 선택해 주세요.");
+				return false;
+			}
+
+			var chk = confirm("삭제하시겠습니까?");
+			if (chk) {
+
+				document.delfrm.action = "../HotDeal/HotDealDelete";
+				document.delfrm.submit();
+				alert("삭제 완료 되었습니다.");
+			} else {
+				alert("삭제 취소 되었습니다.");
+				return false;
+			}
+		});
+	});
+</script>
+
+
+<!-- 데이트피커 -->
+<script>
+$(function() {
+	//날짜만
+	$("#search_sday,#search_eday").datepicker(
+			{
+				dateFormat : 'yy-mm-dd',
+				minDate : 0,
+				maxDate : 60,
+				prevText : '이전 달',
+				nextText : '다음 달',
+				monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
+						'7월', '8월', '9월', '10월', '11월', '12월' ],
+				dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
+				changeMonth : true,
+				changeYear : true,
+				showMonthAfterYear : true,
+				yearRange : 'c-5:c+5',
+			});
+
+	//날짜 선택시 전날선택 안되게 막기   
+	$('#search_sday').datepicker("option", "minDate",
+			$("#search_eday").val());
+
+	$('#search_sday').datepicker(
+			"option",
+			"onClose",
+			function(selectedDate) {
+				$("#search_eday").datepicker("option", "minDate",
+						selectedDate);
+			});
+
+	//종료날짜만 선택시 이전 날짜 선택 가능하게
+	$('#search_eday').datepicker("option", "minDate", null);
+
+	//오늘날짜 등록되기
+	$('search_date').datepicker({});
+	var d = new Date();
+	var month = d.getMonth() + 1;
+	var prettyDate = d.getFullYear() + '-' + month + '-' + d.getDate();
+	$('#search_date').val(prettyDate);
+});
+</script>
+
 </head>
 <body>
 	<div id="wrapper">
@@ -115,9 +223,9 @@ window.onload = function()
 									<div class="input-group" style="padding-left: 1px;">
 										<select name="searchColumn" class="form-control">
 											<option value="direct_input">검색조건</option>
-											<option value="id">숙박업소명</option>
-											<option value="nickname">숙박종류</option>
-											<option value="email">객실종류</option>
+											<option value="lodge_name">숙박업소명</option>
+											<option value="lodge_type">숙박종류</option>
+											<option value="room_type">객실종류</option>
 										</select>
 									</div>
 									<div class="input-group" style="padding-left: 1px;">
@@ -131,7 +239,8 @@ window.onload = function()
 									</div>
 								</form>
 							</div>
-
+							
+							<form name="delfrm" method="post" action="../HotDeal/HotDealDelete">
 								<table width="100%"
 									class="table table-striped table-bordered table-hover center"
 									style="text-align: center;">
@@ -139,6 +248,8 @@ window.onload = function()
 									</thead>
 									<tbody>
 										<tr style="font-weight: bold">
+											<td style="width: 40px;"><label><input
+														type="checkbox" name="checkAll" /></label></td>
 											<td>번호</td>
 											<td>숙박업소명</td>
 											<td>숙박종류</td>
@@ -147,7 +258,6 @@ window.onload = function()
 											<td>핫딜 금액</td>
 											<td>판매수량</td>
 											<td>구매가능 수량</td>
-											<td>선택</td>
 										</tr>
 										<c:choose>
 											<c:when test="${empty lists }">
@@ -160,6 +270,7 @@ window.onload = function()
 												<c:forEach items="${lists }" var="row" varStatus="loop">
 												<!-- 리스트반복 -->
 												<tr>
+													<td style="vertical-align:middle;"><label><input type="checkbox" class="inputchk" name="checkDel" value="${row.hotdeal_no }" /></label></td>
 													<td style="vertical-align:middle;">${map.totalCount - (((map.nowPage -1) * map.pageSize) + loop.index) }</td>
 													<td style="vertical-align:middle;">
 														<!-- inner join으로 숙소이름나옴 -->
@@ -183,18 +294,20 @@ window.onload = function()
 													</td>
 													<td style="vertical-align:middle;">${row.hotdeal_price}</td>
 													<td style="vertical-align:middle;">${row.hotdeal_sell}</td>
-													<td style="vertical-align:middle;">${row.hotdeal_buy}
-													</td>
-													<td style="vertical-align:middle;"><input type="checkbox" name="check" /></td>
+													<td style="vertical-align:middle;">${row.hotdeal_buy}</td>
 												</tr>
 												</c:forEach>
 											</c:otherwise>
 										</c:choose>
 									</tbody>
 								</table>
+								</form>
 								<!-- /.table-responsive -->
 								<button type="button" class="btn btn-info" onclick="location.href='../HotDeal/HotDealWrite';">
 									<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+								</button>
+								<button type="button" id="delUser" class="btn btn-danger">
+									<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
 								</button>
 							</div>
 							<!-- /.panel-body -->
