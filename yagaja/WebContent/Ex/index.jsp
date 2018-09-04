@@ -47,7 +47,7 @@ int motelCount = ldao.getTotalRecordCount(mc);
 int hotelCount = ldao.getTotalRecordCount(hc);
 int pensionCount = ldao.getTotalRecordCount(pc);
 int guesthouseCount = ldao.getTotalRecordCount(gc);
-%>
+%> 
 
 
 <script type="text/javascript">

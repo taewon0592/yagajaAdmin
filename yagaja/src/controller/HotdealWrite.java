@@ -71,7 +71,7 @@ public class HotdealWrite extends HttpServlet {
 			
 		if (sucOrFail == 1) {
 			// DB입력성공일때
-			req.getRequestDispatcher("/HotDeal/HotDealList").forward(req, resp);
+			resp.sendRedirect("../HotDeal/HotDealList");
 		} else {
 			// DB입력실패 혹은 파일업로드 실패시
 			req.getRequestDispatcher("/hotdeal/hotdeal_write.jsp").forward(req, resp);// 데이터처리할게 없기 때문에 서블릿을 통해 처리하지 않는다.

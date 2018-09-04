@@ -138,9 +138,15 @@
 								<!-- /.table-responsive -->
 							</div>
 							<!-- /.panel-body -->
-							<button type="button" class="btn btn-info" onclick="location.href='../HotDeal/HotDealEdit?hotdeal_no=${dto.hotdeal_no}&nowPage=${param.nowPage }';">수정</button>
-							<button type="button" class="btn btn-danger" onclick="location.href='./hotdeal_list.jsp';">삭제</button>
-							<button type="button" class="btn btn-success" onclick="location.href='../HotDeal/HotDealList?nowPage=${param.nowPage}';">리스트</button>
+							<button type="button" class="btn btn-success" onclick="location.href='../HotDeal/HotDealEdit?hotdeal_no=${dto.hotdeal_no}&nowPage=${param.nowPage }';">
+								<i class="glyphicon glyphicon-edit"></i>&nbsp;수정하기
+							</button>
+							<button type="button" class="btn btn-danger" onclick="location.href='../HotDeal/HotDealDelete?hotdeal_no=${dto.hotdeal_no}&nowPage=${param.nowPage }';">
+								<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
+							</button>
+							<button type="button" class="btn btn-warning" onclick="location.href='../HotDeal/HotDealList?nowPage=${param.nowPage}';">
+								<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기
+							</button>
 						</div>
 						<!-- /.panel -->
 					</div>

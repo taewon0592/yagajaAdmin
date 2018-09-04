@@ -381,9 +381,20 @@
 		<servlet-class>controller.HotdealEdit</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>HotDealView</servlet-name>
+		<servlet-name>HotDealEdit</servlet-name>
 		<url-pattern>/HotDeal/HotDealEdit</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 핫딜 삭제하기 -->
+	<servlet>
+		<servlet-name>HotDealDelete</servlet-name>
+		<servlet-class>controller.HotdealDelete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HotDealDelete</servlet-name>
+		<url-pattern>/HotDeal/HotDealDelete</url-pattern>
+	</servlet-mapping>
+	
 	
 	<!-- 핫딜 숙소검색해서 입력폼에 전달하기 -->
 	<servlet>

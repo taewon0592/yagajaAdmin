@@ -271,9 +271,12 @@ $( document ).ready( function() {
 									<!-- /.table-responsive -->
 								</div>
 								<!-- /.panel-body -->
-								<button type="submit" class="btn btn-info">등록하기</button>
-								<button type="button" class="btn btn-success"
-									onclick="location.href='../HotDeal/HotDealList';">리스트</button>
+								<button type="submit" class="btn btn-info">
+									<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+								</button>
+								<button type="button" class="btn btn-warning" onclick="location.href='../HotDeal/HotDealList';">
+									<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기
+								</button>
 							</div>
 							<!-- /.panel -->
 						</form>

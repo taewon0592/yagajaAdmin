@@ -638,5 +638,25 @@ public class LodgeDAO {
 
 		return lodge;
 		}
+	
+   public int getTotalRecordCount(String lodge_type) {
+         
+	      int totalCount = 0;
+	      
+	      try {
+	         String sql = "SELECT COUNT(*) FROM lodge "
+	               + " WHERE lodge_type LIKE '%"+lodge_type+"%' ";
+	            
+	         System.out.println("메인차트용 sql = "+sql);
+	         psmt = con.prepareStatement(sql);
+	         rs = psmt.executeQuery();
+	         rs.next();
+	         totalCount = rs.getInt(1);
+	      }
+	      catch(Exception e) {
+	         
+	      }
+	      return totalCount;
+	   }
 
 }

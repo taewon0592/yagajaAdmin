@@ -100,36 +100,42 @@ window.onload = function()
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div class="table-responsive">
+						<!-- 검색기능 -->
+							<div class="row text-left" style="margin-bottom: 15px; padding-left: 15px;">
+								<form class="form-inline" name="searchFrm" method="post"
+									action="">
+									<div class="form-group">
+										<input type="text" style="text-align: center; width: 100px;"
+											class="form-control" id="search_sday" name="search_sday"
+											placeholder="시작일자" /> - <input type="text"
+											style="text-align: center; width: 100px;"
+											class="form-control" id="search_eday" name="search_eday"
+											placeholder="종료일자" />
+									</div>
+									<div class="input-group" style="padding-left: 1px;">
+										<select name="searchColumn" class="form-control">
+											<option value="direct_input">검색조건</option>
+											<option value="id">숙박업소명</option>
+											<option value="nickname">숙박종류</option>
+											<option value="email">객실종류</option>
+										</select>
+									</div>
+									<div class="input-group" style="padding-left: 1px;">
+										<input type="search" name="searchWord" class="form-control"
+											placeholder="검색어를 입력하세요." autofocus />
+										<div class="input-group-btn" style="padding-left: 2px;">
+											<button type="submit" id="btn_search" class="btn btn-default">
+												<i class="glyphicon glyphicon-search"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
 
 								<table width="100%"
 									class="table table-striped table-bordered table-hover center"
 									style="text-align: center;">
 									<thead>
-										<!-- 굵기넣기 -->
-										<tr style="font-weight: bold">
-											<td colspan="2">
-												<button type="button" class="btn btn-info" onclick="location.href='../HotDeal/HotDealWrite';">
-													핫딜등록
-												</button>
-											</td>
-											<td>핫딜검색내용</td>
-											<td colspan="4">
-												<div class="input-group custom-search-form">
-													<!-- 서치폼안에 어떤걸 검색할건지 셀렉트로 분류넣어줘야함 -->
-													<input type="text" class="form-control" placeholder="Search..." style="width:500px"> 
-														<span class="input-group-btn">
-														<button class="btn btn-default" type="button">
-															<i class="fa fa-search"></i>
-														</button>
-													</span>
-												</div>
-											</td>
-											<td>진행중인 핫딜</td>
-											<td>
-												<button type="submit" class="btn btn-waring">전체선택</button>
-											</td>
-										</tr>
 									</thead>
 									<tbody>
 										<tr style="font-weight: bold">
@@ -147,7 +153,7 @@ window.onload = function()
 											<c:when test="${empty lists }">
 												<!-- 등록된 게시물이 없는 경우 -->
 											<tr>
-												<td colspan="8">등록된 글이 없습니다.</td>
+												<td colspan="9">등록된 글이 없습니다.</td>
 											</tr>
 											</c:when>
 											<c:otherwise>
@@ -187,21 +193,25 @@ window.onload = function()
 									</tbody>
 								</table>
 								<!-- /.table-responsive -->
+								<button type="button" class="btn btn-info" onclick="location.href='../HotDeal/HotDealWrite';">
+									<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+								</button>
 							</div>
 							<!-- /.panel-body -->
 						</div>
 						<!-- /.panel -->
 						<!-- 페이지번호 -->
-						<div class="row text-center">
-							<ul class="pagination">
-								${pagingImg }
-							</ul>
-						</div>
+						
 						<!-- Contents영역 끝-->
 					</div>
 					<!-- /.col-lg-12 -->
 				</div>
 				<!-- /.row -->
+				<div class="row text-center">
+							<ul class="pagination">
+								${pagingImg }
+							</ul>
+						</div>
 			</div>
 			<!-- /.col-lg-6 -->
 		</div>
