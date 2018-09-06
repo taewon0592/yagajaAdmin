@@ -39,7 +39,7 @@
 		<servlet-class>controller.NoticeList</servlet-class>
 			<init-param>
 				<param-name>PAGE_SIZE</param-name>
-				<param-value>3</param-value>
+				<param-value>10</param-value>
 			</init-param>
 			<init-param>
 				<param-name>BLOCK_PAGE</param-name>
@@ -97,11 +97,11 @@
 		<servlet-class>controller.MemberList</servlet-class>
 		<init-param>
 			<param-name>PAGE_SIZE</param-name>
-			<param-value>3</param-value>
+			<param-value>10</param-value>
 		</init-param>
 		<init-param>
 			<param-name>BLOCK_PAGE</param-name>
-			<param-value>3</param-value>
+			<param-value>5</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -135,11 +135,11 @@
 		<servlet-class>controller.LeaveMemberList</servlet-class>
 		<init-param>
 			<param-name>PAGE_SIZE</param-name>
-			<param-value>3</param-value>
+			<param-value>10</param-value>
 		</init-param>
 		<init-param>
 			<param-name>BLOCK_PAGE</param-name>
-			<param-value>3</param-value>
+			<param-value>5</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -173,11 +173,11 @@
 		<servlet-class>controller.lodge_ListCtrl</servlet-class>
 		<init-param>
 			<param-name>PAGE_SIZE</param-name>
-			<param-value>3</param-value>
+			<param-value>10</param-value>
 		</init-param>
 		<init-param>
 			<param-name>BLOCK_PAGE</param-name>
-			<param-value>3</param-value>
+			<param-value>5</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -201,11 +201,11 @@
 		<servlet-class>controller.lodge_ViewCtrl</servlet-class>
 		<init-param>
 			<param-name>PAGE_SIZE</param-name>
-			<param-value>3</param-value>
+			<param-value>10</param-value>
 		</init-param>
 		<init-param>
 			<param-name>BLOCK_PAGE</param-name>
-			<param-value>3</param-value>
+			<param-value>5</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -272,6 +272,36 @@
 		<servlet-name>RoomView</servlet-name>
 		<url-pattern>/lodge/room_view</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 객실 삭제하기 -->
+  	<servlet>
+		<servlet-name>RoomDelete</servlet-name>
+		<servlet-class>controller.room_DeleteCtrl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RoomDelete</servlet-name>
+		<url-pattern>/lodge/room_delete</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 입력하면서 객실 삭제하기 -->
+  	<servlet>
+		<servlet-name>RoomDelete2</servlet-name>
+		<servlet-class>controller.room2_DeleteCtrl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RoomDelete2</servlet-name>
+		<url-pattern>/lodge/room2_delete</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 객실 수정하기 -->
+  	<servlet>
+		<servlet-name>RoomModify</servlet-name>
+		<servlet-class>controller.room_ModifyCtrl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RoomModify</servlet-name>
+		<url-pattern>/lodge/room_modify</url-pattern>
+	</servlet-mapping>
   
   
   
@@ -306,6 +336,39 @@
  		<url-pattern>/Yagaja/Auction_EndList</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 옥션 상세보기 -->
+	<servlet>
+ 		<servlet-name>YagajaAuction_View</servlet-name>
+ 		<servlet-class>controller.Auction_View</servlet-class>
+ 	</servlet>
+	<servlet-mapping>
+ 		<servlet-name>YagajaAuction_View</servlet-name>
+ 		<url-pattern>/Yagaja/AuctionView</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 옥션 수정하기 -->
+	<servlet>
+ 		<servlet-name>YagajaAuction_Edit</servlet-name>
+ 		<servlet-class>controller.Auction_Edit</servlet-class>
+ 	</servlet>
+	<servlet-mapping>
+ 		<servlet-name>YagajaAuction_Edit</servlet-name>
+ 		<url-pattern>/Yagaja/AuctionEdit</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 옥션 삭제하기 -->
+	<servlet>
+ 		<servlet-name>/Yagaja/AuctionDelete</servlet-name>
+ 		<servlet-class>controller.Auction_Delete</servlet-class>
+ 	</servlet>
+	<servlet-mapping>
+ 		<servlet-name>/Yagaja/AuctionDelete</servlet-name>
+ 		<url-pattern>/Yagaja/AuctionDelete</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	
 	<!-- 핫딜 숙소검색해서 입력폼에 전달하기 -->
 	<servlet>
 		<servlet-name>AuctionLodgeSearch</servlet-name>
@@ -325,11 +388,11 @@
 		<servlet-class>controller.HotdealList</servlet-class>
 		<init-param>
 			<param-name>PAGE_SIZE</param-name>
-			<param-value>3</param-value>
+			<param-value>10</param-value>
 		</init-param>
 		<init-param>
 			<param-name>BLOCK_PAGE</param-name>
-			<param-value>3</param-value>
+			<param-value>5</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -343,11 +406,11 @@
 		<servlet-class>controller.HotdealEndList</servlet-class>
 		<init-param>
 			<param-name>PAGE_SIZE</param-name>
-			<param-value>3</param-value>
+			<param-value>10</param-value>
 		</init-param>
 		<init-param>
 			<param-name>BLOCK_PAGE</param-name>
-			<param-value>3</param-value>
+			<param-value>5</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -409,11 +472,11 @@
   <!-- 옥션 게시판 페이지 설정 -->
   <context-param>
   	<param-name>PAGE_SIZE</param-name>
-  	<param-value>3</param-value>
+  	<param-value>10</param-value>
   </context-param>
   <context-param>
   	<param-name>BLOCK_PAGE</param-name>
-  	<param-value>3</param-value>
+  	<param-value>5</param-value>
   </context-param>
   
 	<!-- 주변시설 리스트 -->
@@ -426,7 +489,7 @@
 	  </init-param>
 	  <init-param>
 	  	<param-name>BLOCK_PAGE</param-name>
-	  	<param-value>2</param-value>
+	  	<param-value>5</param-value>
 	  </init-param>  
    </servlet>
    <servlet-mapping>

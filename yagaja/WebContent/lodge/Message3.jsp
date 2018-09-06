@@ -9,13 +9,13 @@
 		<c:set var="sucmsg" value="수정성공함" />
 		<c:set var="failmsg" value="수정실패함" />
 		<c:set var="sucurl" 
-		value="../lodge/lodge_view?lodge_no=${lodge_no}&nowPage=${nowPage }" />
+		value="../lodge/room_view?lodge_no=${lodge_no}&room_no=${room_no }" />
 	</c:when>
 	<c:otherwise>
 		<c:set var="sucmsg" value="삭제성공함" />
 		<c:set var="failmsg" value="삭제실패함" />
 		<c:set var="sucurl" 
-		value="../lodge/lodge_view?nowPage=${nowPage }&lodge_no=${lodge_no }" />	
+		value="../lodge/room_write?lodge_no=${lodge_no }&lodge_name=${lodge_name}" />	
 	</c:otherwise>
 </c:choose>
 

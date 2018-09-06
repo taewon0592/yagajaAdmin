@@ -45,17 +45,17 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-10">
                     <div class="panel panel-default">
 
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         	
                         	<div style="padding-bottom:15px;">
-                        		<button type="button" class="btn btn-info" onclick="location.href='../lodge/room_write2?lodge_no=${lodge_no}';">
+                        		<button type="button" class="btn btn-info" onclick="location.href='../lodge/room_write2?lodge_no=${lodge_no}&nowPage=${param.nowPage }';">
                         			<i class="glyphicon glyphicon-pencil"></i>&nbsp;방 등록하기
                         		</button>
-                        		<button type="button" class="btn btn-success" onclick="location.href='../lodge/lodge_modify?lodge_no=${lodge_no}';">
+                        		<button type="button" class="btn btn-success" onclick="location.href='../lodge/lodge_modify?lodge_no=${lodge_no}&nowPage=${param.nowPage }';">
                         			<i class="glyphicon glyphicon-edit"></i>&nbsp;수정하기
                         		</button>
                         		<button type="button" class="btn btn-danger" onclick="location.href='../lodge/lodge_delete?lodge_no=${lodge_no }';">
@@ -63,14 +63,15 @@
 	                            </button>
 	                        </div>
                         	<form action=""  >
-	                            <table width="70%" class="table table-bordered table-hover center" style="text-align:center;">
+	                            <table width="100%" class="table table-bordered table-hover center" style="text-align:center;">
 
 	                                <tbody>
 	                                <input type="hidden" value="${lodge_no }" />
 	                                <input type="hidden" value="${dto.lodge_name }" />
 	                                <input type="hidden" value="${dto.lodge_thema }" />
+	                                <input type="hidden" value="${param.nowPage }" />
 	                                	<tr>
-	                                        <td style="font-weight:bold">숙소명</td>
+	                                        <td style="font-weight:bold; width:20%">숙소명</td>
 	                                        <td colspan="3">${dto.lodge_name }</td>
 	                                    </tr>
 	                                    <tr class="odd gradeX">
@@ -81,12 +82,10 @@
 	                                       	<td style="font-weight:bold">숙소 주소</td>
 	                                        <td colspan="3">${dto.addr_common }&nbsp;&nbsp;${dto.addr_detail } </td>
 	                                    </tr>
-	                                   <tr class="even gradeC">
-	                                       	<td style="font-weight:bold">전화번호</td>
-	                                        <td colspan="3">
-	                                        	<p>
-	                                        		${dto.lodge_tel }
-	                                        	</p>
+	                                    <tr class="even gradeC">
+	                                       	<td style="font-weight:bold; vertical-align:middle;">전화번호</td>
+	                                        <td colspan="3" style="vertical-align:middle;">
+                                        		${dto.lodge_tel }
 	                                        </td>
 	                                    </tr>
 	                                    <tr class="even gradeC" >
@@ -113,8 +112,8 @@
 	                                        <td colspan="3">${dto.lodge_note }</td>
 	                                    </tr>
 	                                    <tr class="even gradeC">
-	                                    	<td style="font-weight:bold">숙소 대표사진</td>
-	                                    	<td colspan="3"><img src="../Upload/${dto.lodge_photo }"  /></td>
+	                                    	<td style="font-weight:bold; vertical-align:middle;">숙소 대표사진</td>
+	                                    	<td colspan="3"><img style="width:100%;"src="../Upload/${dto.lodge_photo }"  /></td>
 	                                    </tr>
 	                                  
 	                                  
@@ -122,43 +121,42 @@
 	                            </table>
                             	<!-- /.table-responsive -->
                             </form>
+                            
                             <form action="">
                         		<table class="table table-striped table-bordered table-hover center" style=" width:100%; ">
 	                       			<tr class="odd gradeX">
 		                        		<td style="text-align:center;">No</td>
 		                        		<td style="text-align:center;">객실타입</td>
 		                        		<td>인원</td>
-		                        		<td style="text-align:center;">객실사진</td>
 		                        		<td style="text-align:center;"><span style="color:black; font-weight:bold;">주중</span>&nbsp;&nbsp;&nbsp;대실가격</td>
 		                        		<td style="text-align:center;"><span style="color:black; font-weight:bold;">주중</span>&nbsp;&nbsp;&nbsp;숙박가격</td>
 		                        		<td style="text-align:center;"><span style="color:red; font-weight:bold;">주말</span>&nbsp;&nbsp;&nbsp;대실가격</td>
 		                        		<td style="text-align:center;"><span style="color:red; font-weight:bold;">주말</span>&nbsp;&nbsp;&nbsp;숙박가격</td>
+		                        		<td style="text-align:center;">객실사진</td>
 		                        	</tr>
 		                        	<tr class="even gradeC" >
 		                        	<c:choose>
 		                                	<c:when test="${empty lists }">
 		                                		<tr>
-		                                			<td colspan="8">
+		                                			<td colspan="8" style="text-align:center; font-weight:bold;">
 		                                				등록된 글이 없습니다.
 		                                			</td>
 		                                		</tr>
 		                                	</c:when>
 		                                	<c:otherwise>
 		                                		<c:forEach items="${lists }" var="row" varStatus="loop">
-			                                        <td>${row.room_no }</td>
-			                                        <td><a href="./room_view?lodge_no=${lodge_no }&room_no=${row.room_no}">${row.room_type }</a></td>
-			                                        <td>${row.room_person}</td>
+			                                        <td style="text-align:center; vertical-align:middle;">${row.rNum }</td>
+			                                        <td style="text-align:center; vertical-align:middle; color:black; font-weight:bold;"><a href="../lodge/room_view?room_no=${row.room_no }&lodge_no=${lodge_no}&nowPage=${param.nowPage}">${row.room_type }</a></td>
+			                                        <td style="text-align:center; vertical-align:middle;">${row.room_person}</td>
 			                                       <%--  <td><fmt:formatNumber value="${row.d_rent_price }" groupingUsed="true"/></td>
 			                                        <td><fmt:formatNumber value="${row.d_sleep_price }" groupingUsed="true"/></td>
 			                                        <td><fmt:formatNumber value="${row.w_rent_price }" groupingUsed="true"/></td>
 			                                        <td><fmt:formatNumber value="${row.w_sleep_price }" groupingUsed="true"/></td> --%>
-			                                        <td>${row.d_rent_price }</td>
-			                                        <td>${row.d_sleep_price }</td>
-			                                        <td>${row.w_rent_price }</td>
-			                                        <td>${row.w_sleep_price }</td>
-			                                        <td>${row.room_photo }</td>
-			                                        
-		                                		
+			                                        <td style="text-align:center; vertical-align:middle;">${row.d_rent_price }원</td>
+			                                        <td style="text-align:center; vertical-align:middle;">${row.d_sleep_price }원</td>
+			                                        <td style="text-align:center; vertical-align:middle;">${row.w_rent_price }원</td>
+			                                        <td style="text-align:center; vertical-align:middle;">${row.w_sleep_price }원</td>
+			                                        <td style="text-align:center; vertical-align:middle;">${row.room_photo }</td>
 			                                    </tr>
 		                                		</c:forEach>
 		                                	</c:otherwise>

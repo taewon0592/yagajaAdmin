@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>lodge_write</title>
+<title>객실등록</title>
 <link href="../vendor/bootstrap3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS (세로드롭메뉴바)-->
@@ -78,7 +78,7 @@ String lodge_no = request.getParameter("lodge_no");
          <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">숙박 업소 등록</h1>
+                    <h1 class="page-header">객실 등록</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -92,6 +92,7 @@ String lodge_no = request.getParameter("lodge_no");
                            <div class="table-responsive">    
                            <form name="writeFrm2" method="post" action="<c:url value="../lodge/room_write2" />"  onsubmit="return frmValidate(this);" enctype="multipart/form-data">
                            <input type="hidden" name="lodge_no" value="${param.lodge_no }" />
+                           <input type="hidden" name="nowPage" value="${param.nowPage }" />
                            	
                               <table class="table table-striped table-bordered table-hover center" style=" width:100%; ">
                                  <tr class="even gradeC">

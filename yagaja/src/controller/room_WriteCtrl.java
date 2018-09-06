@@ -25,26 +25,20 @@ public class room_WriteCtrl extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		System.out.println("여기로못오니??");
-		String lodge_no = req.getParameter("lodge_no");
+		
 		LodgeDAO dao = new LodgeDAO();
 		
-		Map param = new HashMap();
+		LodgeDTO dto = dao.selectLodge_No();
 		
-	
 		//1. 게시판 테이블의 전체 레코드 개수 구하기
-		int totalRecordCount = dao.getTotalRecordCount(param);
+		int totalRecordCount = dao.roomGetTotalRecordCount(dto);
 	
-		param.put("lodge_no", lodge_no);
-		//가상번호 계산을 위한 추가
-
-		List<LodgeDTO> lists = dao.room_selectpaging(param);
-		for(LodgeDTO dto : lists)
-		{
-			System.out.println("dto.getRoom_type()"+dto.getRoom_type());
-		}
+		List<LodgeDTO> lists = dao.room2_selectpaging(dto);
 		
-		RequestDispatcher dis = req.getRequestDispatcher("../lodge/room_write.jsp");
-		dis.forward(req, resp);
+		req.setAttribute("lists", lists); 
+		req.setAttribute("dto", dto);
+		
+		req.getRequestDispatcher("/lodge/room_write.jsp?lodge_no="+dto.getLodge_no()+"&lodge_name="+dto.getLodge_name()).forward(req, resp);
 				
 	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,6 +46,9 @@ public class room_WriteCtrl extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		MultipartRequest mr = FileUtil.upload(req, req.getServletContext().getRealPath("/Upload"));
+		
+		String lodge_no = null;
+		String lodge_name = null;
 		
 		int sucOrFail;
 		//String lodge_name = req.getParameter("lodge_name");
@@ -64,8 +61,8 @@ public class room_WriteCtrl extends HttpServlet {
 			String d_rent_price = mr.getParameter("d_rent_price");
 			String w_rent_price = mr.getParameter("w_rent_price");
 			String room_photo = mr.getFilesystemName("room_photo");
-			String lodge_no = mr.getParameter("lodge_no");
-			String lodge_name = mr.getParameter("lodge_name");
+			lodge_no = mr.getParameter("lodge_no");
+			lodge_name = mr.getParameter("lodge_name");
 			System.out.println(lodge_no);
 			System.out.println("WirteCtrl에서 lodge_name="+lodge_name);
 
@@ -87,9 +84,7 @@ public class room_WriteCtrl extends HttpServlet {
 		}
 		
 		if(sucOrFail==1) {
-			RequestDispatcher dis = req.getRequestDispatcher("../lodge/room_write.jsp");
-			dis.forward(req, resp);
-			// req.getRequestDispatcher("../lodge/room_write.jsp").forward(req, resp);
+			resp.sendRedirect("../lodge/room_write?lodge_no="+lodge_no+"&lodge_name="+lodge_name);
 		}
 		else {
 			req.getRequestDispatcher("../lodge/lodge_list.jsp").forward(req, resp);

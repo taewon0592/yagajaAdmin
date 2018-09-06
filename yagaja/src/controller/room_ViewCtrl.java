@@ -22,6 +22,7 @@ public class room_ViewCtrl extends HttpServlet {
 		
 		String lodge_no = req.getParameter("lodge_no");
 		String room_no = req.getParameter("room_no");
+		String nowPage = req.getParameter("nowPage");
 		LodgeDAO dao = new LodgeDAO();
 		LodgeDTO dto = dao.selectRoomView(lodge_no,room_no);
 		/*	dto.setLodge_note(dto.getLodge_note().replaceAll("\r\n", "<br/>"));*/
@@ -29,7 +30,7 @@ public class room_ViewCtrl extends HttpServlet {
 		
 		
 		//리퀘스트 영역에 저장하기
-		
+		req.setAttribute("nowPage", nowPage);
 		req.setAttribute("lodge_no", lodge_no);
 		req.setAttribute("dto", dto);	
 		

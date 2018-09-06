@@ -26,7 +26,7 @@ public class LodgeSearch extends HttpServlet {
 		resp.setContentType("text/html;charset=utf-8;");
 
 		String lodgename = req.getParameter("lodgename");
-		//System.out.println("lodgename:"+lodgename);
+		System.out.println("lodgename:"+lodgename);
 
 		// 검색어를 파라미터로 DAO호출 후 JSON출력을 담당하는 메소드 호출
 		String resultJSON = getJSON(lodgename);

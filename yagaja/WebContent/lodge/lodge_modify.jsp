@@ -248,7 +248,7 @@ for(String s : iArr2){
                         	<div class="table-responsive">    
                         	<form action="<c:url value="../lodge/lodge_modify" />" name="writeFrm" method="post" enctype="multipart/form-data" onsubmit="return frmValidate(this);" >
                         		<input type="hidden" name="lodge_no" value="<%=lodge_no %>" />
-                        		<input type="hidden" name="nowPage"  value="<%=lodge_type%>"/>
+                        		<input type="hidden" name="nowPage"  value="${param.nowPage }"/>
                         		<input type="hidden" name="h_lodge_thema"  value="<%=lodge_thema%>"/>
                         		<input type="hidden" name="originalfile" value="${dto.lodge_photo }" />
 	                        	<table class="table table-striped table-bordered table-hover center" style=" width:100%; ">

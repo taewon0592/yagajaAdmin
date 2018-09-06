@@ -29,8 +29,9 @@
 <c:forEach items="${lists }" var="row" varStatus="loop">
 //남은시간(초) - DB에서 가져옴
 var remain_time_sec_${row.hotdeal_no} = ${row.remain_time_sec }
+var srts_${row.hotdeal_no} = ${row.start_remain_time_sec}
 
-function auction_reverse_time_${row.hotdeal_no}()
+function hotdeal_reverse_time_${row.hotdeal_no}()
 {
 	
 	dateVal	=	parseInt(remain_time_sec_${row.hotdeal_no}/(24*60*60));	//총 초에서 날짜 뽑기
@@ -39,16 +40,32 @@ function auction_reverse_time_${row.hotdeal_no}()
 	temp_val = temp_val%(60*60);						//남은 초 담기
 	minVal = parseInt(temp_val/(60));					//남은 총 초에서 분 뽑기
 	secVal = temp_val%(60);								//남은 초 담기
+	
+	srts_dateVal = parseInt(srts_${row.hotdeal_no}/(24*60*60));	//경매시간 남은 총 초에서 날짜 뽑기
+	srts_temp_val = srts_${row.hotdeal_no}%(24*60*60);			//경매시간 남은 초 담기
+	srts_hourVal = parseInt(srts_temp_val/(60*60));				//경매시간 남은 총 초에서 시간 뽑기
+	srts_temp_val = srts_temp_val%(60*60);						//경매시간 남은 초 담기
+	srts_minVal = parseInt(srts_temp_val/(60));					//경매시간 남은 총 초에서 분 뽑기
+	srts_secVal = srts_temp_val%(60);							//경매시간 남은 초 담기
+	
 
 	document.getElementById("diffTime_${row.hotdeal_no}").innerHTML = "<span style='color:blue; font-weight:bold;'>핫딜까지 남은시간</span><br/>"+dateVal+"일 "+hourVal+"시간 "+minVal+"분 "+secVal+"초";
 
 	//남은 시간이 0이 되어 경매종료시
 	if(remain_time_sec_${row.hotdeal_no}<=0)
 	{
-		document.getElementById("diffTime_${row.hotdeal_no}").innerHTML = "<span style='color:red; fonr-weight:bold;'>핫딜이 종료되었습니다</span>";
+		document.getElementById("diffTime_${row.hotdeal_no}").innerHTML = "<span style='color:red; font-weight:bold;'>핫딜 진행중</span><br/>"+srts_dateVal+"일 "+srts_hourVal+"시간 "+srts_minVal+"분 "+srts_secVal+"초";
 		//호출중지
 		//화면리플레쉬
 		//location.reload();
+		if(srts_${row.hotdeal_no}<=0)
+		{
+			document.getElementById("diffTime_${row.hotdeal_no }").innerHTML = "<span style='color:red; font-weight:bold;'>핫딜이 종료되었습니다</span>";
+		}
+		else
+		{
+			srts_${row.hotdeal_no}--;
+		}
 	}
 	else
 	{	//잔여시간이 있다면 1초씩 차감
@@ -64,15 +81,24 @@ window.onload = function()
 	
 	//남은시간 가져오기
 	remain_time_sec_${row.hotdeal_no} = document.getElementById("remain_time_sec_${row.hotdeal_no}").value;
+	srts_${row.hotdeal_no} = document.getElementById("srts_${row.hotdeal_no}").value;
 	
 	if(remain_time_sec_${row.hotdeal_no} > 0)
 	{
 		//1초에 한번씩 함수 호출
-		setInterval("auction_reverse_time_${row.hotdeal_no}()" ,1000);
+		setInterval("hotdeal_reverse_time_${row.hotdeal_no}()" ,1000);
 	}
 	else
 	{
-		document.getElementById("diffTime_${row.hotdeal_no }").innerHTML = "<span style='color:red; font-weight:bold;'>핫딜이 종료되었습니다</span>";
+		if(srts_${row.hotdeal_no} >0)
+		{
+			setInterval("hotdeal_reverse_time_${row.hotdeal_no}()", 1000);	
+		}
+		else
+		{
+			document.getElementById("diffTime_${row.hotdeal_no }").innerHTML = "<span style='color:red; font-weight:bold;'>핫딜이 종료되었습니다</span>";		
+		}
+		
 	}
 	</c:forEach>
 }
@@ -284,14 +310,27 @@ $(function() {
 														${row.room_type }
 														<input type="hidden" name="room_no" value="${row.room_no }" />
 													</td style="vertical-align:middle;">
-													<td style="vertical-align:middle;">
 														<!-- 핫딜남은시간 -->
 														<input type="hidden" id="remain_time_sec_${row.hotdeal_no }" value="${row.remain_time_sec }"/>
-														<span id="diffTime_${row.hotdeal_no }">
-				                                    		<b style="color:blue;">핫딜까지 남은시간</b><br />
-				                                    		${row.timeView }
-				                                    	</span> 
-													</td>
+														<input type="hidden" id="srts_${row.hotdeal_no }" value="${row.start_remain_time_sec }" />
+														<c:choose>
+					                                    	<c:when test="${row.remain_time_sec >= 0 }">
+						                                    	<td style="vertical-align:middle;">
+						                                    		<span id="diffTime_${row.hotdeal_no }">
+						                                    			<b style="color:blue;">핫딜까지 남은시간</b><br />
+						                                    			${row.timeView }
+						                                    		</span>
+						                                    	</td>
+					                                    	</c:when>
+					                                    	<c:otherwise>
+					                                    		<td style="vertical-align:middle;">
+						                                    		<span id="diffTime_${row.hotdeal_no }">
+						                                    			<b style="color:red;">핫딜 진행중</b><br />
+						                                    			${row.start_timeView }
+						                                    		</span>
+						                                    	</td>
+					                                    	</c:otherwise>
+				                                    	</c:choose>
 													<td style="vertical-align:middle;">${row.hotdeal_price}</td>
 													<td style="vertical-align:middle;">${row.hotdeal_sell}</td>
 													<td style="vertical-align:middle;">${row.hotdeal_buy}</td>
@@ -306,9 +345,15 @@ $(function() {
 								<button type="button" class="btn btn-info" onclick="location.href='../HotDeal/HotDealWrite';">
 									<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
 								</button>
-								<button type="button" id="delUser" class="btn btn-danger">
-									<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
-								</button>
+								<c:choose>
+									<c:when test="${empty lists }">
+									</c:when>
+									<c:otherwise>
+										<button type="button" id="delUser" class="btn btn-danger">
+											<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
+										</button>
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<!-- /.panel-body -->
 						</div>

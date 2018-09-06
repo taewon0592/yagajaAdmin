@@ -29,6 +29,9 @@ public class LodgeDTO {
 	private String addr_lat;  
 	private String addr_long; 
 	
+	//순서보여주기
+	private String rNum;
+	
 	//기본생성자
 	public LodgeDTO() {}
 	//인자생성자
@@ -200,6 +203,17 @@ public class LodgeDTO {
 	public void setAddr_long(String addr_long) {
 		this.addr_long = addr_long;
 	}
+	public String getrNum() {
+		return rNum;
+	}
+	public void setrNum(String rNum) {
+		this.rNum = rNum;
+	}
+	
+	
+	
+	
+	
 	
 	
 	

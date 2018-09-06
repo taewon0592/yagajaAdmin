@@ -29,7 +29,7 @@ public class lodge_WriteCtrl extends HttpServlet {
 		
 		
 		
-		
+
 		//파일업로드를 위한 로직
 		MultipartRequest mr = FileUtil.upload(req, req.getServletContext().getRealPath("/Upload"));
 		
@@ -110,7 +110,7 @@ public class lodge_WriteCtrl extends HttpServlet {
 		
 		if(sucOrFail==1 && sucOrFail2 ==1) 
 		{
-			req.getRequestDispatcher("../lodge/room_write.jsp").forward(req, resp);
+			resp.sendRedirect("../lodge/room_write");
 		}
 		else {
 			req.getRequestDispatcher("../lodge/lodge_write.jsp").forward(req, resp);

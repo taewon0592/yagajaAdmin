@@ -2,11 +2,13 @@
 <%@page import="model.LodgeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" 
+uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>숙박 업소 목록</title>
+<title>객실 상세보기</title>
 <link href="../vendor/bootstrap3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS (세로드롭메뉴바)-->
@@ -37,25 +39,30 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">숙박 시설 상세보기</h1>
+                    <h1 class="page-header">객실 상세보기</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-8">
                     <div class="panel panel-default">
 
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                        	<div class="table-responsive">
                         	
-                            <table width="70%" class="table table-bordered table-hover center" style="text-align:center;">
+                            <table width="100%" class="table table-bordered table-hover center" style="text-align:center;">
+                            	<colgroup>
+                            		<col width="20%"/>
+                            		<col width="30%"/>
+                            		<col width="20%"/>
+                            		<col width="30%"/>
+                            	</colgroup>
                                 <thead>
                                 <!-- 굵기넣기 -->
-                                <input type="hid den" name="lodge_no" value="${dto.lodge_no }"/>
-                                <input type="hid den" value="${dto.room_no }" />   
-                                <input type="hid den" value="${dto.lodge_no }" />   
+                                <input type="hidden" name="lodge_no" value="${dto.lodge_no }"/>
+                                <input type="hidden" value="${dto.room_no }" />   
+                                <input type="hidden" value="${dto.lodge_no }" />   
                                 
                                 </thead>
                                 <tbody>
@@ -69,60 +76,46 @@
                                     </tr>
                                     <tr class="even gradeC" >
                                         <td style="font-weight:bold">주중 숙박가격</td>
-                                        <td>${dto.d_sleep_price }</td>
+                                        <td><fmt:formatNumber value="${dto.w_sleep_price }" groupingUsed="true"/>원</td>
                                         <td style="font-weight:bold">주중 대실가격</td>
-                                        <td>${dto.d_rent_price }</td>
+                                        <td><fmt:formatNumber value="${dto.w_sleep_price }" groupingUsed="true"/>원</td>
                                     </tr>
                                     <tr class="even gradeC" >
                                         <td style="font-weight:bold;" >주말 숙박가격</td>
-                                        <td>${dto.w_sleep_price }</td>
+                                        <td><fmt:formatNumber value="${dto.w_sleep_price }" groupingUsed="true"/>원</td>
                                         <td style="font-weight:bold ">주말 대실가격</td>
-                                        <td>${dto.w_rent_price }</td>
+                                        <td><fmt:formatNumber value="${dto.w_sleep_price }" groupingUsed="true"/>원</td>
                                     </tr>
                                     <tr class="even gradeC" >
-                                        <td style="font-weight:bold">객실 사진</td>
-                                        <td colspan="3"><img src="../Upload/${dto.room_photo }" /></td>
+                                        <td style="font-weight:bold; vertical-align:middle;">객실 사진</td>
+                                        <td colspan="3"><img style="width:100%;"src="../Upload/${dto.room_photo }" /></td>
                                     </tr>
-                                    
-                                    		
-                                  
-                                
                                 </tbody>
                             </table>
-	                            <div class="row" style="text-align:center;">
-		                            <p>
-			                            <button  type="button" class="btn btn-success" onclick="location.href='../lodge/room_modify?lodge_no=${dto.lodge_no }&room_no=${dto.room_no }';">
-			                           		수정
-			                           	</button>
-			                    		<button type="button" class="btn btn-danger"onclick="location.href='../lodge/room_delete?lodge_no=${dto.lodge_no }&room_no=${dto.room_no }';">
-			                     			삭제
-			                     		</button>
-		                     		</p>
-                     			</div>
-                            
-                                    	
-                            <!-- /.table-responsive -->
-                            
+	                            
+		                           
+                            <button  type="button" class="btn btn-success" onclick="location.href='../lodge/room_modify?lodge_no=${dto.lodge_no }&room_no=${dto.room_no }&nowPage=${nowPage }';">
+                           		<i class="glyphicon glyphicon-edit"></i>&nbsp;수정하기
+                           	</button>
+                    		<button type="button" class="btn btn-danger"onclick="location.href='../lodge/room_delete?lodge_no=${param.lodge_no }&room_no=${dto.room_no }&nowPage=${nowPage }';">
+                     			<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
+                     		</button>
+		                    <button type="button" class="btn btn-warning"onclick="location.href='../lodge/lodge_view?lodge_no=${dto.lodge_no }&room_no=${dto.room_no }&nowPage=${nowPage }';">
+                     			<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기
+                     		</button>		
+                     		                     
+                                    	                          
                            
                         	
-                        </div>
+    
                         <!-- /.panel-body -->
-                    </div>
+   
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                      
-                          
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
+ 
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->

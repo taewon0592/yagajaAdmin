@@ -11,18 +11,22 @@ import model.LodgeDAO;
 import model.LodgeDTO;
 import util.FileUtil;
 
-public class room_DeleteCtrl extends HttpServlet{
+public class room2_DeleteCtrl extends HttpServlet{
 	   
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		 String lodge_no = req.getParameter("lodge_no");
+		 String lodge_no = req.getParameter("lodge_no2");
 	     String nowPage = req.getParameter("nowPage");
 	     String room_no = req.getParameter("room_no"); 
+	     String lodge_name = req.getParameter("lodge_name2");
+	     
 	      //삭제후 페이지이동 위해 영역에 저장
 	      req.setAttribute("nowPage", nowPage);
 	      req.setAttribute("room_no", room_no);
 	      req.setAttribute("lodge_no", lodge_no);
+	      req.setAttribute("lodge_name", lodge_name);
 	      System.out.println(req.getParameter("lodge_no"));
+	      
 	      LodgeDAO dao = new LodgeDAO();
 	      LodgeDTO dto = dao.selectView(lodge_no);
 	      //System.out.println("memberdelete controller : "+lodge_no);
@@ -40,7 +44,7 @@ public class room_DeleteCtrl extends HttpServlet{
 	      req.setAttribute("WHEREIS", "DELETE");
 	      req.setAttribute("SUC_FAIL", sucOrFail);
 	      
-	      req.getRequestDispatcher("/lodge/Message.jsp").forward(req, resp);
+	      req.getRequestDispatcher("/lodge/Message3.jsp").forward(req, resp);
 
 	}
 

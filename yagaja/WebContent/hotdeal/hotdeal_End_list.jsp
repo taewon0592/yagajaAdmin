@@ -242,9 +242,17 @@ $(function() {
 									</tbody>
 								</table>
 								</form>
-								<button type="button" id="delUser" class="btn btn-danger">
-									<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
-								</button>
+								
+								
+								<c:choose>
+									<c:when test="${empty lists }">
+									</c:when>
+									<c:otherwise>
+										<button type="button" id="delUser" class="btn btn-danger">
+											<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
+										</button>
+									</c:otherwise>
+								</c:choose>
 							<!-- /.panel-body -->
 						</div>
 						<!-- /.panel -->

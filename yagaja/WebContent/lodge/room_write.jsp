@@ -40,15 +40,7 @@
 			}
 		}).open();
 	}
-<%String lodge_name = request.getAttribute("lodge_name").toString();
 
-			LodgeDAO dao = new LodgeDAO();
-			LodgeDTO dto = dao.selectLodge_No(lodge_name);
-
-			//System.out.println("lodge_no "+dto.getLodge_no());
-			pageContext.setAttribute("dto", dto);
-			//request.setAttribute("lodge_no", dto.getLodge_no());
-			dao.close();%>
 	function frmValidate(f) {
 
 		var frmArray = [ "room_type", "room_person", "d_rent_price",
@@ -71,6 +63,69 @@
 			return false;
 		}
 	}
+</script>
+
+<script type="text/javascript">
+	function allCheckFunc(obj) {
+		$("[name=checkDel]").prop("checked", $(obj).prop("checked"));
+	}
+
+	/* 체크박스 체크시 전체선택 체크 여부 */
+	function oneCheckFunc(obj) {
+		var allObj = $("[name=checkAll]");
+		var objName = $(obj).attr("name");
+
+		if ($(obj).prop("checked")) {
+			checkBoxLength = $("[name=" + objName + "]").length;
+			checkedLength = $("[name=" + objName + "]:checked").length;
+
+			if (checkBoxLength == checkedLength) {
+				allObj.prop("checked", true);
+			} else {
+				allObj.prop("checked", false);
+			}
+		} else {
+			allObj.prop("checked", false);
+		}
+	}
+
+	$(function() {
+		$("[name=checkAll]").click(function() {
+			allCheckFunc(this);
+		});
+		$("[name=checkDel]").each(function() {
+			$(this).click(function() {
+				oneCheckFunc($(this));
+			});
+		});
+	});
+
+	//체크박스 회원 삭제 경고창
+	$(function() {
+		$("#delUser").click(function() {
+			var selectedCheck = new Array();
+			$('.inputchk:checked').each(function() {
+				selectedCheck.push(this.value);
+			});
+
+			if (selectedCheck.length < 1) {
+				alert("삭제할 회원을 선택해 주세요.");
+				return false;
+			}
+
+			var chk = confirm("삭제하시겠습니까?");
+			if (chk) {
+
+				document.delfrm.action = "../lodge/room2_delete";
+				document.delfrm.submit();
+				alert("삭제 완료 되었습니다.");
+			} else {
+				alert("삭제 취소 되었습니다.");
+				return false;
+			}
+
+		});
+	});
 </script>
 
 </head>
@@ -102,24 +157,17 @@
 									action="<c:url value="../lodge/room_write" />"
 									onsubmit="return frmValidate(this);"
 									enctype="multipart/form-data">
-									<input type="hid den" name="lodge_no" value="${dto.lodge_no }" />
-									<input type="hid den" name="lodge_name" value="${lodge_name }">
+									<input type="hidden" name="lodge_no" value="${param.lodge_no }" />
+									<input type="hidden" name="lodge_name" value="${param.lodge_name }">
 									<table
 										class="table table-striped table-bordered table-hover center"
 										style="width: 100%;">
-										<tr class="odd gradeX">
-											<td colspan="2">
-												<button type="submit" class="btn btn-warning">추가+</button>
-												<button type="button" class="btn btn-info"
-													onclick="location.href='./lodge_list';">완료</button>
-											</td>
-										</tr>
 										<tr class="even gradeC">
 											<td
 												style="font-weight: bold; vertical-align: middle; font-size: 1.2em; width: 20%; text-align: center;">객실
 												타입(인원)</td>
 											<td><input name="room_type" type="text" />
-												&nbsp;&nbsp;( <input name="room_person" type="text" />) 명 <%--<span style="vertical-align:middle; font-weight:bold;">최소:</span>
+												&nbsp;&nbsp;( <input name="room_person" type="text" style="width:50px;"/>) 명 <%--<span style="vertical-align:middle; font-weight:bold;">최소:</span>
                                   <select name="room_person" style="width:60px;">
                                         <%
                                     for(int i=2 ; i<=20 ; i++){
@@ -182,46 +230,72 @@
 												name="room_photo" /></td>
 										</tr>
 									</table>
+						
+								<div style="padding-bottom:10px;">
+								
+								
+								<c:choose>
+									<c:when test="${empty lists }">
+									</c:when>
+									<c:otherwise>
+										<button type="button" id="delUser" class="btn btn-danger">
+										<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제
+										</button>	
+									</c:otherwise>
+								</c:choose>
+									
+									<button type="submit" class="btn btn-warning">
+										<i class="glyphicon glyphicon-plus"></i>&nbsp;추가
+									</button>
+									<button type="button" class="btn btn-success" onclick="location.href='./lodge_list';">
+										<i class="glyphicon glyphicon-ok-circle"></i>&nbsp;완료
+									</button>
+								</div>
 								</form>
 
-
-
-								<form action="" name="room_Frm" method="get" enctype="multipart/form-data">
+								<form name="delfrm" method="post" action="../lodge/room2_delete">
+								<input type="hidden" name="lodge_no2" value="${param.lodge_no }" />
+		                        <input type="hidden" name="lodge_name2" value="${param.lodge_name }" />
 								<table class="table table-striped table-bordered table-hover center" style=" width:100%; ">
 	                       			<tr class="odd gradeX">
-		                        		<td style="text-align:center;">No</td>
-		                        		<td style="text-align:center;">객실타입</td>
-		                        		<td>인원</td>
-		                        		<td style="text-align:center;">객실사진</td>
-		                        		<td style="text-align:center;"><span style="color:black; font-weight:bold;">주중</span>&nbsp;&nbsp;&nbsp;대실가격</td>
-		                        		<td style="text-align:center;"><span style="color:black; font-weight:bold;">주중</span>&nbsp;&nbsp;&nbsp;숙박가격</td>
-		                        		<td style="text-align:center;"><span style="color:red; font-weight:bold;">주말</span>&nbsp;&nbsp;&nbsp;대실가격</td>
-		                        		<td style="text-align:center;"><span style="color:red; font-weight:bold;">주말</span>&nbsp;&nbsp;&nbsp;숙박가격</td>
+	                       				<td style="width: 30px;"><label><input type="checkbox" name="checkAll" /></label></td>
+		                        		<td style="text-align:center; vertical-align:middle;">No</td>
+		                        		<td style="text-align:center; vertical-align:middle;">객실타입</td>
+		                        		<td style="text-align:center; vertical-align:middle;">인원</td>
+		                        		<td style="text-align:center; vertical-align:middle;"><span style="color:black; font-weight:bold;">주중</span>&nbsp;&nbsp;&nbsp;대실가격</td>
+		                        		<td style="text-align:center; vertical-align:middle;"><span style="color:black; font-weight:bold;">주중</span>&nbsp;&nbsp;&nbsp;숙박가격</td>
+		                        		<td style="text-align:center; vertical-align:middle;"><span style="color:red; font-weight:bold;">주말</span>&nbsp;&nbsp;&nbsp;대실가격</td>
+		                        		<td style="text-align:center; vertical-align:middle;"><span style="color:red; font-weight:bold;">주말</span>&nbsp;&nbsp;&nbsp;숙박가격</td>
+		                        		<td style="text-align:center; vertical-align:middle;">객실사진</td>
 		                        	</tr>
 		                        	<tr class="even gradeC" >
 		                        	<c:choose>
 		                                	<c:when test="${empty lists }">
 		                                		<tr>
-		                                			<td colspan="8">
+		                                			<td colspan="9" style="text-align:center; vertical-align:middle; font-weight:bold;">
 		                                				등록된 글이 없습니다.
 		                                			</td>
 		                                		</tr>
 		                                	</c:when>
 		                                	<c:otherwise>
 		                                		<c:forEach items="${lists }" var="row" varStatus="loop">
+												<input type="hidden" name="room_no" value="${row.room_no }" />
 		                                		<tr>
-			                                        <td>${row.room_no }</td>
-			                                        <td>${row.room_type }</td>
-			                                        <td>${row.room_person}</td>
+		                                			<td><label><input type="checkbox"
+														class="inputchk" name="checkDel"
+														value="${row.room_no }" /></label></td>
+			                                        <td style="text-align:center;">${row.rNum }</td>
+			                                        <td style="text-align:center;">${row.room_type }</td>
+			                                        <td style="text-align:center;">${row.room_person}</td>
 			                                       <%--  <td><fmt:formatNumber value="${row.d_rent_price }" groupingUsed="true"/></td>
 			                                        <td><fmt:formatNumber value="${row.d_sleep_price }" groupingUsed="true"/></td>
 			                                        <td><fmt:formatNumber value="${row.w_rent_price }" groupingUsed="true"/></td>
 			                                        <td><fmt:formatNumber value="${row.w_sleep_price }" groupingUsed="true"/></td> --%>
-			                                        <td>${row.d_rent_price }</td>
-			                                        <td>${row.d_sleep_price }</td>
-			                                        <td>${row.w_rent_price }</td>
-			                                        <td>${row.w_sleep_price }</td>
-			                                        <td>${row.room_photo }</td>
+			                                        <td style="text-align:center;">${row.d_rent_price }</td>
+			                                        <td style="text-align:center;">${row.d_sleep_price }</td>
+			                                        <td style="text-align:center;">${row.w_rent_price }</td>
+			                                        <td style="text-align:center;">${row.w_sleep_price }</td>
+			                                        <td style="text-align:center;">${row.room_photo }</td>
 			                                    </tr>
 		                                		</c:forEach>
 		                                	</c:otherwise>
@@ -274,15 +348,7 @@
 					<!-- /.col-lg-12 -->
 				</div>
 				<!-- /.row -->
-				<div class="row">
-					<div class="col-lg-6">
-						<div class="panel panel-default"></div>
-						<!-- /.table-responsive -->
-					</div>
-					<!-- /.panel-body -->
-				</div>
-				<!-- /.panel -->
-			</div>
+	
 			<!-- /.col-lg-6 -->
 		</div>
 		<!-- /.row -->

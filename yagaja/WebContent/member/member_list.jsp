@@ -262,8 +262,7 @@ $(function() {
 										</div>
 									</c:otherwise>
 								</c:choose>
-								
-									
+							
 								</div>
 							<!-- /.panel-body -->
 						</div>

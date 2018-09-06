@@ -110,6 +110,71 @@ window.onload = function()
 
 </script>
 
+<script type="text/javascript">
+	function allCheckFunc(obj) {
+		$("[name=checkDel]").prop("checked", $(obj).prop("checked"));
+	}
+
+	/* 체크박스 체크시 전체선택 체크 여부 */
+	function oneCheckFunc(obj) {
+		var allObj = $("[name=checkAll]");
+		var objName = $(obj).attr("name");
+
+		if ($(obj).prop("checked")) {
+			checkBoxLength = $("[name=" + objName + "]").length;
+			checkedLength = $("[name=" + objName + "]:checked").length;
+
+			if (checkBoxLength == checkedLength) {
+				allObj.prop("checked", true);
+			} else {
+				allObj.prop("checked", false);
+			}
+		} else {
+			allObj.prop("checked", false);
+		}
+	}
+
+	$(function() {
+		$("[name=checkAll]").click(function() {
+			allCheckFunc(this);
+		});
+		$("[name=checkDel]").each(function() {
+			$(this).click(function() {
+				oneCheckFunc($(this));
+			});
+		});
+	});
+
+	//체크박스 회원 삭제 경고창
+	$(function() {
+		$("#delUser").click(function() {
+			var selectedCheck = new Array();
+			$('.inputchk:checked').each(function() {
+				selectedCheck.push(this.value);
+			});
+
+			if (selectedCheck.length < 1) {
+				alert("삭제할 핫딜 목록을 선택해 주세요.");
+				return false;
+			}
+
+			var chk = confirm("삭제하시겠습니까?");
+			if (chk) {
+
+				document.delfrm.action = "../Yagaja/AuctionDelete";
+				document.delfrm.submit();
+				alert("삭제 완료 되었습니다.");
+			} else {
+				alert("삭제 취소 되었습니다.");
+				return false;
+			}
+		});
+	});
+</script>
+
+
+
+
 </head>
 <body>
     <div id="wrapper">
@@ -131,19 +196,37 @@ window.onload = function()
 	            <div class="row">
 	                <div class="col-lg-12">
 	                    <div class="panel panel-default">
-	                    <div class="panel-heading">
-                        	<span style="font-weight:bold;">진행중 경매목록보기</span>                 
-                        </div>
+
                         <!-- /.panel-heading -->
 
 	                        <div class="panel-body">
-	                        	<div class="table-responsive">
+	                        
+	                        	<form class="form-inline" name="searchFrm" method="post" action="" style="padding-bottom:15px;">
+									<div class="input-group" style="padding-left: 1px;">
+										<select name="searchColumn" class="form-control">
+											<option value="direct_input">검색조건</option>
+											<option value="lodge_name">숙박업소명</option>
+											<option value="lodge_type">숙박종류</option>
+											<option value="room_type">객실종류</option>
+										</select>
+									</div>
+									<div class="input-group" style="padding-left: 1px;">
+										<input type="search" name="searchWord" class="form-control"
+											placeholder="검색어를 입력하세요." autofocus />
+										<div class="input-group-btn" style="padding-left: 2px;">
+											<button type="submit" id="btn_search" class="btn btn-default">
+												<i class="glyphicon glyphicon-search"></i>
+											</button>
+										</div>
+									</div>
+								</form>
 	                        	
+	                        	<form action="../Yagaja/AuctionDelete" method="post" name="delfrm">
 	                            <table width="100%" class="table table-striped table-bordered table-hover center" style="text-align:center;">
 	                                <thead>
 	                                <!-- 굵기넣기 -->
 	                                    <tr style="font-weight:bold" >
-	                                    	<td colspan="8" style="text-align:right; font-size:0.9em;" >
+	                                    	<td colspan="9" style="text-align:right; font-size:0.9em;" >
 	                                    		<span><a href="../Yagaja/AuctionList?mode=2" style="color:black">인기경매순</a></span>
 	                                    		<span>｜</span>
 	                                    		<span><a href="../Yagaja/AuctionList?mode=3" style="color:black">마감임박순</a></span>
@@ -154,6 +237,11 @@ window.onload = function()
 	                                </thead>
 	                                <tbody>
 	                                	<tr style="font-weight:bold">
+	                                		<td style="width: 40px;">
+	                                			<label>
+	                                				<input type="checkbox" name="checkAll" />
+	                                			</label>
+	                                		</td>
 	                                        <td>번호</td>
 	                                        <td>숙박시설명</td>
 	                                        <td>객실단가</td>
@@ -167,7 +255,7 @@ window.onload = function()
 	                                    	<c:when test="${empty lists }">
 	                                    		<!-- 등록된 게시물이 없을때 -->
 	                                    		<tr>
-	                                    			<td colspan="8">
+	                                    			<td colspan="9">
 	                                    				<span style="text-align:center; font-weight:bold;">등록된 글이 없습니다.</span>
 	                                    			</td>
 	                                    		</tr>
@@ -175,8 +263,10 @@ window.onload = function()
 	                                    	<c:otherwise>
 	                                    		<c:forEach items="${lists }" var="row" varStatus="loop">
 	                                    			<tr>
+	                                    				<td style="vertical-align:middle;"><label><input type="checkbox" class="inputchk" name="checkDel" value="${row.auction_no }" /></label></td>
 	                                    				<td style="vertical-align:middle;">${map.totalCount - (((map.nowPage-1) * map.pageSize) + loop.index) }</td>
-				                                    	<td style="vertical-align:middle;"><a href="../Yagaja/AuctionView?Auction_no=${row.auction_no }&nowPage=${param.nowPage}" style="color:black">${row.lodge_name }</a></td>
+				                                    	<td style="vertical-align:middle;"><a href="../Yagaja/AuctionView?auction_no=${row.auction_no }&nowPage=${map.nowPage}" style="color:black">${row.lodge_name }</a></td>
+				                                    	<input type="hidden" name="nowPage" value="${map.nowPage }" />
 				                                    	<td style="vertical-align:middle;"><fmt:formatNumber value="${row.w_sleep_price }" groupingUsed="true"/>원</td>
 				                                    	<td style="vertical-align:middle;"><fmt:formatNumber value="${row.start_price }" groupingUsed="true"/>마일리지</td>
 				                                    	<td class="center" style="vertical-align:middle;"><fmt:formatNumber value="${row.end_price }" groupingUsed="true"/>마일리지</td>
@@ -184,7 +274,7 @@ window.onload = function()
 				                                    	<td class="center" style="vertical-align:middle;">${row.final_bidder }</td>
 				                                    	<!-- 경매시작 까지 남은시간 저장한 폼 -->
 				                                    	<input type="hidden" id="remain_time_sec_${row.auction_no }" value="${row.remain_time_sec }" />
-				                                    	<input type="hid-den" id="srts_${row.auction_no }" value="${row.start_remain_time_sec }" />
+				                                    	<input type="hidden" id="srts_${row.auction_no }" value="${row.start_remain_time_sec }" />
 				                                    	<c:choose>
 					                                    	<c:when test="${row.remain_time_sec >= 0 }">
 						                                    	<td style="vertical-align:middle;">
@@ -203,15 +293,28 @@ window.onload = function()
 						                                    	</td>
 					                                    	</c:otherwise>
 				                                    	</c:choose>
-				                                    	
-				                                    	
 	                                    			</tr>
 	                                    		</c:forEach>
 	                                    	 </c:otherwise>
 	                                    </c:choose>   
 	                                </tbody>
 	                            </table>
+	                            </form>
 	                            <!-- /.table-responsive -->
+	                            <button type="button" class="btn btn-info" onclick="location.href='../Yagaja/AuctionWrite';">
+									<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+								</button>
+								
+								<c:choose>
+									<c:when test="${empty lists }">
+									</c:when>
+									<c:otherwise>
+										<button type="button" id="delUser" class="btn btn-danger">
+											<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
+										</button>
+									</c:otherwise>
+								</c:choose>
+
 	                        </div>
 	                        <!-- /.panel-body -->
 	                    </div>
@@ -222,20 +325,13 @@ window.onload = function()
 					     
 	            </div>
 	            <!-- /.row -->
-	            <div class="row">
-	                <div class="col-lg-12">
-	                    <div class="panel panel-default">
-  
-	                            </div>
-	                            <!-- /.table-responsive -->
-	                        </div>
 	                        <!-- /.panel-body -->
 		                    <div class="row text-center">
 								<ul class="pagination">
 									${pagingImg }
 								</ul>
 							</div> 
-	                    </div>
+	                    
 	                    <!-- /.panel -->
 	                </div>
 	                <!-- /.col-lg-6 -->

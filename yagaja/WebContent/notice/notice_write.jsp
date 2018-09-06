@@ -98,12 +98,8 @@ $(function() {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           공지사항 등록 페이지
-                        </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
-                        	<div class="table-responsive">    
+                        <div class="panel-body"> 
                         	<form action="../Notice/NoticeWrite" name="writeFrm" method="post" onsubmit="return isValidate(this);" >
 	                        	<table class="table table-striped table-bordered table-hover center" style=" width:100%; ">
 
@@ -130,9 +126,11 @@ $(function() {
 		                        	
                         		</table>
 
-		<!-- 각종 버튼 부분 -->
-
-		<button type="submit" class="btn btn-info" id="savebutton">등록하기</button>
+									<!-- 각종 버튼 부분 -->
+							
+									<button type="submit" class="btn btn-info" id="savebutton">
+										<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+									</button>
 
 								</form>	
                         	
@@ -140,23 +138,13 @@ $(function() {
                         
        		  						</div>
                         		<!-- /.panel-body -->
-                    			</div>
+                    			</div>			
                     		<!-- /.panel -->
                 			</div>
                 		<!-- /.col-lg-12 -->
            				</div>
             			<!-- /.row -->
-            			<div class="row">
-                			<div class="col-lg-6">
-                    			<div class="panel panel-default">
-                      
-                          
-                            	</div>
-                            	<!-- /.table-responsive -->
-                        	</div>
-                        <!-- /.panel-body -->
-                    	</div>
-                    	<!-- /.panel -->
+
                 	</div>
                 	<!-- /.col-lg-6 -->
             	</div>

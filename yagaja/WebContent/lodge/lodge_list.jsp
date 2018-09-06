@@ -160,7 +160,7 @@ function searchCheck(f){
                                    <thead>
                                    </thead>
                      
-                     <form name="delfrm" method="post">
+                   			 <form name="delfrm" method="post">
                                 <tbody>
                                 
                                    <tr style="font-weight:bold;">
@@ -168,8 +168,8 @@ function searchCheck(f){
                                           <label><input type="checkbox" name="checkAll" /></label>
                                        </td>
                                         <td style="vertical-align:middle;">번호</td>
-                                        <td style="vertical-align:middle;">숙소종류</td>
                                         <td colspan="2" style="vertical-align:middle;">숙소명</td>
+                                        <td style="vertical-align:middle;">숙소종류</td>
                                         <td style="vertical-align:middle;">숙소주소</td>
                                         <td style="vertical-align:middle;">숙소번호</td>
                                         <td style="vertical-align:middle;">방개수</td>                                         
@@ -185,14 +185,14 @@ function searchCheck(f){
                                          </c:when>
                                          <c:otherwise>
                                             <c:forEach items="${lists }" var="row" varStatus="loop">
+                                               
                                                <td style="vertical-align:middle;">
                         							<label><input type="checkbox" class="inputchk" name="checkDel" value="${row.lodge_no}"/></label>
 							                     </td>
 							                     <input type="hidden" name="lodge_no" value="${row.lodge_no }" />
                                                  <td style="vertical-align:middle;">${map.totalCount - (((map.nowPage -1) * map.pageSize) + loop.index) }</td>
-                                                 <td style="vertical-align:middle;">${row.lodge_type }</td>
                                                  <td colspan="2" style="vertical-align:middle;"><a href="./lodge_view?lodge_no=${row.lodge_no }&nowPage=${map.nowPage}" style="color:black;">${row.lodge_name }</a></td>
-                                                
+                                                 <td style="vertical-align:middle;">${row.lodge_type }</td>
                                                  <td class="center" style="vertical-align:middle;">${row.addr_common }</td>
                                                  <td class="center" style="vertical-align:middle;">${row.lodge_tel }</td>
                                                  <td class="center" style="vertical-align:middle;">${row.lodge_roomcount }</td>

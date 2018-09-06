@@ -461,7 +461,7 @@ public class LodgeDAO {
 					+ " room_type=?, room_person=?, d_sleep_price=?,"
 					+ " d_rent_price=?, w_sleep_price=?, w_rent_price=?,  "
 					+ " room_photo=? "
-					+ " WHERE lodge_no=?";
+					+ " WHERE lodge_no=? and room_no=?";
 			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getRoom_type());
@@ -472,6 +472,7 @@ public class LodgeDAO {
 			psmt.setString(6, dto.getW_rent_price());
 			psmt.setString(7, dto.getRoom_photo());
 			psmt.setString(8, dto.getLodge_no());
+			psmt.setString(9, dto.getRoom_no());
 			
 			affected = psmt.executeUpdate();
 		}
@@ -488,13 +489,14 @@ public class LodgeDAO {
 		List<LodgeDTO> bbs = new Vector<LodgeDTO>();
 		
 		String sql = "SELECT * FROM ("
-				+ " SELECT Tb.*, rownum rNum FROM ( "  
+				+ " SELECT Tb.*, to_char(d_sleep_price, '999,999') as dsp, to_char(w_sleep_price, '999,999') as wsp,"
+				+ " to_char(d_rent_price, '999,999') as drp, to_char(w_rent_price, '999,999') as wrp, rownum rNum FROM ( "  
 				+ "      SELECT * FROM room  " ;  
 				
-		sql += " ORDER BY lodge_no DESC "
+		sql += " where lodge_no=? ORDER BY room_no DESC "
 				 +"    ) Tb"
                  +" ) "
-                 + " WHERE lodge_no=? order by room_no desc ";
+                 + " WHERE lodge_no=?";
 		
 		System.out.println("쿼리문 : "+sql);
 		
@@ -503,19 +505,21 @@ public class LodgeDAO {
 			psmt = con.prepareStatement(sql);
 			
 			psmt.setString(1, map.get("lodge_no").toString());
+			psmt.setString(2, map.get("lodge_no").toString());
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				// 결과셋을 DTO객체에 담는다.
 				LodgeDTO dto = new LodgeDTO();
 				
-				dto.setRoom_no(rs.getString(1));
-				dto.setRoom_type(rs.getString(2));
-				dto.setRoom_person(rs.getString(3));
-				dto.setD_rent_price(rs.getString(4));
-				dto.setD_sleep_price(rs.getString(5));
-				dto.setW_rent_price(rs.getString(6));
-				dto.setW_sleep_price(rs.getString(7));
-				dto.setRoom_photo(rs.getString(8));
+				dto.setRoom_no(rs.getString("room_no"));
+				dto.setRoom_type(rs.getString("room_type"));
+				dto.setRoom_person(rs.getString("room_person"));
+				dto.setD_rent_price(rs.getString("drp"));
+				dto.setD_sleep_price(rs.getString("dsp"));
+				dto.setW_rent_price(rs.getString("wrp"));
+				dto.setW_sleep_price(rs.getString("wsp"));
+				dto.setRoom_photo(rs.getString("room_photo"));
+				dto.setrNum(rs.getString("rNum"));
 				
 				//DTO객체를 컬렉션에 추가
 				bbs.add(dto);
@@ -658,5 +662,105 @@ public class LodgeDAO {
 	      }
 	      return totalCount;
 	   }
-
+   
+   //lodge_no 가져오기
+   public LodgeDTO selectLodge_No()
+   {
+	   LodgeDTO dto = new LodgeDTO();
+	   
+	   try
+	   {
+		   String sql = "select * from "
+			   		+ " (select lodge_no, lodge_name, rownum rNum from "
+			   		+ " (select lodge_no, lodge_name from lodge order by lodge_no desc) ) where rNum=1";
+			   
+			   System.out.println("lodge_no가져오는 쿼리"+sql);
+			   
+			   psmt = con.prepareStatement(sql);
+			   rs = psmt.executeQuery();
+			   if(rs.next())
+			   {
+				   dto.setLodge_no(rs.getString("lodge_no"));
+				   dto.setLodge_name(rs.getString("lodge_name"));
+			   }
+			   
+			    
+			   
+	   }
+	   catch(Exception e)
+	   {
+		   e.printStackTrace();
+	   }
+	   return dto;
+   }
+   
+   //room에 맞는 게시판 테이블의 개수 구해오기
+  	public int roomGetTotalRecordCount(LodgeDTO dto) {
+ 			
+ 		int totalCount = 0;
+ 		
+ 		try {
+ 			String sql = "SELECT COUNT(*) FROM lodge L inner join room R on L.lodge_no=R.lodge_no where L.lodge_no=? ";
+ 			
+ 			System.out.println("room게시판 개수는="+sql);
+			psmt = con.prepareStatement(sql);
+			
+			psmt.setString(1, dto.getLodge_no());
+ 			rs = psmt.executeQuery();
+ 			rs.next();
+ 			totalCount = rs.getInt(1);
+ 		}
+ 		catch(Exception e) {
+ 			
+ 		}
+ 		return totalCount;
+ 	}
+  	
+  //room2페이지
+  	public List<LodgeDTO> room2_selectpaging(LodgeDTO row){
+  		
+  		List<LodgeDTO> bbs = new Vector<LodgeDTO>();
+  		
+  		String sql = "SELECT * FROM ("
+  				+ " SELECT Tb.*, to_char(d_sleep_price, '999,999') as dsp, to_char(w_sleep_price, '999,999') as wsp,"
+  				+ " to_char(d_rent_price, '999,999') as drp, to_char(w_rent_price, '999,999') as wrp, rownum rNum FROM ( "  
+  				+ "      SELECT * FROM room  " ;  
+  				
+  		sql += " where lodge_no=? ORDER BY room_no DESC "
+  				 +"    ) Tb"
+                   +" ) "
+                   + " WHERE lodge_no=?";
+  		
+  		System.out.println("쿼리문 : "+sql);
+  		
+  		// prepare 객체생성 및 실행
+  		try {
+  			psmt = con.prepareStatement(sql);
+  			
+  			psmt.setString(1, row.getLodge_no());
+  			psmt.setString(2, row.getLodge_no());
+  			rs = psmt.executeQuery();
+  			while(rs.next()) {
+  				// 결과셋을 DTO객체에 담는다.
+  				LodgeDTO dto = new LodgeDTO();
+  				
+  				dto.setRoom_no(rs.getString("room_no"));
+  				dto.setRoom_type(rs.getString("room_type"));
+  				dto.setRoom_person(rs.getString("room_person"));
+  				dto.setD_rent_price(rs.getString("drp"));
+  				dto.setD_sleep_price(rs.getString("dsp"));
+  				dto.setW_rent_price(rs.getString("wrp"));
+  				dto.setW_sleep_price(rs.getString("wsp"));
+  				dto.setRoom_photo(rs.getString("room_photo"));
+  				dto.setrNum(rs.getString("rNum"));
+  				
+  				//DTO객체를 컬렉션에 추가
+  				bbs.add(dto);
+  			}
+  		}
+  		catch(Exception e) {
+  			e.printStackTrace();
+  		}
+  		return bbs;
+  	}
 }

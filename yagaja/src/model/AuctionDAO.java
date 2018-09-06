@@ -284,6 +284,96 @@ public class AuctionDAO
 		}	
 		return bbs;
 	}
+	
+	//게시물 상세보기(view)
+	public AuctionDTO view(String auction_no) {
+		
+		AuctionDTO dto = new AuctionDTO();
+		
+		String sql = " "
+				+ " SELECT H.*, L.lodge_name, L.lodge_type, L.lodge_photo,R.room_type,R.room_no FROM "
+				+ "	auction H INNER JOIN lodge L"
+				+ "	ON H.lodge_no = L.lodge_no"
+				+ "	INNER JOIN room R"
+				+ "	ON H.lodge_no = R.lodge_no"
+				+ " WHERE auction_no=?";
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, auction_no);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				
+				dto.setAuction_no(rs.getInt("auction_no"));
+				dto.setAuction_stime(rs.getString("auction_stime"));
+				dto.setAuction_etime(rs.getString("auction_etime"));
+				dto.setStart_price(rs.getInt("start_price"));
+				dto.setAuction_unit(rs.getInt("Auction_unit"));
+				dto.setAuction_check_in(rs.getString("check_in"));
+				dto.setAuction_check_out(rs.getString("check_out"));
+				dto.setAuction_regidate(rs.getString("auction_regidate"));
+				dto.setLodge_no(rs.getInt("lodge_no"));
+				//join에 의한 lodge테이블 필드추가
+				dto.setLodge_name(rs.getString("lodge_name"));
+				dto.setLodge_type(rs.getString("lodge_type"));
+				dto.setLodge_photo(rs.getString("lodge_photo"));
+				//join에 의한 room테이블 필드추가
+				dto.setRoom_type(rs.getString("room_type"));
+				dto.setRoom_no(rs.getString("room_no"));
+				
+			}
+		} 
+		catch (Exception e) {
+			System.out.println("View 중 예외발생");
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
+	// 수정하기
+	public int update(AuctionDTO dto) {
+		int affected = 0;// 적용된 행의갯수
+		String sql = " " + " UPDATE auction SET" + " auction_stime=TO_DATE('" + dto.getAuction_stime()
+				+ "','yyyy-mm-dd hh24:mi:ss')," + " auction_etime=TO_DATE('" + dto.getAuction_etime()
+				+ "','yyyy-mm-dd hh24:mi:ss')," + " start_price=?, auction_unit=?, "
+				+ " check_in=TO_DATE('"+dto.getAuction_check_in()+"','yyyy-mm-dd hh24:mi:ss'), check_out=TO_DATE('" + dto.getAuction_check_out() +"','yyyy-mm-dd hh24:mi:ss')" + " WHERE auction_no=? ";
+
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, dto.getStart_price());
+			psmt.setInt(2, dto.getAuction_unit());
+			psmt.setInt(3, dto.getAuction_no());
+			
+			System.out.println(sql);
+			affected = psmt.executeUpdate();
+
+			System.out.println(affected);
+
+		} catch (Exception e) {
+			System.out.println("글 수정 중 오류발생.");
+			e.printStackTrace();
+		}
+		return affected;
+	}
+	
+	public int delete(String auction_no) {
+		int affected = 0;// 적용된 행의갯수
+	
+		try {
+			String sql = "DELETE FROM auction WHERE auction_no=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, auction_no);
+			affected = psmt.executeUpdate();
+			System.out.println("-----------------------dao");
+			System.out.println("auction_no:" + auction_no);
+			System.out.println("sql" + sql);
+	
+		} catch (Exception e) {
+			System.out.println("글 삭제중 오류가 발생했습니다.");
+			e.printStackTrace();
+	
+		}
+		return affected;
+	}
 }
 
 

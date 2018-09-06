@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>index.jsp</title>
+<title>경매 수정하기</title>
 <!-- Bootstrap Core CSS -->
 <link href="../vendor/bootstrap3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
@@ -138,7 +138,7 @@ function frmValidate(fn) {
 		    <div id="page-wrapper">
 					<div class="row">
 						<div class="col-lg-12">
-							<h1 class="page-header">경매 등록</h1>
+							<h1 class="page-header">경매 수정하기</h1>
 						</div>
 						<!-- /.col-lg-12 -->
 					</div>
@@ -149,18 +149,22 @@ function frmValidate(fn) {
 
 		
 								<!-- /.panel-heading -->
-								<form action="../Yagaja/AuctionWrite?mode=1" name="writeFrm" method="post" onsubmit="return frmValidate(this);">
+								<form action="../Yagaja/AuctionEdit" name="writeFrm" method="post" onsubmit="return frmValidate(this);">
 									<div class="panel-body">
 										<div class="table-responsive">
 											<table width="100%"
 												class="table table-striped table-bordered table-hover center"
 												style="text-align: center;">
 												<tr style="font-weight: bold">
-												<input type="hidden" id="lodge_no" name="lodge_no" value="" />
+												<input type="hid-den" id="aucton_no" name="auction_no" value="${dto.auction_no }" />
+												<input type="hid-den" id="lodge_no" name="lodge_no" value="${dto.lodge_no }"/>
+												<input type="hid-den" id="room_no" name="room_no" value="${dto.room_no }"/>
+												<input type="hid-den" id="nowPage" name="nowPage" value="${param.nowPage }" />
+												
 													<td style="vertical-align:middle;">숙박업소명</td>
 													<td colspan="3">
-														<div class="input-group">
-															<input type="text" class="form-control" placeholder="숙소명을 검색하세요" id="lodge_name" />
+														<div class="input-group"> 
+															<input type="text" class="form-control" placeholder="숙소명을 검색하세요" id="lodge_name" value="${dto.lodge_name }" readonly/>
 															<div class="input-group-btn">
 																<button type="button" class="btn btn-default" id="lodge_searchBtn" data-toggle="modal" data-target="#lodge_searchModal">
 																	<i class="glyphicon glyphicon-search"></i>
@@ -172,7 +176,7 @@ function frmValidate(fn) {
 												<tr>
 													<td style="font-weight: bold; vertical-align:middle;">숙 소 분 류</td>
 													<td colspan="3">
-														<input type="text" class="form-control" id="lodge_type" />
+														<input type="text" class="form-control" id="lodge_type"  value="${dto.lodge_type }" readonly/>
 														<!-- 
 														<select name="lodge_type"
 															onChange="lodge_type(this.value);" class="form-control">
@@ -188,33 +192,31 @@ function frmValidate(fn) {
 													<td style="font-weight: bold; vertical-align:middle;">객 실 타 입</td>
 													<td colspan="3">
 														<!-- 숙소명과 숙소분류에 따른 객실타입이 자동으로 나올 수 있어야함 --> 
-														<select name="room_type" id="room_type" class="form-control" onChange="typeChange(this.value);">
-														</select>
-														<input type="hid-den" id="room_no" name="room_no" value="" />
+														<input type="text" name="room_type" id="room_type" class="form-control" value="${dto.room_type }" readonly/>
 													</td>
 												</tr>
 												<tr>
 													<td style="font-weight: bold; vertical-align:middle;">입 실 날 짜</td>
 													
 													<td>
-														<input type="text" class="form-control" id="auction_check_in" name="auction_check_in"/>
+														<input type="text" class="form-control" id="auction_check_in" name="auction_check_in" value="${dto.auction_check_in }"/>
 													</td>
 													<td style="font-weight: bold; vertical-align:middle;">퇴 실 날 짜</td>
 													<td>
-														<input type="text" class="form-control" id="auction_check_out" name="auction_check_out"/>
+														<input type="text" class="form-control" id="auction_check_out" name="auction_check_out" value="${dto.auction_check_out }"/>
 													</td>
 												</tr>
 												<tr>
 													<td style="font-weight: bold; vertical-align:middle;">시 작 가</td>
 													<td colspan="3">
-														<input type="text" class="form-control" id="" name="start_Price"/>
+														<input type="text" class="form-control" id="" name="start_Price" value="${dto.start_price }"/>
 													</td>
 												</tr>
 												
 												<tr>
 													<td style="font-weight: bold; vertical-align:middle;">입 찰 단 위</td>
 													<td colspan="3">
-					                        		<select name="auction_unit" id="" class="form-control">
+					                        		<select name="auction_unit" id="" class="form-control" value="${dto.auction_unit }">
 					                        			<option value="500">500</option>
 					                        			<option value="1000">1000</option>
 					                        			<option value="1500">1500</option>
@@ -225,11 +227,11 @@ function frmValidate(fn) {
 												<tr>
 													<td style="font-weight: bold; vertical-align:middle;">경 매 시 작</td>
 													<td>
-														<input type="text" class=form-control id="auction_stime" name="auction_stime"/>
+														<input type="text" class=form-control id="auction_stime" name="auction_stime" value="${dto.auction_stime }"/>
 													</td>
 													<td style="font-weight: bold; vertical-align:middle;">경 매 종 료</td>
 													<td>
-														<input type="text" class="form-control" id="auction_etime" name="auction_etime" />												
+														<input type="text" class="form-control" id="auction_etime" name="auction_etime" value="${dto.auction_etime }" />												
 													</td>
 												</tr>
 		
@@ -238,10 +240,10 @@ function frmValidate(fn) {
 											<!-- /.table-responsive -->
 										</div>
 										<!-- /.panel-body -->
-										<button type="submit" class="btn btn-info">
-											<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+										<button type="submit" class="btn btn-success">
+											<i class="glyphicon glyphicon-edit"></i>&nbsp;수정하기
 										</button>
-										<button type="button" class="btn btn-success" onclick="location.href='../Yagaja/AuctionList?mode=1';">
+										<button type="button" class="btn btn-warning" onclick="location.href='../Yagaja/AuctionList?mode=1';">
 											<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기
 										</button>
 									</div>

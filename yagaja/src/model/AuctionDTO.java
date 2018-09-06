@@ -35,7 +35,7 @@ public class AuctionDTO
 	private String lodge_name;
 	private String lodge_type;
 	private String lodge_photo;
-	//room추가
+	//room추가ㅊ
 	private String room_type;
 	private String room_no;
 	

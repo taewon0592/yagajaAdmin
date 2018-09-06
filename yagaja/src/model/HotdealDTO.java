@@ -21,18 +21,23 @@ public class HotdealDTO {
 	private String room_type;
 	private String room_no;
 	
-	//남은시간
+	//경매까지 남은시간
 	private String remain_time_sec;
 	private String timeView;
+	
+	//경매시작 후 종료까지 남은시간
+	private String start_remain_time_sec; //경매종료 까지 남은시간
+	private String start_timeView; //경매진행중 보여주기위해 필요한 남은시간
+	
 	
 	//기본생서자
 	public HotdealDTO() {
 	}
-
+	//인자생성자
 	public HotdealDTO(String hotdeal_no, String hotdeal_stime, String hotdeal_etime, String hotdeal_price,
 			String hotdeal_buy, String hotdeal_sell, String hotdeal_date, String hotdeal_sday, String hotdeal_eday,
 			String lodge_no, String lodge_name, String lodge_type, String lodge_photo, String room_type, String room_no,
-			String remain_time_sec, String timeView) {
+			String remain_time_sec, String timeView, String start_remain_time_sec, String start_timeView) {
 		super();
 		this.hotdeal_no = hotdeal_no;
 		this.hotdeal_stime = hotdeal_stime;
@@ -51,7 +56,10 @@ public class HotdealDTO {
 		this.room_no = room_no;
 		this.remain_time_sec = remain_time_sec;
 		this.timeView = timeView;
+		this.start_remain_time_sec = start_remain_time_sec;
+		this.start_timeView = start_timeView;
 	}
+
 
 	public String getHotdeal_no() {
 		return hotdeal_no;
@@ -189,6 +197,18 @@ public class HotdealDTO {
 
 	public void setTimeView(String timeView) {
 		this.timeView = timeView;
+	}
+	public String getStart_remain_time_sec() {
+		return start_remain_time_sec;
+	}
+	public void setStart_remain_time_sec(String start_remain_time_sec) {
+		this.start_remain_time_sec = start_remain_time_sec;
+	}
+	public String getStart_timeView() {
+		return start_timeView;
+	}
+	public void setStart_timeView(String start_timeView) {
+		this.start_timeView = start_timeView;
 	}
 	
 	

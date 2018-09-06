@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>숙박 업소 목록</title>
+<title>객실 수정하기</title>
 <link href="../vendor/bootstrap3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS (세로드롭메뉴바)-->
@@ -38,43 +38,42 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">숙박 시설 상세보기</h1>
+                    <h1 class="page-header">객실 수정하기</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-8">
                     <div class="panel panel-default">
 
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                        	<div class="table-responsive">
                         	<form action="<c:url value="../lodge/room_modify" />" name="writeFrm2" method="post" enctype="multipart/form-data" >
-                            <table width="70%" class="table table-bordered table-hover center" style="text-align:center;">
+                            <table width="100%" class="table table-bordered table-hover center" style="text-align:center;">
                                 <thead>
                                 <!-- 굵기넣기 -->
-                                <input type="hid den" name="room_no" value="${dto.room_no }" />   
-                                <input type="hid den" name="lodge_no" value="${dto.lodge_no }" />   
-                                <input type="hid den" name="originalfile" value="${dto.room_photo }"/>
+                                <input type="hidden" name="room_no" value="${dto.room_no }" />   
+                                <input type="hidden" name="lodge_no" value="${dto.lodge_no }" />   
+                                <input type="hidden" name="originalfile" value="${dto.room_photo }"/>
                                 </thead>
                                 <tbody>
                                 	<tr>
-                                        <td style="font-weight:bold">객실 타입</td>
+                                        <td style="font-weight:bold; vertical-align:middle;">객실 타입</td>
                                         <td><input type="text" name="room_type" value="${dto.room_type }" /></td>
-                                       	<td style="font-weight:bold">객실 인원</td>
+                                       	<td style="font-weight:bold; vertical-align:middle;">객실 인원</td>
                                         <td ><input type="text" name="room_person" value="${dto.room_person }" /></td>
                                     </tr>
                                     <tr class="even gradeC" >
-                                        <td style="font-weight:bold">주중 숙박가격</td>
+                                        <td style="font-weight:bold; vertical-align:middle;">주중 숙박가격</td>
                                         <td><input type="text" name="d_sleep_price" value="${dto.d_sleep_price }" /></td>
-                                        <td style="font-weight:bold">주중 대실가격</td>
+                                        <td style="font-weight:bold; vertical-align:middle;">주중 대실가격</td>
                                         <td><input type="text" name="d_rent_price" value="${dto.d_rent_price }" /></td>
                                     </tr>
                                     <tr class="even gradeC" >
-                                        <td style="font-weight:bold;" >주말 숙박가격</td>
+                                        <td style="font-weight:bold; vertical-align:middle;" >주말 숙박가격</td>
                                         <td><input type="text" name="w_sleep_price" value="${dto.w_sleep_price }" /></td>
-                                        <td style="font-weight:bold ">주말 대실가격</td>
+                                        <td style="font-weight:bold; vertical-align:middle;">주말 대실가격</td>
                                         <td><input type="text" name="w_rent_price" value="${dto.w_rent_price }" /></td>
                                     </tr>
                                     <tr class="even gradeC" >
@@ -87,18 +86,15 @@
                                 
                                 </tbody>
                             </table>
-	                            <div class="row" style="text-align:center;">
-		                            <p>
-			                            <button  type="submit" class="btn btn-success">
-			                           		수정 완료
-			                           	</button>
-			                    		
-		                     		</p>
-		                     		</form>	
-                     			</div>
+
+		                            <button  type="submit" class="btn btn-success">
+		                           		<i class="glyphicon glyphicon-edit"></i>&nbsp;수정하기
+		                           	</button>
+	                     		</form>	
+  
                             
                                     	
-                            <!-- /.table-responsive -->
+
                             
                            
                         	
@@ -110,16 +106,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                      
-                          
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
+ 
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->

@@ -152,7 +152,8 @@ public class HotdealDAO {
 		
 		String sql = ""
 				+" SELECT * FROM ("
-				+"    SELECT Tb.*, trunc((hotdeal_stime-sysdate)*24*60*60) AS remain_time_sec, rownum rNum FROM ("
+				+"    SELECT Tb.*, trunc((hotdeal_stime-sysdate)*24*60*60) AS remain_time_sec, "
+				+ "					trunc((hotdeal_etime-sysdate)*24*60*60) AS start_remain_time_sec, rownum rNum FROM ("
 				+"        SELECT H.*, L.lodge_name,L.lodge_type,R.room_type FROM "
 				+ "			hotdeal H INNER JOIN lodge L"
 				+ "				ON H.lodge_no=L.lodge_no"
@@ -259,6 +260,7 @@ public class HotdealDAO {
 				dto.setRoom_type(rs.getString("room_type"));
 				dto.setRoom_no(rs.getString("room_no"));
 				dto.setRemain_time_sec(rs.getString("remain_time_sec"));
+				dto.setStart_remain_time_sec(rs.getString("start_remain_time_sec"));
 				
 				//처음에 남은시간을 보여주기
 				int dateVal = (Integer.parseInt(dto.getRemain_time_sec())/(24*60*60)); //총 초에서 날짜뽑기
@@ -271,7 +273,19 @@ public class HotdealDAO {
 				String remain_time = dateVal+"일 "+hourVal+"시간 "+minVal+"분 "+secVal+"초";
 				
 				dto.setTimeView(remain_time);
-			
+				
+				//진행중 경매 처음에 남은시간 보여주기
+				int s_dateVal = (Integer.parseInt(dto.getStart_remain_time_sec())/(24*60*60)); //총 초에서 날짜뽑기
+				int s_tempVal = Integer.parseInt(dto.getStart_remain_time_sec())%(24*60*60); //남은 초 담기
+				int s_hourVal = s_tempVal/(60*60);  //남은 총 초에서 시간 뽑기
+				s_tempVal = s_tempVal%(60*60);  //남은 초 담기
+				int s_minVal = s_tempVal/60; //남은 총 초에서 분 뽑기
+				int s_secVal = s_tempVal%60; //남은 초 담기
+				
+				String s_remain_time = s_dateVal+"일 "+s_hourVal+"시간 "+s_minVal+"분 "+s_secVal+"초";
+				
+				dto.setStart_timeView(s_remain_time);
+				
 				//5.DTO객체를 컬렉션에 추가한다.
 				bbs.add(dto);
 			}

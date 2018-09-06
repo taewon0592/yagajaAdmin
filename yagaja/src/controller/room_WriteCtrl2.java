@@ -31,6 +31,7 @@ public class room_WriteCtrl2 extends HttpServlet {
 		
 		MultipartRequest mr = FileUtil.upload(req, req.getServletContext().getRealPath("/Upload"));
 		String lodge_no = null;
+		String nowPage = null;
 		int sucOrFail;
 		//String lodge_name = req.getParameter("lodge_name");
 		if(mr != null) {
@@ -43,7 +44,9 @@ public class room_WriteCtrl2 extends HttpServlet {
 			String w_rent_price = mr.getParameter("w_rent_price");
 			String room_photo = mr.getFilesystemName("room_photo");
 			lodge_no = mr.getParameter("lodge_no");
+			nowPage = mr.getParameter("nowPage");
 			String lodge_name = mr.getParameter("lodge_name");
+
 			System.out.println(lodge_no);
 			System.out.println("WirteCtrl에서 lodge_name="+lodge_name);
 
@@ -65,8 +68,8 @@ public class room_WriteCtrl2 extends HttpServlet {
 		}
 		
 		if(sucOrFail==1) {
-			RequestDispatcher dis = req.getRequestDispatcher("../lodge/lodge_view?lodge_no="+lodge_no);
-			dis.forward(req, resp);
+			resp.sendRedirect("../lodge/lodge_view?lodge_no="+lodge_no+"&nowPage="+nowPage);
+
 			// req.getRequestDispatcher("../lodge/room_write.jsp").forward(req, resp);
 		}
 		else {

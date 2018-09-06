@@ -188,25 +188,29 @@ function searchCheck(f){
 							href="../Notice/NoticeView?notice_no=${row.notice_no }&nowPage=${param.nowPage }">
 								${row.notice_title } </a></td>
 						<td class="text-center">${row.notice_name }</td>
-						<td class="text-center">${row.notice_regidate }</td>
-						
+						<td class="text-center">${row.notice_regidate }</td>	
 					</tr>	
 				</c:forEach>
-				
 			</c:otherwise>
 		</c:choose>
-
-                              
                                 </tbody>
                             </table> 
                             <!-- /.table-responsive -->
-							</form>
-							<button type="button" class="btn btn-info" onclick="location.href='../notice/notice_write.jsp';">
+
+					<button type="button" class="btn btn-info" onclick="location.href='../notice/notice_write.jsp';">
               			<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
               		</button>&nbsp;&nbsp;
+              		
+			<c:choose>
+				<c:when test="${empty lists }">
+				</c:when>
+				<c:otherwise>              		
               		<button type="button" id="NoticeDel" class="btn btn-danger" >
               			<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
               		</button>
+				</c:otherwise>
+			</c:choose>   
+										</form>           		
                         <!-- /.panel-body -->
                     </div>
                     
@@ -214,23 +218,13 @@ function searchCheck(f){
                 </div>
                 <!-- /.col-lg-12 -->
                	<!-- 페이지번호 -->
-				<div class="row text-center">
+				<div class="row text-center"> 
 					<ul class="pagination">
 						${pagingImg }
 					</ul>
 				</div>
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                      
-                          
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->

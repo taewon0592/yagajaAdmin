@@ -78,7 +78,7 @@ public class AuctionWrite extends HttpServlet
 		
 		if(sucOrFail==1)
 		{
-			req.getRequestDispatcher("/Yagaja/AuctionList").forward(req, resp);
+			resp.sendRedirect("../Yagaja/AuctionList?mode=1");
 		}
 		else
 		{

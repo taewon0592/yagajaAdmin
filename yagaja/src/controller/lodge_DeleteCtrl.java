@@ -25,9 +25,11 @@ public class lodge_DeleteCtrl extends HttpServlet{
 	      LodgeDTO dto = dao.selectView(lodge_no);
 	      //System.out.println("memberdelete controller : "+lodge_no);
 	      //레코드 삭제
-	      int sucOrFail = dao.delete_lodge(lodge_no);
-	      int sucOfFail2 = dao.delete_addr(lodge_no);
 	      int sucOfFail3 = dao.delete_room(lodge_no);
+	      int sucOfFail2 = dao.delete_addr(lodge_no);
+	      int sucOrFail = dao.delete_lodge(lodge_no);
+	      
+	      
 	      /*
 	      //리퀘스트영역에 데이터저장
 	      req.setAttribute("WHEREIS", "DELETE");*/
@@ -39,7 +41,7 @@ public class lodge_DeleteCtrl extends HttpServlet{
 	      req.setAttribute("WHEREIS", "DELETE");
 	      req.setAttribute("SUC_FAIL", sucOrFail);
 	      
-	      req.getRequestDispatcher("/lodge/Message.jsp").forward(req, resp);
+	      req.getRequestDispatcher("/lodge/Message2.jsp").forward(req, resp);
 
 	}
 
