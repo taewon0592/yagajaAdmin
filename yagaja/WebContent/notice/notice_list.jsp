@@ -112,7 +112,7 @@ function searchCheck(f){
 
 </script>
 
-</script>
+
 
 </head>
 
