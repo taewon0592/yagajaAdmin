@@ -38,10 +38,10 @@
                             <a href="#"><i class="fa fa-table fa-fw"></i>예약 및 결제 관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="../reservation/reser_list.jsp">예약 및 결제 목록</a>
+                                    <a href="../Reservation/ReservationList">예약 및 결제 목록</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">예약 취소 목록</a>
+                                    <a href="../Reservation/ReservationCancleList">예약 취소 목록</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -59,10 +59,7 @@
                                     <a href="../member/terms_and_conditions.jsp">약관동의</a>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 통계관리</a>
-                        </li>
+                        </li>                      
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> 경매관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

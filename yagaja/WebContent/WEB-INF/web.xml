@@ -546,11 +546,73 @@
   	<servlet-name>checkDelete</servlet-name>
   	<url-pattern>/lodge/checkDelete</url-pattern>
   </servlet-mapping>
+
+	<!-- 예약 결제 관리 리스트 -->
+	<servlet>
+		<servlet-name>ReservationList</servlet-name>
+		<servlet-class>controller.ReservationList</servlet-class>
+		<init-param>
+			<param-name>PAGE_SIZE</param-name>
+			<param-value>10</param-value>
+		</init-param>
+		<init-param>
+			<param-name>BLOCK_PAGE</param-name>
+			<param-value>5</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReservationList</servlet-name>
+		<url-pattern>/Reservation/ReservationList</url-pattern>
+	</servlet-mapping>
+
+	<!-- 예약 결제 상세보기 -->
+	<servlet>
+		<servlet-name>ReservationView</servlet-name>
+		<servlet-class>controller.ReservationView</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReservationView</servlet-name>
+		<url-pattern>/Reservation/ReservationView</url-pattern>
+	</servlet-mapping>
 	
-	
+	<!-- 예약 결제 삭제하기 -->
+	<servlet>
+		<servlet-name>ReservationDelete</servlet-name>
+		<servlet-class>controller.ReservationDelete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReservationDelete</servlet-name>
+		<url-pattern>/Reservation/ReservationDelete</url-pattern>
+	</servlet-mapping>
   
-  
-   
+
+   <!-- 예약 취소 관리 리스트 -->
+	<servlet>
+		<servlet-name>ReservationCancleList</servlet-name>
+		<servlet-class>controller.ReservationCancleList</servlet-class>
+		<init-param>
+			<param-name>PAGE_SIZE</param-name>
+			<param-value>10</param-value>
+		</init-param>
+		<init-param>
+			<param-name>BLOCK_PAGE</param-name>
+			<param-value>5</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReservationCancleList</servlet-name>
+		<url-pattern>/Reservation/ReservationCancleList</url-pattern>
+	</servlet-mapping>
+
+	<!-- 예약 취소 상세보기 -->
+	<servlet>
+		<servlet-name>ReservationCancleView</servlet-name>
+		<servlet-class>controller.ReservationCancleView</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReservationCancleView</servlet-name>
+		<url-pattern>/Reservation/ReservationCancleView</url-pattern>
+	</servlet-mapping>
    
   
   

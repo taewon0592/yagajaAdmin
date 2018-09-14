@@ -157,89 +157,89 @@ public class YagajaLeaveMemberDAO {
 				+"        SELECT * FROM leave_member ";
 			
 		//검색어가 없고
-			if(map.get("Word")=="" || map.get("Word")==null) 
+		if(map.get("Word")=="" || map.get("Word")==null) 
+		{
+			//검색어 X + 시작 일자
+			if(map.get("search_sday")!=null && map.get("search_eday")=="") 
 			{
-				//검색어 X + 시작 일자
-				if(map.get("search_sday")!=null && map.get("search_eday")=="") 
-				{
-					sql +=" WHERE leave_date >= "
-						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
-				}
-				//검색어 X + 종료 일자
-				else if(map.get("search_sday")=="" && map.get("search_eday")!=null) 
-				{
-					sql +=" WHERE leave_date <= "
-						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
-				}		
-				//검색어 X + 시작/종료일자
-				else if(map.get("search_sday")!=null && map.get("search_eday")!=null) 
-				{
-				
-					sql +=" WHERE leave_date >= "
-						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-						+ " AND leave_date <= "
-						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";							
-												
-				}
-						 
-				//검색어 X + 기간 없음(전체검색)
-				else {
-					sql += " WHERE 1=1 ";					
-				}
+				sql +=" WHERE leave_date >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
 			}
+			//검색어 X + 종료 일자
+			else if(map.get("search_sday")=="" && map.get("search_eday")!=null) 
+			{
+				sql +=" WHERE leave_date <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+			}		
+			//검색어 X + 시작/종료일자
+			else if(map.get("search_sday")!=null && map.get("search_eday")!=null) 
+			{
 			
-			//검색어가 있고
-			else if(map.get("Word")!="" || map.get("Word")!=null) 
-			{
-				//단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
-				if(map.get("Column").equals("direct_input")) 
-				{
-					sql +=" WHERE "
-						+ " (id LIKE '%" + map.get("Word")+ "%' "
-						+ " OR "
-						+ " leave_reason LIKE '%" + map.get("Word")+ "%' "
-						+ " OR"
-						+ " leave_reason2 LIKE '%" + map.get("Word")+ "%') "
-						+ " AND (leave_date >= "
-						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-						+ " AND leave_date <= "
-						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
-				}	
-				//검색어  + 시작 일자
-				else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) 
-				{
-					sql +=" WHERE "+map.get("Column")+" "
-						+ " LIKE '%"+map.get("Word")+"%' "
-						+ " AND leave_date >= "
-						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
-				}
-				//검색어  + 종료 일자 
-				else if(map.get("search_sday")=="" && map.get("search_eday")!="") 
-				{
-					sql +=" WHERE "+map.get("Column")+" "
-						+ " LIKE '%"+map.get("Word")+"%' "
-						+ " AND leave_date <= "
-						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
-				}				
-				//검색어 + 시작/종료일자
-				else if(map.get("search_sday")!="" && map.get("search_eday")!="") 
-				{
-					sql +=" WHERE "+map.get("Column")+" "
-						+ " LIKE '%"+map.get("Word")+"%' "
-						+ " AND leave_date >= "
-						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-						+ " AND leave_date <= "
-						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
-				}							
-				//검색어 + 기간 없음(전체검색)
-				else {
-					sql +=" WHERE "+map.get("Column")+" "
-						+ " LIKE '%"+map.get("Word")+"%' ";				
-				}
+				sql +=" WHERE leave_date >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+					+ " AND leave_date <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";							
+											
 			}
-			sql += " ORDER BY leave_date DESC "
-					+"    ) Tb "
-					+" ) WHERE rNum BETWEEN ? and ? ";
+					 
+			//검색어 X + 기간 없음(전체검색)
+			else {
+				sql += " WHERE 1=1 ";					
+			}
+		}
+		
+		//검색어가 있고
+		else if(map.get("Word")!="" || map.get("Word")!=null) 
+		{
+			//단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
+			if(map.get("Column").equals("direct_input")) 
+			{
+				sql +=" WHERE "
+					+ " (id LIKE '%" + map.get("Word")+ "%' "
+					+ " OR "
+					+ " leave_reason LIKE '%" + map.get("Word")+ "%' "
+					+ " OR"
+					+ " leave_reason2 LIKE '%" + map.get("Word")+ "%') "
+					+ " AND (leave_date >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+					+ " AND leave_date <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
+			}	
+			//검색어  + 시작 일자
+			else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) 
+			{
+				sql +=" WHERE "+map.get("Column")+" "
+					+ " LIKE '%"+map.get("Word")+"%' "
+					+ " AND leave_date >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+			}
+			//검색어  + 종료 일자 
+			else if(map.get("search_sday")=="" && map.get("search_eday")!="") 
+			{
+				sql +=" WHERE "+map.get("Column")+" "
+					+ " LIKE '%"+map.get("Word")+"%' "
+					+ " AND leave_date <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+			}				
+			//검색어 + 시작/종료일자
+			else if(map.get("search_sday")!="" && map.get("search_eday")!="") 
+			{
+				sql +=" WHERE "+map.get("Column")+" "
+					+ " LIKE '%"+map.get("Word")+"%' "
+					+ " AND leave_date >= "
+					+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+					+ " AND leave_date <= "
+					+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+			}							
+			//검색어 + 기간 없음(전체검색)
+			else {
+				sql +=" WHERE "+map.get("Column")+" "
+					+ " LIKE '%"+map.get("Word")+"%' ";				
+			}
+		}
+		sql += " ORDER BY leave_date DESC "
+				+"    ) Tb "
+				+" ) WHERE rNum BETWEEN ? and ? ";
 		
 			System.out.println("쿼리문:"+sql);
 						

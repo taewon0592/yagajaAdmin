@@ -101,7 +101,7 @@ $(function(){
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">예약 결제 목록</h1>
+                    <h1 class="page-header">예약 취소 목록</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -114,14 +114,13 @@ $(function(){
 <!-- 검색 -->
 <div class="row text-left"
 	style="margin-bottom: 5px; padding-left: 15px;">
-	<form class="form-inline" name="searchFrm" method="post">		
+	<form class="form-inline" name="searchFrm" method="post">
 		<div class="input-group" style="padding-left: 1px;">
 			<select name="searchColumn" class="form-control">
 				<option value="direct_input">검색조건</option>
-				<option value="reser_name">예약자명</option>
-				<option value="reser_type">예약종류</option>
-				<option value="lodge_type">숙소타입</option>
+				<option value="reser_name">취소자명</option>
 				<option value="payment_type">결제수단</option>
+				<option value="lodge_type">숙소타입</option>
 			</select>
 		</div>
 		<div class="input-group" style="padding-left: 1px;">
@@ -146,10 +145,11 @@ $(function(){
 											name="checkAll" /></td>
                                         <td>예약번호</td>
                                         <td>예약자명</td>
-                                        <td>예약일자</td>
-                                        <td>예약종류</td>
-                                        <td>숙소타입</td>
                                         <td>결제금액</td>
+                                        <td>취소일자</td>
+                                        <td>취소수수료</td>
+                                        <td>환불금액</td>
+                                        <td>숙소타입</td>
                                         <td>결제수단</td>
                                     </tr>
                                 </thead>
@@ -172,14 +172,15 @@ $(function(){
 													name="checkDel" value="${row.reser_no }" /></td>
 												<td>${map.totalCount - (((map.nowPage-1) * map.pageSize) + loop.index) }</td>
 		                                        <td class="text-center">
-			                                        <a href="../Reservation/ReservationView?reser_no=${row.reser_no }&nowPage=${map.nowPage}">
+			                                        <a href="../Reservation/ReservationCancleView?reser_no=${row.reser_no }&nowPage=${map.nowPage}">
 														${row.reser_name }
 													</a>
 												</td>
-		                                        <td class="text-center">${row.reser_date }</td>
-		                                        <td class="text-center">${row.reser_type }</td>
+												<td class="text-center"><fmt:formatNumber value="${row.payment_price }" groupingUsed="true"/></td>
+		                                        <td class="text-center">${row.cancle_date }</td>		                                        
+		                                        <td class="text-center"><fmt:formatNumber value="${row.cancle_fee }" groupingUsed="true"/></td>
+		                                        <td class="text-center"><fmt:formatNumber value="${(row.payment_price - row.cancle_fee)}" groupingUsed="true"/></td>
 		                                        <td class="text-center">${row.lodge_type }</td>
-		                                        <td class="text-center"><fmt:formatNumber value="${row.payment_price }" groupingUsed="true"/></td>
 		                                        <td class="text-center">${row.payment_type }</td>												
 											</tr>
 										</c:forEach>

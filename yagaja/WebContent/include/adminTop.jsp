@@ -15,9 +15,8 @@
 <!-- /.navbar-header -->
 <ul class="nav navbar-top-links navbar-left">
 	<li><a class="navbar-brand" href="../lodge/lodge_list.jsp">시설관리</a></li>
-	<li><a class="navbar-brand" href="../reservation/reser_list.jsp">예약결제관리</a></li>
+	<li><a class="navbar-brand" href="../Reservation/ReservationList">예약결제관리</a></li>
 	<li><a class="navbar-brand" href="../Member/MemberList">회원관리</a></li>
-	<li><a class="navbar-brand" href="#">통계관리</a></li>
 	<li><a class="navbar-brand" href="../auction/auction_list.jsp">경매관리</a></li>
 	<li><a class="navbar-brand" href="../hotdeal/hotdeal_list.jsp">핫딜관리</a></li>
 	
