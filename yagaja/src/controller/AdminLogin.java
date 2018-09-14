@@ -54,7 +54,7 @@ public class AdminLogin extends HttpServlet {
 			PrintWriter out = resp.getWriter();
 			String str = ""
 					+ "<script>"
-					+ "  location.href='../Ex/index.jsp'; "
+					+ "  location.href='../Main/Index'; "
 					+ "</script>"; 
 			out.println(str);
 			

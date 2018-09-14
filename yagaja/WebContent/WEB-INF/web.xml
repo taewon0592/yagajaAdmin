@@ -33,6 +33,16 @@
 		<url-pattern>/Administrator/AdminLogout</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 메인페이지 -->
+	<servlet>
+		<servlet-name>Index</servlet-name>
+		<servlet-class>controller.IndexMain</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Index</servlet-name>
+		<url-pattern>/Main/Index</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 공지사항 리스트 -->
 	<servlet>
 		<servlet-name>NoticeList</servlet-name>

@@ -389,5 +389,43 @@ public class ReservationDAO {
 		}
 		return dto;
 	}
+	//예약금액합계
+	public int getTotalPaymentPrice(Map map)
+	{
+		int totalCount = 0;
+		try
+		{
+			String sql = " SELECT sum(payment_price) FROM reservation ";
+
+			System.out.println("count sql = "+sql);
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			rs.next();
+			totalCount = rs.getInt(1);			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return totalCount;
+	}
+	public int getTotalRecordCount(String lodge_type) {
+        
+      int totalCount = 0;
+      
+      try {
+         String sql = " select count(*) from reservation r inner join lodge l on l.lodge_no=r.lodge_no where lodge_type like '%"+lodge_type+"%' ";
+            
+         System.out.println("메인차트 예약숙소종류 카운트 sql = "+sql);
+         psmt = con.prepareStatement(sql);
+         rs = psmt.executeQuery();
+         rs.next();
+         totalCount = rs.getInt(1);
+      }
+      catch(Exception e) {
+         
+      }
+      return totalCount;
+   }	
 }
 

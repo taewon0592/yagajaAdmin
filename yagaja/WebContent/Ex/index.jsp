@@ -5,6 +5,7 @@
 <%@page import="model.LodgeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,45 +28,22 @@
 	rel="stylesheet" type="text/css">
 
 <script src="../vendor/bootstrap3.3.7/jquery/jquery-3.2.1.min.js"></script>
-
-<%
-request.setCharacterEncoding("UTF-8");
-
-YagajaMemberDAO dao = new YagajaMemberDAO();
-LodgeDAO ldao = new LodgeDAO();
-
-Map param = new HashMap();
-
-String mc = "모텔";
-String hc = "호텔";
-String pc = "펜션";
-String gc = "게스트하우스";
-
-int memberCount = dao.getTotalRecordCount(param);
-int lodgeCount = ldao.getTotalRecordCount(param);
-int motelCount = ldao.getTotalRecordCount(mc);
-int hotelCount = ldao.getTotalRecordCount(hc);
-int pensionCount = ldao.getTotalRecordCount(pc);
-int guesthouseCount = ldao.getTotalRecordCount(gc);
-%> 
-
-
 <script type="text/javascript">
 $(function() {
 	Morris.Donut({
 	    element: 'morris-donut-chart',
 	    data: [{
 	        label: "Motel",
-	        value: <%=motelCount %>
+	        value: ${main.motelCount}
 	    }, {
 	        label: "Hotel",
-	        value: <%=hotelCount %>
+	        value: ${main.hotelCount}
 	    }, {
 	        label: "Pension",
-	        value: <%=pensionCount %>
+	        value: ${main.pensionCount}
 	    }, {
 	        label: "GuestHouse",
-	        value: <%=guesthouseCount %>
+	        value: ${main.guesthouseCount}
 	    }],
 	    resize: true
 	});
@@ -76,20 +54,20 @@ $(function(){
         element: 'morris-bar-chart',
         data: [{
             y: 'Motel',
-            a: 100,
-            b: 90
+            a: ${main.reservationMotelCount},
+            b: ${main.motelCount - main.reservationMotelCount}
         }, {
             y: 'Hotel',
-            a: 75,
-            b: 65
+            a: ${main.reservationHotelCount},
+            b: ${main.hotelCount - main.reservationHotelCount}
         }, {
             y: 'Pension',
-            a: 50,
-            b: 40
+            a: ${main.reservationPensionCount},
+            b: ${main.pensionCount - main.reservationPensionCount}
         }, {
             y: 'GuestHouse',
-            a: 75,
-            b: 65
+            a: ${main.reservationGuestHouseCount},
+            b: ${main.guesthouseCount - main.reservationGuestHouseCount}
         }],
         xkey: 'y',
         ykeys: ['a', 'b'],
@@ -137,11 +115,11 @@ $(function(){
                                     <i class="fa fa-krw fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                	<div> reserve<br /> <big>90</big></div>
+                                	<div> reserve<br /> <big>${main.reservationCount }</big></div>
                                 </div>
                             </div>
                         </div>
-                        <a href="./reser_list.jsp">
+                        <a href="../Reservation/ReservationList">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -158,11 +136,11 @@ $(function(){
                                     <i class="fa fa-calendar fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                	<div> sales<br /> <i class="fa fa-krw"> </i><big> 3,190,000</big></div>
+                                	<div> sales<br /> <i class="fa fa-krw"> </i><big><fmt:formatNumber value="${main.reservationSum }" groupingUsed="true"/> </big></div>
                                 </div>
                             </div>
                         </div>
-                        <a href="./reser_list.jsp">
+                        <a href="../Reservation/ReservationList">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -179,7 +157,7 @@ $(function(){
                                     <i class="fa fa-user fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                	<div>member<br /> <big><%=memberCount %></big></div>
+                                	<div>member<br /> <big>${main.memberCount }</big></div>
                                 </div>
                             </div>
                         </div>
@@ -200,11 +178,11 @@ $(function(){
                                     <i class="fa fa-building-o fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                	<div>client<br /> <big><%=lodgeCount %></big></div>
+                                	<div>client<br /> <big>${main.lodgeCount }</big></div>
                                 </div>
                             </div>
                         </div>
-                        <a href="./lodge_list.jsp">
+                        <a href="../lodge/lodge_list">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -256,7 +234,7 @@ $(function(){
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             경매관리
-                             <a href="./acution_list.jsp"> 
+                             <a href="../Yagaja/AuctionList?mode=1"> 
                             	 <span class="pull-right"> <i class="fa fa-arrow-circle-right"> </i></span>    
                                  <span class="pull-right" > View Details </span>                                                            
                    		    </a>  
@@ -308,7 +286,7 @@ $(function(){
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             핫딜관리
-                             <a href="./hotdeal_list.jsp"> 
+                             <a href="../HotDeal/HotDealList"> 
                             	 <span class="pull-right"> <i class="fa fa-arrow-circle-right"> </i></span>    
                                  <span class="pull-right" > View Details </span>                                                            
                    		    </a>  

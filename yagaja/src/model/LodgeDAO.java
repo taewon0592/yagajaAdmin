@@ -645,23 +645,38 @@ public class LodgeDAO {
 	
    public int getTotalRecordCount(String lodge_type) {
          
-	      int totalCount = 0;
-	      
-	      try {
-	         String sql = "SELECT COUNT(*) FROM lodge "
-	               + " WHERE lodge_type LIKE '%"+lodge_type+"%' ";
-	            
-	         System.out.println("메인차트용 sql = "+sql);
-	         psmt = con.prepareStatement(sql);
-	         rs = psmt.executeQuery();
-	         rs.next();
-	         totalCount = rs.getInt(1);
-	      }
-	      catch(Exception e) {
-	         
-	      }
-	      return totalCount;
-	   }
+      int totalCount = 0;
+      
+      try {
+         String sql = " SELECT COUNT(*) FROM lodge "
+               + " WHERE lodge_type LIKE '%"+lodge_type+"%' ";
+            
+         System.out.println("메인차트용 sql = "+sql);
+         psmt = con.prepareStatement(sql);
+         rs = psmt.executeQuery();
+         rs.next();
+         totalCount = rs.getInt(1);
+      }
+      catch(Exception e) {
+         
+      }
+      return totalCount;
+   }
+   public int getTotalRoomCount(Map map) {
+       
+      int totalCount = 0;
+      
+      try {
+         String sql = " SELECT COUNT(*) FROM room ";
+            
+         psmt = con.prepareStatement(sql);
+         rs = psmt.executeQuery();
+         rs.next();
+         totalCount = rs.getInt(1);
+      }
+      catch(Exception e) {}
+      return totalCount;
+   }
    
    //lodge_no 가져오기
    public LodgeDTO selectLodge_No()
@@ -672,7 +687,7 @@ public class LodgeDAO {
 	   {
 		   String sql = "select * from "
 			   		+ " (select lodge_no, lodge_name, rownum rNum from "
-			   		+ " (select lodge_no, lodge_name from lodge order by lodge_no desc) ) where rNum=1";
+			   		+ " (select lodge_no, lodge_name from lodge order by lodge_no desc)) where rNum=1";
 			   
 			   System.out.println("lodge_no가져오는 쿼리"+sql);
 			   
@@ -683,9 +698,6 @@ public class LodgeDAO {
 				   dto.setLodge_no(rs.getString("lodge_no"));
 				   dto.setLodge_name(rs.getString("lodge_name"));
 			   }
-			   
-			    
-			   
 	   }
 	   catch(Exception e)
 	   {

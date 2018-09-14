@@ -485,4 +485,6 @@ public class YagajaMemberDAO {
 		
 		return info;
 	}
+	
+	
 }
