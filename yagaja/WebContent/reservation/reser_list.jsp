@@ -179,7 +179,7 @@ $(function(){
 		                                        <td class="text-center">${row.reser_date }</td>
 		                                        <td class="text-center">${row.reser_type }</td>
 		                                        <td class="text-center">${row.lodge_type }</td>
-		                                        <td class="text-center"><fmt:formatNumber value="${row.payment_price }" groupingUsed="true"/></td>
+		                                        <td class="text-center"><fmt:formatNumber value="${row.payment_price }" groupingUsed="true"/>원</td>
 		                                        <td class="text-center">${row.payment_type }</td>												
 											</tr>
 										</c:forEach>

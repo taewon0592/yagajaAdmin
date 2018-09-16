@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,16 +98,11 @@
 										</tr>
 										<tr>
 											<td style="font-weight: bold">핫딜 적용금액</td>
-											<td colspan="3">
-												${dto.hotdeal_price }
-											</td>
-											
+											<td colspan="3" class="text-center"><fmt:formatNumber value="${dto.hotdeal_price }" groupingUsed="true"/>원</td>
 										</tr>
 										<tr>											
 											<td style="font-weight: bold">핫딜 판매 수량</td>
-											<td>
-												${dto.hotdeal_sell  }
-											</td>
+											<td colspan="3" class="text-center"><fmt:formatNumber value="${dto.hotdeal_sell  }" groupingUsed="true"/>건</td>
 										</tr>
 										<tr>
 											<td style="font-weight: bold">핫딜 등록된 사진</td>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,16 +98,11 @@
 										</tr>
 										<tr>
 											<td style="font-weight: bold">시작가</td>
-											<td colspan="3">
-												${dto.start_price }
-											</td>
-											
+											<td colspan="3" class="text-center"><fmt:formatNumber value="${dto.start_price }" groupingUsed="true"/>원</td>
 										</tr>
 										<tr>
 											<td style="font-weight: bold">입찰단위</td>
-											<td colspan="3">
-												${dto.auction_unit }
-			                        		</td>
+											<td colspan="3" class="text-center"><fmt:formatNumber value="${dto.auction_unit }" groupingUsed="true"/></td>
 										</tr>
 										<tr>
 											<td style="font-weight: bold">경매 등록된 사진</td>

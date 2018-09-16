@@ -176,10 +176,10 @@ $(function(){
 														${row.reser_name }
 													</a>
 												</td>
-												<td class="text-center"><fmt:formatNumber value="${row.payment_price }" groupingUsed="true"/></td>
+												<td class="text-center"><fmt:formatNumber value="${row.payment_price }" groupingUsed="true"/>원</td>
 		                                        <td class="text-center">${row.cancle_date }</td>		                                        
-		                                        <td class="text-center"><fmt:formatNumber value="${row.cancle_fee }" groupingUsed="true"/></td>
-		                                        <td class="text-center"><fmt:formatNumber value="${(row.payment_price - row.cancle_fee)}" groupingUsed="true"/></td>
+		                                        <td class="text-center"><fmt:formatNumber value="${row.cancle_fee }" groupingUsed="true"/>원</td>
+		                                        <td class="text-center"><fmt:formatNumber value="${(row.payment_price - row.cancle_fee)}" groupingUsed="true"/>원</td>
 		                                        <td class="text-center">${row.lodge_type }</td>
 		                                        <td class="text-center">${row.payment_type }</td>												
 											</tr>

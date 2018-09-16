@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -330,8 +331,8 @@ $(function() {
 						                                    	</td>
 					                                    	</c:otherwise>
 				                                    	</c:choose>
-													<td style="vertical-align:middle;">${row.hotdeal_price}</td>
-													<td style="vertical-align:middle;">${row.hotdeal_sell}</td>
+				                                    <td class="text-center" style="vertical-align:middle;"><fmt:formatNumber value="${row.hotdeal_price}" groupingUsed="true"/>원</td>
+													<td style="vertical-align:middle;">${row.hotdeal_sell}건</td>
 												</tr>
 												</c:forEach>
 											</c:otherwise>

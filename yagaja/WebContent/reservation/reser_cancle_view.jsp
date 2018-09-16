@@ -57,7 +57,7 @@
 										</tr>										
 										<tr>
 											<td style="font-weight: bold">결제금액</td>
-											<td colspan="3"> ${dto.payment_price }</td>											
+											<td colspan="3"> <fmt:formatNumber value="${dto.payment_price }" groupingUsed="true"/>원</td>											
 										</tr>
 										<tr>
 											<td style="font-weight: bold">취소일자</td>
@@ -66,13 +66,13 @@
 										<tr>
 											<td style="font-weight: bold">취소수수료</td>
 											<td colspan="3">
-												<fmt:formatNumber value="${dto.cancle_fee }" groupingUsed="true"/>											
+												<fmt:formatNumber value="${dto.cancle_fee }" groupingUsed="true"/>원											
 											</td>
 										</tr>
 										<tr>
 											<td style="font-weight: bold">취소금액</td>
 											<td colspan="3">
-												<fmt:formatNumber value="${(dto.payment_price - dto.cancle_fee)}" groupingUsed="true"/>											
+												<fmt:formatNumber value="${(dto.payment_price - dto.cancle_fee)}" groupingUsed="true"/>원											
 											</td>
 										</tr>
 										<tr>

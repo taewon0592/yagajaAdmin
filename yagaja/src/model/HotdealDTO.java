@@ -26,8 +26,7 @@ public class HotdealDTO {
 	
 	//경매시작 후 종료까지 남은시간
 	private String start_remain_time_sec; //경매종료 까지 남은시간
-	private String start_timeView; //경매진행중 보여주기위해 필요한 남은시간
-	
+	private String start_timeView; //경매진행중 보여주기위해 필요한 남은시간	
 	
 	//기본생서자
 	public HotdealDTO() {

@@ -68,7 +68,7 @@
 										<tr>
 											<td style="font-weight: bold">결제금액</td>
 											<td colspan="3">
-												<fmt:formatNumber value="${dto.payment_price }" groupingUsed="true"/>											
+												<fmt:formatNumber value="${dto.payment_price }" groupingUsed="true"/>원											
 											</td>
 										</tr>
 										<tr>

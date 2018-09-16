@@ -393,14 +393,15 @@ window.onload = function()
                            		</tr>
                            		<tr>
                            			<td>핫딜판매수</td>
-                           			<td>구매가능수</td>
+                           			<td>판매금액</td>
                            		</tr>
                            		<c:forEach items="${hList }" begin="1" end="4" var="how" varStatus="loop">
                            		<tr>     
+                           		<input type="hidden" name="hotdeal_no" value="${how.hotdeal_no }" />
                            			<td class="center" style="vertical-align:middle;"><a href="../HotDeal/HotdealView?hotdeal_no=${how.hotdeal_no }" style="color:black">${how.lodge_name}</a></td>
 										<input type="hidden" name="lodge_no" value="${how.lodge_no}"/>
 	                                <td class="center" style="vertical-align:middle;">${how.hotdeal_sell }</td>
-                                	<td class="center" style="vertical-align:middle;">${how.hotdeal_buy }</td>                             		
+	                                <td class="text-center"><fmt:formatNumber value="${how.hotdeal_price }" groupingUsed="true"/>원</td>
                            		</tr>  
                            		</c:forEach>                         		
                            </table>

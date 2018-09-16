@@ -78,7 +78,8 @@ public class IndexMain extends HttpServlet
 		int reservationMotelCount = rdao.getTotalRecordCount(mc);
 		int reservationHotelCount = rdao.getTotalRecordCount(hc);
 		int reservationPensionCount = rdao.getTotalRecordCount(pc);
-		int reservationGuestHouseCount = rdao.getTotalRecordCount(gc);
+		int reservationGuestHouseCount = rdao.getTotalRecordCount(gc);		
+		
 		
 		//경매관리
 		List<AuctionDTO> aLists = adao.mainAuction(param);
@@ -87,7 +88,6 @@ public class IndexMain extends HttpServlet
 		//핫딜관리		
 		List<HotdealDTO> hLists = hdao.mainHotdeal(param);
 		System.out.println("hLists="+hLists);
-		
 		
 		//map 추가
 		param.put("memberCount", memberCount);
@@ -102,7 +102,7 @@ public class IndexMain extends HttpServlet
 		param.put("reservationMotelCount", reservationMotelCount);
 		param.put("reservationHotelCount", reservationHotelCount);
 		param.put("reservationPensionCount", reservationPensionCount);
-		param.put("reservationGuestHouseCount", reservationGuestHouseCount);
+		param.put("reservationGuestHouseCount", reservationGuestHouseCount);		
 		
 		//자원해제
 		dao.close();
