@@ -26,8 +26,7 @@ public class AuctionList extends HttpServlet
 		//DB연결을 위한 DAO 호출
 		AuctionDAO dao = new AuctionDAO();
 		//파라미터 저장을 위한 Map타입의 변수생성
-		Map param = new HashMap();
-		
+		Map param = new HashMap();		
 		
 		//문자열 검색을 위한 변수선언
 		String addQueryString = "";

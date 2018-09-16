@@ -58,7 +58,7 @@ String nowPage = request.getParameter("nowPage");
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                           공지사항 상세보기 페이지
+                           공지사항 상세보기
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -98,7 +98,7 @@ String nowPage = request.getParameter("nowPage");
 		<!-- 각종 버튼 부분 -->
 		<button type="button" class="btn btn-info" onclick="location.href='./NoticeEdit?notice_no=${param.notice_no}&nowPage=${param.nowPage }';" >수정하기</button>
 		<button type="button" class="btn btn-danger" onclick="location.href='./NoticeDelete?notice_no=${param.notice_no}&nowPage=${param.nowPage }';" >삭제하기</button>
-		<button type="button" class="btn btn-warning" onclick="location.href='./NoticeList?nowPage=${param.nowPage}';" >리스트</button>
+		<button type="button" class="btn btn-warning" onclick="location.href='./NoticeList?nowPage=${param.nowPage}';" >리스트보기</button>
 		
 
 								</form>	

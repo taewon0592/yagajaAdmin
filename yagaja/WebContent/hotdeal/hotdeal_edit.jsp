@@ -152,11 +152,7 @@ $( document ).ready( function() {
 			alert("핫딜 적용가를 입력하세요");
 			f.name.focus();
 			return false;
-		}
-		if (f.hotdeal_buy.value == "") {
-			alert("핫딜 구매가능한 수량을 입력하세요");
-			f.name.focus();
-			return false;
+		}		
 		
 		if (f.hotdeal_sell.value == "") {
 			alert("핫딜 판매수량을 입력하세요");
@@ -164,7 +160,7 @@ $( document ).ready( function() {
 			return false;
 		}
 	}
-}
+
 </script>
 </head>
 <body>
@@ -192,13 +188,12 @@ $( document ).ready( function() {
 						<form action="../HotDeal/HotDealEdit" name="writeFrm" method="post">
 							<div class="panel-body">
 								<div class="table-responsive">
-									<table width="100%"
-										class="table table-striped table-bordered table-hover center"
+									<table width="100%" class="table table-striped table-bordered table-hover center"
 										style="text-align: center;">
 										<tr style="font-weight: bold">
-										<input type="hid-den" id="hotdeal_no" name="hotdeal_no" value="${dto.hotdeal_no }" />
-										<input type="hid-den" id="lodge_no" name="lodge_no" value="${dto.lodge_no }"/>
-										<input type="hid-den" id="room_no" name="room_no" value="${dto.room_no }"/>
+										<input type="hidden" id="hotdeal_no" name="hotdeal_no" value="${dto.hotdeal_no }" />
+										<input type="hidden" id="lodge_no" name="lodge_no" value="${dto.lodge_no }"/>
+										<input type="hidden" id="room_no" name="room_no" value="${dto.room_no }"/>
 											<td>숙박업소명</td>
 											<td colspan="3">
 													<input type="text" class="form-control"  id="lodge_name" value="${dto.lodge_name }" readonly/>													<div class="input-group-btn">
@@ -252,10 +247,7 @@ $( document ).ready( function() {
 											<td colspan="3"><input class="form-control"
 												name="hotdeal_price" value="${dto.hotdeal_price }"></td>
 										</tr>
-										<tr>
-											<td style="font-weight: bold">핫딜 구매 가능 수량</td>
-											<td><input class="form-control" name="hotdeal_buy" value="${dto.hotdeal_buy }">
-											</td>
+										<tr>											
 											<td style="font-weight: bold">핫딜 판매 수량</td>
 											<td><input class="form-control" name="hotdeal_sell" value="${dto.hotdeal_sell }">
 											</td>

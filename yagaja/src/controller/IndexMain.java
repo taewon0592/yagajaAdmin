@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.Session;
 
 import model.AuctionDAO;
 import model.AuctionDTO;
@@ -77,8 +81,12 @@ public class IndexMain extends HttpServlet
 		int reservationGuestHouseCount = rdao.getTotalRecordCount(gc);
 		
 		//경매관리
+		List<AuctionDTO> aLists = adao.mainAuction(param);
+		System.out.println("aLists="+aLists);
 		
 		//핫딜관리		
+		List<HotdealDTO> hLists = hdao.mainHotdeal(param);
+		System.out.println("hLists="+hLists);
 		
 		
 		//map 추가
@@ -96,22 +104,20 @@ public class IndexMain extends HttpServlet
 		param.put("reservationPensionCount", reservationPensionCount);
 		param.put("reservationGuestHouseCount", reservationGuestHouseCount);
 		
-		
-		
 		//자원해제
 		dao.close();
 		ldao.close();
 		rdao.close();
 		adao.close();
-		hdao.close();
+		//hdao.close();
 		
 		//리퀘스트 영역에 저장
 		req.setAttribute("main", param);
-		
+		req.setAttribute("aList", aLists);
+		req.setAttribute("hList", hLists);
 		//요청명/Main/Index
 		//메인주소 /Ex/index.jsp
 		RequestDispatcher dis = req.getRequestDispatcher("/Ex/index.jsp");
-		dis.forward(req, resp);
-		
+		dis.forward(req, resp);		
 	}
 }

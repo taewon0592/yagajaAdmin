@@ -426,6 +426,24 @@ public class ReservationDAO {
          
       }
       return totalCount;
-   }	
+   }
+	public int cancleDelete(String reser_no)
+	{
+		int affected = 0;
+		try
+		{
+			String query = " delete from reservation where reser_no=? ";
+			
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, reser_no);
+			
+			affected = psmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return affected;
+	}
 }
 

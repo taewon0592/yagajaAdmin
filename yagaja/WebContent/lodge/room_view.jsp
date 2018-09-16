@@ -101,7 +101,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                      			<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
                      		</button>
 		                    <button type="button" class="btn btn-warning"onclick="location.href='../lodge/lodge_view?lodge_no=${dto.lodge_no }&room_no=${dto.room_no }&nowPage=${nowPage }';">
-                     			<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기
+                     			<i class="glyphicon glyphicon-list"></i>&nbsp;숙박시설
                      		</button>		
                      		                     
                                     	                          

@@ -105,11 +105,11 @@ function frmValidate(f){
       f.lodge_note.focus();
       return false;
    }
-   if(f.lodge_photo.value==""){
+/*    if(f.lodge_photo.value==""){
       alert("대표사진을 업로드하세요");
       f.lodge_photo.focus();
       return false;
-   }
+   } */
 }
 </script>
 
@@ -341,7 +341,7 @@ for(String s : iArr2){
 		                        			숙소 대표사진
 		                        		</td>
 		                        		<td>
-		                        			<input type="file" name="lodge_photo" value="${dto.lodge_photo }"/>
+		                        			<input type="file" name="lodge_photo" value="${dto.lodge_photo }"/> 기존 파일명 : ${dto.lodge_photo }
 		                        		</td>
 		                        	</tr>
                         		</table>

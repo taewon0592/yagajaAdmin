@@ -78,7 +78,7 @@
                                     </tr>
                                     <tr class="even gradeC" >
                                         <td style="font-weight:bold">객실 사진</td>
-                                        <td colspan="3"><input type="file" name="room_photo" value="${dto.room_photo }"/></td>
+                                        <td colspan="3" style="text-align:left;"><input type="file" name="room_photo" value="${dto.room_photo }"/> 기존 파일명 : ${dto.room_photo }</td>
                                     </tr>
                                     
                                     		

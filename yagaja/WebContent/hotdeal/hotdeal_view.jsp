@@ -103,23 +103,7 @@
 											</td>
 											
 										</tr>
-										<tr>
-											<td style="font-weight: bold">핫딜 구매 가능 수량</td>
-											<td>
-												${dto.hotdeal_buy  }
-												<!-- <select class="form-control">
-	                                                <option value="">1</option>
-	                                                <option value="">2</option>
-	                                                <option value="">3</option>
-	                                                <option value="">4</option>
-	                                                <option value="">5</option>
-	                                                <option value="">6</option>
-	                                                <option value="">7</option>
-	                                                <option value="">8</option>
-	                                                <option value="">9</option>
-	                                                <option value="">10</option>
-                                            	</select> -->
-											</td>
+										<tr>											
 											<td style="font-weight: bold">핫딜 판매 수량</td>
 											<td>
 												${dto.hotdeal_sell  }

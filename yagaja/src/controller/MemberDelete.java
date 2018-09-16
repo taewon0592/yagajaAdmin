@@ -38,8 +38,7 @@ public class MemberDelete extends HttpServlet {
 			for(int i=0; i<checkDel.length; i++) {
 				System.out.println("check는?"+checkDel[i]);	
 				System.out.println("id는?"+id);
-				//레코드 삭제
-				
+				//레코드 삭제				
 				sucOrFail = dao.delete(checkDel[i]);		
 				sucOrFail2 = dao.deleteAdmin(checkDel[i]);				
 			}

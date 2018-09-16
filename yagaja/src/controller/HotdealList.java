@@ -114,8 +114,7 @@ public class HotdealList extends HttpServlet{
 	
 	// 뷰호출
 	RequestDispatcher dis = req.getRequestDispatcher("/hotdeal/hotdeal_list.jsp");
-	dis.forward(req, resp);
-	
+	dis.forward(req, resp);	
 	}
 	
 	@Override

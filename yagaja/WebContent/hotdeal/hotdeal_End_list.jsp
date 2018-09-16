@@ -205,7 +205,6 @@ $(function() {
 											<td>핫딜 남은 시간</td>
 											<td>핫딜 금액</td>
 											<td>판매수량</td>
-											<td>구매가능 수량</td>
 										</tr>
 										
 										<c:choose>
@@ -234,7 +233,6 @@ $(function() {
 													</td>
 													<td style="vertical-align:middle;">${row.hotdeal_price}</td>
 													<td style="vertical-align:middle;">${row.hotdeal_sell}</td>
-													<td style="vertical-align:middle;">${row.hotdeal_buy}
 												</tr>
 												</c:forEach>
 											</c:otherwise>

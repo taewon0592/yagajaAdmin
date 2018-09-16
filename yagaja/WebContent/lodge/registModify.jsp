@@ -153,7 +153,7 @@ function isValidate(fn){
 		                            </table>
 		                            <!-- /.table-responsive -->
 		                            <button type="submit" class="btn btn-info">
-		                            	<i class="glyphicon glyphicon-pencil"></i>&nbsp;등록하기
+		                            	<i class="glyphicon glyphicon-pencil"></i>&nbsp;수정하기
 		                            </button>
 									<button type="button" class="btn btn-warning" onclick="location.href='./registList?nowPage=${param.nowPage}';">
 										<i class="glyphicon glyphicon-list"></i>&nbsp;리스트보기

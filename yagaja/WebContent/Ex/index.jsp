@@ -6,6 +6,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c"
+	uri="http://java.sun.com/jsp/jstl/core"	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,10 +80,88 @@ $(function(){
 });
 
 </script>
-<!-- 
-방 개수로 구분하자.
-예약현황  +  빈방
--->
+
+<script type="text/javascript">
+<c:forEach items="${aList }" begin="1" end="4" var="row" varStatus="loop">
+//남은시간(초) - DB에서 가져옴
+var remain_time_sec_${row.auction_no} = ${row.remain_time_sec }
+var srts_${row.auction_no} = ${row.start_remain_time_sec}
+
+function auction_reverse_time_${row.auction_no}()
+{
+	
+	dateVal	=	parseInt(remain_time_sec_${row.auction_no}/(24*60*60));	//경매시작까지 남은 총 초에서 날짜 뽑기
+	temp_val = remain_time_sec_${row.auction_no}%(24*60*60);				//경매시작까지 남은 초 담기
+	hourVal	= parseInt(temp_val/(60*60));				//경매시작까지 남은 총 초에서 시간 뽑기
+	temp_val = temp_val%(60*60);						//경매시작까지 남은 초 담기
+	minVal = parseInt(temp_val/(60));					//경매시작까지 남은 총 초에서 분 뽑기
+	secVal = temp_val%(60);								//경매시작까지 남은 초 담기
+	
+	srts_dateVal = parseInt(srts_${row.auction_no}/(24*60*60));	//경매시간 남은 총 초에서 날짜 뽑기
+	srts_temp_val = srts_${row.auction_no}%(24*60*60);			//경매시간 남은 초 담기
+	srts_hourVal = parseInt(srts_temp_val/(60*60));				//경매시간 남은 총 초에서 시간 뽑기
+	srts_temp_val = srts_temp_val%(60*60);						//경매시간 남은 초 담기
+	srts_minVal = parseInt(srts_temp_val/(60));					//경매시간 남은 총 초에서 분 뽑기
+	srts_secVal = srts_temp_val%(60);							//경매시간 남은 초 담기
+	
+	document.getElementById("diffTime_${row.auction_no}").innerHTML = "<span style='color:blue; font-weight:bold;'>경매까지 남은시간</span><br/>"+dateVal+"일 "+hourVal+"시간 "+minVal+"분 "+secVal+"초";
+
+	//남은 시간이 0이 되어 경매종료시
+	if(remain_time_sec_${row.auction_no}<=0)
+	{
+		document.getElementById("diffTime_${row.auction_no}").innerHTML = "<span style='color:red; font-weight:bold;'>경매 진행중</span><br/>"+srts_dateVal+"일 "+srts_hourVal+"시간 "+srts_minVal+"분 "+srts_secVal+"초";
+		//호출중지
+		//화면리플레쉬
+
+		if(srts_${row.auction_no}<=0)
+		{
+			document.getElementById("diffTime_${row.auction_no }").innerHTML = "<span style='color:red; font-weight:bold;'>입찰이 종료되었습니다</span>";
+		}
+		else
+		{
+			srts_${row.auction_no}--;
+		}
+	}
+	else
+	{	//잔여시간이 있다면 1초씩 차감
+		remain_time_sec_${row.auction_no}--;
+	}
+	
+}
+</c:forEach> 
+
+window.onload = function()
+{	
+	<c:forEach items="${aList }" begin="1" end="4" var="row" varStatus="loop">
+	
+	//경매시작까지 남은시간 가져오기
+	remain_time_sec_${row.auction_no} = document.getElementById("remain_time_sec_${row.auction_no}").value;
+	srts_${row.auction_no} = document.getElementById("srts_${row.auction_no}").value;
+	
+	
+	if(remain_time_sec_${row.auction_no} > 0)
+	{
+		//1초에 한번씩 함수 호출
+		setInterval("auction_reverse_time_${row.auction_no}()" ,1000);
+		//auction_reverse_time_${row.auction_no}(call_ref_auction);
+	}
+	else
+	{
+		
+		if(srts_${row.auction_no} > 0)
+		{
+			setInterval("auction_reverse_time_${row.auction_no}()" ,1000);	
+		}
+		else
+		{
+			document.getElementById("diffTime_${row.auction_no }").innerHTML = "<span style='color:red; font-weight:bold;'>입찰이 종료되었습니다</span>";
+		}
+		
+	}
+	</c:forEach>
+}
+
+</script>
 
 </head>
 <body>
@@ -112,7 +192,7 @@ $(function(){
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-krw fa-3x"></i>
+                                    <i class="fa fa-calendar fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                 	<div> reserve<br /> <big>${main.reservationCount }</big></div>
@@ -133,10 +213,10 @@ $(function(){
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-calendar fa-3x"></i>
+                                    <i class="fa fa-krw fa-3x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                	<div> sales<br /> <i class="fa fa-krw"> </i><big><fmt:formatNumber value="${main.reservationSum }" groupingUsed="true"/> </big></div>
+                                	<div> sales<br /> <big><fmt:formatNumber value="${main.reservationSum }" groupingUsed="true"/> </big></div>
                                 </div>
                             </div>
                         </div>
@@ -255,38 +335,46 @@ $(function(){
                            			<td>남은시간</td>
                            			<td>입찰수</td>
                            		</tr>
-                           		<tr>                           			
-                           			<td>코스모모텔</td>
-                           			<td>07:17:27</td>
-                           			<td>4</td>
-                           		</tr>
-                           		<tr>
-                           			<td>강남좋은호텔</td>
-                           			<td>12:18:24</td>
-                           			<td>5</td>
-                           		</tr>
-                           		<tr>
-                           			<td>부산풀빌라</td>
-                           			<td>02:11:56</td>
-                           			<td>7</td>
-                           		</tr>
-                           		<tr>
-                           			<td>신촌호텔</td>
-                           			<td>06:11:56</td>
-                           			<td>2</td>
-                           		</tr>
+                           		<c:forEach items="${aList }" begin="1" end="4" var="row" varStatus="loop">
+                           		<tr>                           			                             			
+	                                	<td style="vertical-align:middle;"><a href="../Yagaja/AuctionView?auction_no=${row.auction_no }&nowPage=${map.nowPage}" style="color:black">${row.lodge_name }</a></td>
+	                                	<!-- 경매시작 까지 남은시간 저장한 폼 -->
+	                                	<input type="hidden" id="remain_time_sec_${row.auction_no }" value="${row.remain_time_sec }" />
+	                                	<input type="hidden" id="srts_${row.auction_no }" value="${row.start_remain_time_sec }" />
+                                		<c:choose>
+		                                 	<c:when test="${row.remain_time_sec >= 0 }">
+		                                  	<td style="vertical-align:middle;">
+		                                  		<span id="diffTime_${row.auction_no }">
+		                                  			<b style="color:blue;">경매까지 남은시간</b><br />
+		                                  			${row.timeView }
+		                                  		</span>
+		                                  	</td>
+		                                 	</c:when>
+		                                 	<c:otherwise>
+		                                 		<td style="vertical-align:middle;">
+		                                  		<span id="diffTime_${row.auction_no }">
+		                                  			<b style="color:red;">경매 진행중</b><br />
+		                                  			${row.start_timeView }
+		                                  		</span>
+		                                  	</td>		                                  	
+		                                 	</c:otherwise>
+	                                	</c:choose>
+                                	<td class="center" style="vertical-align:middle;">${row.auction_hits }</td>                             		
+                           		</tr>  
+                           		</c:forEach>                         		
                            </table>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-6 -->            
+                <!-- /.col-lg-6 -->
+                
                 <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             핫딜관리
-                             <a href="../HotDeal/HotDealList"> 
+                             <a href="../Yagaja/AuctionList?mode=1"> 
                             	 <span class="pull-right"> <i class="fa fa-arrow-circle-right"> </i></span>    
                                  <span class="pull-right" > View Details </span>                                                            
                    		    </a>  
@@ -297,44 +385,32 @@ $(function(){
                            <colgroup>
                            <col width="20%;">
                            <col width="40%;">
-                           <col width="40%;">
+                           <col width="40%;">                           
                            </colgroup>
-                           		<tr>
+                          		<tr>
                            			<td rowspan="2"><br />숙소명</td>
                            			<td colspan="2">실시간현황</td>
                            		</tr>
                            		<tr>
-                           			<td>남은시간</td>
+                           			<td>핫딜판매수</td>
                            			<td>구매가능수</td>
                            		</tr>
-                           		<tr>
-                           			<td>가놀자</td>
-                           			<td>07:05:05</td>
-                           			<td style="color:red; font-weight:bold;">1</td>
-                           		</tr>
-                           		<tr>
-                           			<td>나놀자</td>
-                           			<td>08:05:05</td>
-                           			<td>25</td>
-                           		</tr>
-                           		<tr>
-                           			<td>다놀자</td>
-                           			<td>12:05:05</td>
-                           			<td>36</td>
-                           		</tr>
-                           		<tr>
-                           			<td>라놀자</td>
-                           			<td>12:05:05</td>
-                           			<td>36</td>
-                           		</tr>                           		
-                           </table>                        
-                            <!-- <div id="morris-bar-chart"></div> -->
+                           		<c:forEach items="${hList }" begin="1" end="4" var="how" varStatus="loop">
+                           		<tr>     
+                           			<td class="center" style="vertical-align:middle;"><a href="../HotDeal/HotdealView?hotdeal_no=${how.hotdeal_no }" style="color:black">${how.lodge_name}</a></td>
+										<input type="hidden" name="lodge_no" value="${how.lodge_no}"/>
+	                                <td class="center" style="vertical-align:middle;">${how.hotdeal_sell }</td>
+                                	<td class="center" style="vertical-align:middle;">${how.hotdeal_buy }</td>                             		
+                           		</tr>  
+                           		</c:forEach>                         		
+                           </table>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-6 -->               
+                <!-- /.col-lg-6 --> 
+               
             </div>
             <!-- /.row -->  
             </div>
@@ -373,3 +449,7 @@ $(function(){
 
 </body>
 </html>
+
+
+
+for(int i=)

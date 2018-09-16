@@ -148,12 +148,7 @@ $( document ).ready( function() {
 			alert("핫딜 적용가를 입력하세요");
 			f.name.focus();
 			return false;
-		}
-		if (f.hotdeal_buy.value == "") {
-			alert("핫딜 구매가능한 수량을 입력하세요");
-			f.name.focus();
-			return false;
-		
+		}		
 		if (f.hotdeal_sell.value == "") {
 			alert("핫딜 판매수량을 입력하세요");
 			f.name.focus();
@@ -192,7 +187,7 @@ $( document ).ready( function() {
 										class="table table-striped table-bordered table-hover center"
 										style="text-align: center;">
 										<tr style="font-weight: bold">
-										<input type="hid-den" id="lodge_no" name="lodge_no" value=""/>
+										<input type="hidden" id="lodge_no" name="lodge_no" value=""/>
 											<td>숙박업소명</td>
 											<td colspan="3">
 												<div class="input-group">
@@ -225,7 +220,7 @@ $( document ).ready( function() {
 												<!-- 숙소명과 숙소분류에 따른 객실타입이 자동으로 나올 수 있어야함 --> 
 												<select name="room_type" id="room_type" class="form-control"  onchange="typeChange(this.value);">
 												</select>
-												<input type="hid-den" id="room_no" name="room_no" value=""/>
+												<input type="hidden" id="room_no" name="room_no" value=""/>
 												
 											</td>
 										</tr>
@@ -258,9 +253,6 @@ $( document ).ready( function() {
 												name="hotdeal_price"></td>
 										</tr>
 										<tr>
-											<td style="font-weight: bold">핫딜 구매 가능 수량</td>
-											<td><input class="form-control" name="hotdeal_buy">
-											</td>
 											<td style="font-weight: bold">핫딜 판매 수량</td>
 											<td><input class="form-control" name="hotdeal_sell">
 											</td>

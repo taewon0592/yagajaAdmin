@@ -37,7 +37,6 @@ public class HotdealWrite extends HttpServlet {
 		String hotdeal_stime = req.getParameter("hotdeal_stime");
 		String hotdeal_etime = req.getParameter("hotdeal_etime");
 		String hotdeal_price = req.getParameter("hotdeal_price");
-		String hotdeal_buy = req.getParameter("hotdeal_buy");
 		String hotdeal_sell = req.getParameter("hotdeal_sell");
 		String hotdeal_date = req.getParameter("hotdeal_date");
 		String hotdeal_sday = req.getParameter("hotdeal_sday");
@@ -54,7 +53,6 @@ public class HotdealWrite extends HttpServlet {
 		dto.setHotdeal_stime(hotdeal_stime);
 		dto.setHotdeal_etime(hotdeal_etime);
 		dto.setHotdeal_price(hotdeal_price);
-		dto.setHotdeal_buy(hotdeal_buy);
 		dto.setHotdeal_sday(hotdeal_sday);
 		dto.setHotdeal_eday(hotdeal_eday);
 		dto.setHotdeal_sell(hotdeal_sell);

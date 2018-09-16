@@ -319,8 +319,114 @@ public class YagajaMemberDAO {
 		
 		return dto;
 	}
-		
+	
 	//회원 삭제하기 : DELETE 문
+		public int delete(String checkDel)
+		{
+			String[] noAndId = checkDel.split(",");
+			
+			int affected = 0;
+			try
+			{
+				String query = " delete from member where member_no=? ";
+				
+				psmt = con.prepareStatement(query);
+				psmt.setString(1, noAndId[0]);
+				
+				affected = psmt.executeUpdate();
+				System.out.println("member_no="+noAndId);
+				System.out.println("query="+query);
+			}
+			catch(Exception e)
+			{
+				System.out.println("DAO delete 삭제하기 오류");
+				e.printStackTrace();
+			}
+			return affected;
+		}
+		
+		public int deleteAdmin(String checkDel)
+		{
+			String[] noAndId = checkDel.split(",");
+
+			int affected = 0;
+			try
+			{
+				String query = " insert into leave_member (id, member_no,leave_reason,leave_reason2,leave_date,authority) values (?,?,?,?,sysdate,?)";
+				
+				psmt = con.prepareStatement(query);
+				psmt.setString(3, "관리자삭제");
+				psmt.setString(4, "예약취소 10회");
+				psmt.setString(1, noAndId[1]);
+				psmt.setString(2, noAndId[0]);
+				psmt.setString(5, "dropuser");
+				
+				affected = psmt.executeUpdate();
+							
+				System.out.println("member_no="+noAndId[0]);
+				System.out.println("id="+noAndId[1]);
+				System.out.println("query="+query);
+			}
+			catch(Exception e)
+			{
+				System.out.println("DAO deleteAdmin 삭제하기 오류");
+				e.printStackTrace();
+			}
+			return affected;
+		}
+		
+		//회원 삭제하기 : DELETE 문
+		public int delete1(String member_no)
+		{		
+			int affected = 0;
+			try
+			{
+				String query = " delete from member where member_no=? ";
+				
+				psmt = con.prepareStatement(query);
+				psmt.setString(1, member_no);
+				
+				affected = psmt.executeUpdate();
+				System.out.println("member_no="+member_no);
+				System.out.println("query="+query);
+			}
+			catch(Exception e)
+			{
+				System.out.println("DAO delete1 삭제하기 오류");
+				e.printStackTrace();
+			}
+			return affected;
+		}
+		
+		public int deleteAdmin1(String member_no, String id)
+		{
+			int affected = 0;
+			try
+			{
+				String query = " insert into leave_member (id, member_no,leave_reason,leave_reason2,leave_date,authority) values (?,?,?,?,sysdate,?)";
+				
+				psmt = con.prepareStatement(query);
+				psmt.setString(3, "관리자삭제");
+				psmt.setString(4, "예약취소 10회");
+				psmt.setString(1, id);
+				psmt.setString(2, member_no);
+				psmt.setString(5, "dropuser");
+				
+				affected = psmt.executeUpdate();
+							
+				System.out.println("member_no="+member_no);
+				System.out.println("id="+id);
+				System.out.println("query="+query);
+			}
+			catch(Exception e)
+			{
+				System.out.println("DAO deleteAdmin1 삭제하기 오류");
+				e.printStackTrace();
+			}
+			return affected;
+		}
+		
+/*	//회원 삭제하기 : DELETE 문
 	public int delete(String checkDel)
 	{
 		String[] noAndId = checkDel.split(",");
@@ -424,7 +530,7 @@ public class YagajaMemberDAO {
 			e.printStackTrace();
 		}
 		return affected;
-	}
+	}*/
 
 	public int adminRegist(YagajaMemberDTO dto) {
 		

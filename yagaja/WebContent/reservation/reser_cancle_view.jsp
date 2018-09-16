@@ -108,7 +108,7 @@
 								<!-- /.table-responsive -->
 							</div>
 							<!-- /.panel-body -->
-							<button type="button" class="btn btn-danger" onclick="location.href='../Reservation/ReservationDelete?reser_no=${dto.reser_no}&nowPage=${param.nowPage }';">
+							<button type="button" class="btn btn-danger" onclick="location.href='../Reservation/ReservationCancleDelete?reser_no=${dto.reser_no}&nowPage=${param.nowPage }';">
 								<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
 							</button>							
 							<button type="button" class="btn btn-warning" onclick="location.href='../Reservation/ReservationCancleList?nowPage=${param.nowPage}';">

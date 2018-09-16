@@ -249,7 +249,6 @@ public class HotdealDAO {
 				dto.setHotdeal_stime(rs.getString("hotdeal_stime"));
 				dto.setHotdeal_etime(rs.getString("hotdeal_etime"));
 				dto.setHotdeal_price(rs.getString("hotdeal_price"));
-				dto.setHotdeal_buy(rs.getString("hotdeal_buy"));
 				dto.setHotdeal_sell(rs.getString("hotdeal_sell"));
 				dto.setHotdeal_date(rs.getString("hotdeal_date"));
 				dto.setHotdeal_sday(rs.getString("hotdeal_sday"));
@@ -303,13 +302,13 @@ public class HotdealDAO {
 		
 		try {
 			
-			String sql = " INSERT INTO hotdeal (hotdeal_no, hotdeal_stime, hotdeal_etime, hotdeal_price, hotdeal_buy, "
+			String sql = " INSERT INTO hotdeal (hotdeal_no, hotdeal_stime, hotdeal_etime, hotdeal_price, "
 					+ " hotdeal_sell, hotdeal_date,hotdeal_sday, hotdeal_eday,lodge_no,room_no) "
 					+ " VALUES ("
 					+ " hotdeal_no_seq.NEXTVAL,"
 					+ " TO_DATE('"+dto.getHotdeal_stime()+"','yyyy-mm-dd hh24:mi:ss'),"
 					+ " TO_DATE('"+dto.getHotdeal_etime()+"','yyyy-mm-dd hh24:mi:ss'),"
-					+ " ?,?,?,"
+					+ " ?,?,"
 					+ " TO_DATE('"+dto.getHotdeal_date()+"','yyyy-mm-dd'),"
 					+ " TO_DATE('"+dto.getHotdeal_sday()+"','yyyy-mm-dd'),"
 					+ " TO_DATE('"+dto.getHotdeal_eday()+"','yyyy-mm-dd'), ?,?)";
@@ -318,10 +317,9 @@ public class HotdealDAO {
 			//System.out.println("룸넘버:"+dto.getRoom_no());
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, dto.getHotdeal_price());
-			psmt.setString(2, dto.getHotdeal_buy());
-			psmt.setString(3, dto.getHotdeal_sell());
-			psmt.setString(4, dto.getLodge_no());
-			psmt.setString(5, dto.getRoom_no());
+			psmt.setString(2, dto.getHotdeal_sell());
+			psmt.setString(3, dto.getLodge_no());
+			psmt.setString(4, dto.getRoom_no());
 			affected = psmt.executeUpdate();
 			
 			System.out.println(affected);
@@ -355,7 +353,6 @@ public class HotdealDAO {
 				dto.setHotdeal_stime(rs.getString("hotdeal_stime"));
 				dto.setHotdeal_etime(rs.getString("hotdeal_etime"));
 				dto.setHotdeal_price(rs.getString("hotdeal_price"));
-				dto.setHotdeal_buy(rs.getString("hotdeal_buy"));
 				dto.setHotdeal_sell(rs.getString("hotdeal_sell"));
 				dto.setHotdeal_date(rs.getString("hotdeal_date").substring(0, 10));
 				dto.setHotdeal_sday(rs.getString("hotdeal_sday").substring(0, 10));
@@ -382,7 +379,7 @@ public class HotdealDAO {
 		int affected = 0;// 적용된 행의갯수
 		String sql = " " + " UPDATE hotdeal SET" + " hotdeal_stime=TO_DATE('" + dto.getHotdeal_stime()
 				+ "','yyyy-mm-dd hh24:mi:ss')," + " hotdeal_etime=TO_DATE('" + dto.getHotdeal_etime()
-				+ "','yyyy-mm-dd hh24:mi:ss')," + " hotdeal_price=?, hotdeal_buy=?,hotdeal_sell=?, "
+				+ "','yyyy-mm-dd hh24:mi:ss')," + " hotdeal_price=?, hotdeal_sell=?, "
 				+ " hotdeal_date=TO_DATE('" + dto.getHotdeal_date() + "','yyyy-mm-dd')," + " hotdeal_sday=TO_DATE('"
 				+ dto.getHotdeal_sday() + "','yyyy-mm-dd'), " + " hotdeal_eday=TO_DATE('" + dto.getHotdeal_eday()
 				+ "','yyyy-mm-dd')" + " WHERE hotdeal_no=? ";
@@ -390,9 +387,8 @@ public class HotdealDAO {
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, dto.getHotdeal_price());
-			psmt.setString(2, dto.getHotdeal_buy());
-			psmt.setString(3, dto.getHotdeal_sell());
-			psmt.setString(4, dto.getHotdeal_no());
+			psmt.setString(2, dto.getHotdeal_sell());
+			psmt.setString(3, dto.getHotdeal_no());
 
 			System.out.println(sql);
 			affected = psmt.executeUpdate();
@@ -468,7 +464,6 @@ public class HotdealDAO {
 				dto.setHotdeal_stime(rs.getString("hotdeal_stime"));
 				dto.setHotdeal_etime(rs.getString("hotdeal_etime"));
 				dto.setHotdeal_price(rs.getString("hotdeal_price"));
-				dto.setHotdeal_buy(rs.getString("hotdeal_buy"));
 				dto.setHotdeal_sell(rs.getString("hotdeal_sell"));
 				dto.setHotdeal_date(rs.getString("hotdeal_date"));
 				dto.setHotdeal_sday(rs.getString("hotdeal_sday"));
@@ -512,5 +507,44 @@ public class HotdealDAO {
 		}
 		return affected;
 	}
-	
+	//메인
+	public List<HotdealDTO> mainHotdeal(Map map)
+	{
+		List<HotdealDTO> mh = new Vector<HotdealDTO>();
+		
+		String sql = " "
+				+ "    SELECT Tb.*, trunc((hotdeal_stime-sysdate)*24*60*60) AS remain_time_sec, "
+				+ "					trunc((hotdeal_etime-sysdate)*24*60*60) AS start_remain_time_sec, rownum rNum FROM ("					
+				+ "  select h.*, l.lodge_name from hotdeal h "
+				+ " inner join lodge l on h.lodge_no=l.lodge_no "
+				+ " where (hotdeal_etime-sysdate) > -1 and (hotdeal_stime-sysdate) < 0  "
+				+ "  order BY hotdeal_no DESC "
+				+"    ) Tb ";
+		System.out.println("hotdeal main sql: "+sql);
+		try{
+			//3.prepare 객체생성 및 실행
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next())
+			{
+				//4.결과셋을 DTO객체에 담는다.
+				HotdealDTO dto = new HotdealDTO();
+				
+				dto.setHotdeal_no(rs.getString("hotdeal_no"));
+				dto.setHotdeal_price(rs.getString("hotdeal_price"));
+				dto.setHotdeal_sell(rs.getString("hotdeal_sell"));
+				dto.setLodge_no(rs.getString("lodge_no"));
+				dto.setLodge_name(rs.getString("lodge_name"));				
+		
+				//5.DTO객체를 컬렉션에 추가한다.
+				mh.add(dto);
+			}
+		}
+		catch(Exception e){
+			System.out.println("Select시 예외발생함");
+			e.printStackTrace();
+		}
+		return mh;
+	}
 }

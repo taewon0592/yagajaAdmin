@@ -156,10 +156,10 @@ function frmValidate(fn) {
 												class="table table-striped table-bordered table-hover center"
 												style="text-align: center;">
 												<tr style="font-weight: bold">
-												<input type="hid-den" id="aucton_no" name="auction_no" value="${dto.auction_no }" />
-												<input type="hid-den" id="lodge_no" name="lodge_no" value="${dto.lodge_no }"/>
-												<input type="hid-den" id="room_no" name="room_no" value="${dto.room_no }"/>
-												<input type="hid-den" id="nowPage" name="nowPage" value="${param.nowPage }" />
+												<input type="hidden" id="aucton_no" name="auction_no" value="${dto.auction_no }" />
+												<input type="hidden" id="lodge_no" name="lodge_no" value="${dto.lodge_no }"/>
+												<input type="hidden" id="room_no" name="room_no" value="${dto.room_no }"/>
+												<input type="hidden" id="nowPage" name="nowPage" value="${param.nowPage }" />
 												
 													<td style="vertical-align:middle;">숙박업소명</td>
 													<td colspan="3">
@@ -324,7 +324,7 @@ function lodgeInfo(lodge_no,lodge_name,lodge_type,room_no,room_type)
 	document.getElementById("room_no").value = room_no;
 	document.getElementById("room_type").value = room_type;
 
-	alert(lodge_no);
+	//alert(lodge_no);
 	//alert(document.getElementById("lodge_no").value); 정상적으로 값이 들어감
 }	
 

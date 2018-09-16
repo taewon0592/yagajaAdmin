@@ -190,7 +190,7 @@ function frmValidate(fn) {
 														<!-- 숙소명과 숙소분류에 따른 객실타입이 자동으로 나올 수 있어야함 --> 
 														<select name="room_type" id="room_type" class="form-control" onChange="typeChange(this.value);">
 														</select>
-														<input type="hid-den" id="room_no" name="room_no" value="" />
+														<input type="hidden" id="room_no" name="room_no" value="" />
 													</td>
 												</tr>
 												<tr>

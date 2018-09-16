@@ -49,8 +49,7 @@
                     <div class="panel panel-default">
 
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
-                        	
+                        <div class="panel-body">                        	
                         	<div style="padding-bottom:15px;">
                         		<button type="button" class="btn btn-info" onclick="location.href='../lodge/room_write2?lodge_no=${lodge_no}&nowPage=${param.nowPage }';">
                         			<i class="glyphicon glyphicon-pencil"></i>&nbsp;방 등록하기
@@ -61,6 +60,9 @@
                         		<button type="button" class="btn btn-danger" onclick="location.href='../lodge/lodge_delete?lodge_no=${lodge_no }';">
                             		<i class="glyphicon glyphicon-trash"></i>&nbsp;삭제하기
 	                            </button>
+	                            <button type="button" class="btn btn-warning" onclick="location.href='../lodge/lodge_list?mode=1&nowPage=${param.nowPage}';">
+								<i class="glyphicon glyphicon-list"></i>&nbsp;리스트
+							</button>
 	                        </div>
                         	<form action=""  >
 	                            <table width="100%" class="table table-bordered table-hover center" style="text-align:center;">
@@ -145,8 +147,8 @@
 		                                	</c:when>
 		                                	<c:otherwise>
 		                                		<c:forEach items="${lists }" var="row" varStatus="loop">
-			                                        <td style="text-align:center; vertical-align:middle;">${row.rNum }</td>
-			                                        <td style="text-align:center; vertical-align:middle; color:black; font-weight:bold;"><a href="../lodge/room_view?room_no=${row.room_no }&lodge_no=${lodge_no}&nowPage=${param.nowPage}">${row.room_type }</a></td>
+			                                        <td style="text-align:center; vertical-align:middle; ">${row.rNum }</td>
+			                                        <td style="text-align:center; vertical-align:middle;  font-weight:bold;"><a href="../lodge/room_view?room_no=${row.room_no }&lodge_no=${lodge_no}&nowPage=${param.nowPage}" style="color:black;">${row.room_type }</a></td>
 			                                        <td style="text-align:center; vertical-align:middle;">${row.room_person}</td>
 			                                       <%--  <td><fmt:formatNumber value="${row.d_rent_price }" groupingUsed="true"/></td>
 			                                        <td><fmt:formatNumber value="${row.d_sleep_price }" groupingUsed="true"/></td>

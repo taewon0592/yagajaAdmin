@@ -5,7 +5,6 @@ public class HotdealDTO {
 	private String hotdeal_stime;
 	private String hotdeal_etime;
 	private String hotdeal_price;
-	private String hotdeal_buy;
 	private String hotdeal_sell;
 	private String hotdeal_date;
 	private String hotdeal_sday;
@@ -35,7 +34,7 @@ public class HotdealDTO {
 	}
 	//인자생성자
 	public HotdealDTO(String hotdeal_no, String hotdeal_stime, String hotdeal_etime, String hotdeal_price,
-			String hotdeal_buy, String hotdeal_sell, String hotdeal_date, String hotdeal_sday, String hotdeal_eday,
+			String hotdeal_sell, String hotdeal_date, String hotdeal_sday, String hotdeal_eday,
 			String lodge_no, String lodge_name, String lodge_type, String lodge_photo, String room_type, String room_no,
 			String remain_time_sec, String timeView, String start_remain_time_sec, String start_timeView) {
 		super();
@@ -43,7 +42,6 @@ public class HotdealDTO {
 		this.hotdeal_stime = hotdeal_stime;
 		this.hotdeal_etime = hotdeal_etime;
 		this.hotdeal_price = hotdeal_price;
-		this.hotdeal_buy = hotdeal_buy;
 		this.hotdeal_sell = hotdeal_sell;
 		this.hotdeal_date = hotdeal_date;
 		this.hotdeal_sday = hotdeal_sday;
@@ -93,15 +91,7 @@ public class HotdealDTO {
 	public void setHotdeal_price(String hotdeal_price) {
 		this.hotdeal_price = hotdeal_price;
 	}
-
-	public String getHotdeal_buy() {
-		return hotdeal_buy;
-	}
-
-	public void setHotdeal_buy(String hotdeal_buy) {
-		this.hotdeal_buy = hotdeal_buy;
-	}
-
+	
 	public String getHotdeal_sell() {
 		return hotdeal_sell;
 	}

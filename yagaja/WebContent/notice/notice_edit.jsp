@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>공지사항 등록</title>
+<title>공지사항 수정</title>
 <link href="../vendor/bootstrap3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS (세로드롭메뉴바)-->
@@ -90,7 +90,7 @@ $(function() {
          <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">공지사항 등록</h1>
+                    <h1 class="page-header">공지사항 수정</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -99,7 +99,7 @@ $(function() {
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                           공지사항 등록 페이지
+                           공지사항 수정
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -107,8 +107,8 @@ $(function() {
                         	<form action="../Notice/NoticeEdit" name="writeFrm" method="post" onsubmit="return isValidate(this);" >
 	                        	
 	                        	<!-- 게시물 수정을 위한 일련번호 추가 -->
-	                        	<input type="hid den" name="notice_no" value="${dto.notice_no }" />
-	                        	<input type="hid den" name="nowPage" value="${nowPage }" />
+	                        	<input type="hidden" name="notice_no" value="${dto.notice_no }" />
+	                        	<input type="hidden" name="nowPage" value="${nowPage }" />
 	                        	
 	                        	<table class="table table-striped table-bordered table-hover center" style=" width:100%; ">
 
@@ -137,8 +137,8 @@ $(function() {
 
 		<!-- 각종 버튼 부분 -->
 
-		<button type="submit" class="btn btn-info" id="savebutton">수정하기</button>
-		<button type="button" class="btn btn-warning" onclick="location.href='./NoticeList?nowPage=${nowPage }';" >리스트</button>
+		<button type="submit" class="btn btn-info" id="savebutton" onclick="">수정하기</button>
+		<button type="button" class="btn btn-warning" onclick="location.href='./NoticeList';" >리스트</button>
 
 								</form>	
                         	

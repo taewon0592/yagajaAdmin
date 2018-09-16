@@ -624,7 +624,15 @@
 		<url-pattern>/Reservation/ReservationCancleView</url-pattern>
 	</servlet-mapping>
    
-  
+	<!-- 예약 취소 삭제하기 -->
+	<servlet>
+		<servlet-name>ReservationCancleDelete</servlet-name>
+		<servlet-class>controller.ReservationCancleDelete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReservationCancleDelete</servlet-name>
+		<url-pattern>/Reservation/ReservationCancleDelete</url-pattern>
+	</servlet-mapping>
   
    
   

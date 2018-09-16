@@ -369,10 +369,74 @@ public class AuctionDAO
 	
 		} catch (Exception e) {
 			System.out.println("글 삭제중 오류가 발생했습니다.");
-			e.printStackTrace();
-	
+			e.printStackTrace();	
 		}
 		return affected;
+	}
+	public List<AuctionDTO> mainAuction(Map map) 
+	{
+		List<AuctionDTO> ma = new Vector<AuctionDTO>();
+		
+		String sql = " "
+			+" SELECT Tb.*, trunc((auction_stime-sysdate)*24*60*60) AS remain_time_sec, "
+			+" trunc((auction_etime-sysdate)*24*60*60) AS start_remain_time_sec, rownum rNum FROM ("
+			+" select au.*, l.lodge_name from auction au inner join lodge l on au.lodge_no=l.lodge_no "
+			+" where (auction_etime-sysdate) > 0 and (auction_stime-sysdate) < 0 ORDER BY auction_no DESC ) Tb ";		
+			
+		System.out.println("쿼리문:"+sql);
+		
+		try{
+			//3.prepare 객체생성 및 실행
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next())
+			{
+				//4.결과셋을 DTO객체에 담는다.
+				AuctionDTO dto = new AuctionDTO();
+				 
+				dto.setAuction_no(rs.getInt(1));
+				dto.setStart_price(rs.getInt("start_price"));				
+				dto.setEnd_price(rs.getInt(3));
+				dto.setFinal_bidder(rs.getString(4));
+				dto.setTender_count(rs.getInt(5));
+				dto.setRemain_time_sec(rs.getString("remain_time_sec"));
+				dto.setLodge_name(rs.getString("Lodge_name"));
+				dto.setStart_remain_time_sec(rs.getString("start_remain_time_sec"));
+				
+				//처음에 남은시간을 보여주기
+				int dateVal = (Integer.parseInt(dto.getRemain_time_sec())/(24*60*60)); //총 초에서 날짜뽑기
+				int tempVal = Integer.parseInt(dto.getRemain_time_sec())%(24*60*60); //남은 초 담기
+				int hourVal = tempVal/(60*60);  //남은 총 초에서 시간 뽑기
+				tempVal = tempVal%(60*60);  //남은 초 담기
+				int minVal = tempVal/60; //남은 총 초에서 분 뽑기
+				int secVal = tempVal%60; //남은 초 담기
+				
+				String remain_time = dateVal+"일 "+hourVal+"시간 "+minVal+"분 "+secVal+"초";
+				
+				dto.setTimeView(remain_time);
+				
+				//진행중 경매 처음에 남은시간 보여주기
+				int s_dateVal = (Integer.parseInt(dto.getStart_remain_time_sec())/(24*60*60)); //총 초에서 날짜뽑기
+				int s_tempVal = Integer.parseInt(dto.getStart_remain_time_sec())%(24*60*60); //남은 초 담기
+				int s_hourVal = s_tempVal/(60*60);  //남은 총 초에서 시간 뽑기
+				s_tempVal = s_tempVal%(60*60);  //남은 초 담기
+				int s_minVal = s_tempVal/60; //남은 총 초에서 분 뽑기
+				int s_secVal = s_tempVal%60; //남은 초 담기
+				
+				String s_remain_time = s_dateVal+"일 "+s_hourVal+"시간 "+s_minVal+"분 "+s_secVal+"초";
+				
+				dto.setStart_timeView(s_remain_time);
+ 
+				//5.DTO객체를 컬렉션에 추가한다.
+				ma.add(dto);
+			
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}	
+		return ma;
+		
 	}
 }
 

@@ -172,9 +172,9 @@ $(function() {
 									<div class="input-group" style="padding-left: 1px;">
 										<select name="searchColumn" class="form-control">
 											<option value="direct_input">검색조건</option>
-											<option value="id">아이디</option>
-											<option value="nickname">닉네임</option>
-											<option value="email">이메일</option>
+											<option value="lodge_name">숙박업소명</option>
+											<option value="lodge_type">숙박종류</option>
+											<option value="room_type">객실종류</option>
 										</select>
 									</div>
 									<div class="input-group" style="padding-left: 1px;">
