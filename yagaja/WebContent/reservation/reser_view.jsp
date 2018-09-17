@@ -94,7 +94,7 @@
 										<tr>
 											<td style="font-weight: bold">연락처</td>
 											<td colspan="3">
-												${dto.reser_phone }
+												${dto.phone }
 											</td>
 										</tr>										
 									</tbody>

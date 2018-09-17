@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="../Ex/index.jsp"><img src="../images/yagaja.png" alt="YAGAJA" style="width:110px;"/></a>
+    <a class="navbar-brand" href="../Main/Index"><img src="../images/yagaja.png" alt="YAGAJA" style="width:110px;"/></a>
 </div>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <!-- /.navbar-header -->
@@ -30,17 +30,17 @@
 		</span>반갑습니다^ㅡ^
 	</li>
 	<li class="dropdown">
-		<a class="dropdown-toggle" data-toggle="dropdown" href="#">공지사항
+		<a class="dropdown-toggle" href="../Notice/NoticeList">공지사항
 		  <i class="glyphicon glyphicon-bullhorn"></i>
 		</a>
-		<ul class="dropdown-menu dropdown-messages">
+		<!-- <ul class="dropdown-menu dropdown-messages">
             <li>
                 <a href="../Notice/NoticeList">
                     <div style="text-align:center;">
                         <strong>공지내용</strong>
-                       <!--  <span class="pull-right text-muted">
+                        <span class="pull-right text-muted">
                             <em>Yesterday</em>
-                        </span> -->
+                        </span>
                     </div>
                 </a>
             </li>
@@ -49,9 +49,9 @@
                 <a href="#">
                     <div style="text-align:center;">
                         <strong>자주 묻는 질문/답변</strong>
-                        <!-- <span class="pull-right text-muted">
+                        <span class="pull-right text-muted">
                             <em>Yesterday</em>
-                        </span> -->
+                        </span>
                     </div>
                 </a>
             </li>
@@ -60,17 +60,17 @@
                 <a href="#">
                     <div style="text-align:center;">
                         <strong>Q & A</strong>
-                        <!-- <span class="pull-right text-muted">
+                        <span class="pull-right text-muted">
                             <em>Yesterday</em>
-                        </span> -->
+                        </span>
                     </div>
                 </a>
             </li>
-        </ul>
+        </ul> -->
 	</li>
-	<li>
+	<!-- <li>
 		<a href="">실시간채팅   <i class="fa fa-bell-o"></i> </a>
-	</li>
+	</li> -->
 	<li>
 		<a href="../Administrator/AdminLogout">로그아웃<i class="glyphicon glyphicon-log-out"></i> </a>
 	</li>

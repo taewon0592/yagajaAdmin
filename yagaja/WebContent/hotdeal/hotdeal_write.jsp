@@ -254,7 +254,7 @@ $( document ).ready( function() {
 										</tr>
 										<tr>
 											<td style="font-weight: bold">핫딜 판매 수량</td>
-											<td><input class="form-control" name="hotdeal_sell">
+											<td colspan="3" ><input class="form-control" name="hotdeal_sell">
 											</td>
 										</tr>
 
@@ -345,7 +345,7 @@ function lodgeInfo(lodge_no,lodge_name,lodge_type,room_no,room_type)
 	document.getElementById("room_no").value = room_no;
 	document.getElementById("room_type").value = room_type;
 
-	alert(lodge_no);
+	//alert(lodge_no);
 	//alert(document.getElementById("lodge_no").value); 정상적으로 값이 들어감
 }	
 

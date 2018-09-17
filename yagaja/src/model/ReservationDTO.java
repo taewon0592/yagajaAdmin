@@ -21,6 +21,7 @@ public class ReservationDTO
 	private String member_no;
 	private String lodge_type;
 	private String lodge_name;
+	private String phone;
 	//기본생성자
 	public ReservationDTO() 
 	{
@@ -160,5 +161,12 @@ public class ReservationDTO
 	}
 	public void setLodge_name(String lodge_name) {
 		this.lodge_name = lodge_name;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}	
+	
 }

@@ -72,7 +72,7 @@ public class ReservationDAO {
 					}
 				}
 				else {
-					sql +=" cancle_date is null or cancle_fee is null  ";
+					sql +=" cancle_date is null or cancle_fee = 0  ";
 				}
 				sql += "  ORDER BY reser_date DESC ";
 			
@@ -94,7 +94,7 @@ public class ReservationDAO {
 		List<ReservationDTO> ygj = new Vector<ReservationDTO>();
 		
 		String sql = " SELECT * FROM "
-				+ " (SELECT Tb.*,  rownum rNum FROM "
+				+ " (SELECT Tb.*, rownum rNum FROM "
 				+ " ( "
 				+ " SELECT * "
 				+ " from reservation ye inner join lodge l on l.lodge_no=ye.lodge_no"
@@ -120,7 +120,7 @@ public class ReservationDAO {
 			}
 			else
 			{
-				sql += "  cancle_date is null or cancle_fee is null  ";
+				sql += "  cancle_date is null or cancle_fee = 0  ";
 			}
 				/*
 				if(map.get("mode")=="reser")
@@ -152,7 +152,6 @@ public class ReservationDAO {
 				
 				dto.setReser_no(rs.getString("reser_no"));
 				dto.setReser_name(rs.getString("reser_name"));
-				dto.setReser_phone(rs.getString("reser_phone"));
 				dto.setVisit_type(rs.getString("visit_type"));
 				dto.setReser_date(rs.getString("reser_date").substring(0,10));
 				dto.setReser_type(rs.getString("reser_type"));
@@ -178,11 +177,12 @@ public class ReservationDAO {
 	{
 		ReservationDTO dto = new ReservationDTO();
 		
-		String sql = " select ye.*, l.lodge_no, l.lodge_type, "
+		String sql = " select ye.*, l.lodge_no, l.lodge_type, ye.member_no, M.phone, "
 				+ " l.lodge_name, ye.reser_no from "
 				+ " reservation ye inner join lodge l "
-				+ " on l.lodge_no=ye.lodge_no where ye.reser_no=? ";
+				+ " on l.lodge_no=ye.lodge_no inner join member M on ye.member_no=M.member_no where ye.reser_no=? ";
 		
+		System.out.println(sql);
 		try 
 		{
 			psmt = con.prepareStatement(sql);
@@ -194,7 +194,7 @@ public class ReservationDAO {
 				dto.setCheck_in(rs.getString("check_in"));
 				dto.setCheck_out(rs.getString("check_out"));
 				dto.setReser_name(rs.getString("reser_name"));
-				dto.setReser_phone(rs.getString("reser_phone"));
+				dto.setPhone(rs.getString("phone"));
 				dto.setVisit_type(rs.getString("visit_type"));
 				dto.setReser_date(rs.getString("reser_date").substring(0,10));
 				dto.setReser_type(rs.getString("reser_type"));

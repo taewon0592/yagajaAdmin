@@ -65,236 +65,238 @@ public class HotdealDAO {
 		}
 	}
 	//게시판테이블의 전체 레코드 갯수 얻기
-	public int getTotalRecordCount(Map<String,Object> map)
-	{
-		int totalCount = 0;
-		try{
-			String sql = "SELECT COUNT(*) FROM hotdeal H inner join lodge L on H.lodge_no = L.lodge_no"
-					+ " inner join room R on H.room_no = R.room_no WHERE 1=1";
-										
-			//검색어가 없고
-			if(map.get("Word")=="" || map.get("Word")==null) {
-				//검색어 X + 시작 일자
-				if(map.get("search_sday")!=null && map.get("search_eday")=="") {
-					sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
-				}
-				//검색어 X + 종료 일자
-				else if(map.get("search_sday")=="" && map.get("search_eday")!=null) {
-					sql +=" AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
-				}		
-				//검색어 X + 시작/종료일자
-				else if(map.get("search_sday")!=null && map.get("search_eday")!=null) {
-				
-					sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-						+ " AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";													
-				}
-			}
-			
-			//검색어가 있고
-			else if(map.get("Word")!="" || map.get("Word")!=null) {
-				//단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
-				if(map.get("Column").equals("direct_input")) {
-					sql +=" AND (lodge_name LIKE '%" + map.get("Word")+ "%' "
-						+ " OR "
-						+ " lodge_type LIKE '%" + map.get("Word")+ "%' "
-						+ " OR"
-						+ " room_type LIKE '%" + map.get("Word")+ "%') "
-						+ " AND (hotdeal_date >= "
-						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-						+ " AND hotdeal_date <= "
-						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
-				}	
-				//검색어  + 시작 일자
-				else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) {
-					sql +=" AND "+map.get("Column")+" "
-						+ " LIKE '%"+map.get("Word")+"%' "
-						+ " AND hotdeal_date >= "
-						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
-				}
-				//검색어  + 종료 일자 
-				else if(map.get("search_sday")=="" && map.get("search_eday")!="") {
-					sql +=" AND "+map.get("Column")+" "
-						+ " LIKE '%"+map.get("Word")+"%' "
-						+ " AND hotdeal_date <= "
-						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
-				}				
-				//검색어 + 시작/종료일자
-				else if(map.get("search_sday")!="" && map.get("search_eday")!="") {
-					sql +=" AND "+map.get("Column")+" "
-						+ " LIKE '%"+map.get("Word")+"%' "
-						+ " AND hotdeal_date >= "
-						+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-						+ " AND hotdeal_date <= "
-						+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
-				}							
-				//검색어 + 기간 없음(전체검색)
-				else {
-					sql +=" AND "+map.get("Column")+" "
-						+ " LIKE '%"+map.get("Word")+"%' ";				
-				}
-			}
-			
-			sql += " and (hotdeal_etime-sysdate) > 0 ";
-			
-			psmt = con.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			rs.next();
-			totalCount = rs.getInt(1);
-		}
-		catch(Exception e){}
-		return totalCount; 
-	}
+	   public int getTotalRecordCount(Map<String,Object> map)
+	   {
+	      int totalCount = 0;
+	      try{
+	         String sql = "SELECT COUNT(*) FROM hotdeal H inner join lodge L on H.lodge_no = L.lodge_no"
+	               + " inner join room R on H.room_no = R.room_no WHERE 1=1";
+	                              
+	         //검색어가 없고
+	         if(map.get("Word")=="" || map.get("Word")==null) {
+	            //검색어 X + 시작 일자
+	            if(map.get("search_sday")!=null && map.get("search_eday")=="") {
+	               sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+	            }
+	            //검색어 X + 종료 일자
+	            else if(map.get("search_sday")=="" && map.get("search_eday")!=null) {
+	               sql +=" AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+	            }      
+	            //검색어 X + 시작/종료일자
+	            else if(map.get("search_sday")!=null && map.get("search_eday")!=null) {
+	            
+	               sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+	                  + " AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";                                       
+	            }
+	         }
+	         
+	         //검색어가 있고
+	         else if(map.get("Word")!="" || map.get("Word")!=null) {
+	            //단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
+	            if(map.get("Column").equals("direct_input")) {
+	               sql +=" AND (lodge_name LIKE '%" + map.get("Word")+ "%' "
+	                  + " OR "
+	                  + " lodge_type LIKE '%" + map.get("Word")+ "%' "
+	                  + " OR"
+	                  + " room_type LIKE '%" + map.get("Word")+ "%') "
+	                  + " AND (hotdeal_date >= "
+	                  + " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+	                  + " AND hotdeal_date <= "
+	                  + " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
+	            }   
+	            //검색어  + 시작 일자
+	            else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) {
+	               sql +=" AND "+map.get("Column")+" "
+	                  + " LIKE '%"+map.get("Word")+"%' "
+	                  + " AND hotdeal_date >= "
+	                  + " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+	            }
+	            //검색어  + 종료 일자 
+	            else if(map.get("search_sday")=="" && map.get("search_eday")!="") {
+	               sql +=" AND "+map.get("Column")+" "
+	                  + " LIKE '%"+map.get("Word")+"%' "
+	                  + " AND hotdeal_date <= "
+	                  + " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+	            }            
+	            //검색어 + 시작/종료일자
+	            else if(map.get("search_sday")!="" && map.get("search_eday")!="") {
+	               sql +=" AND "+map.get("Column")+" "
+	                  + " LIKE '%"+map.get("Word")+"%' "
+	                  + " AND hotdeal_date >= "
+	                  + " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+	                  + " AND hotdeal_date <= "
+	                  + " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+	            }                     
+	            //검색어 + 기간 없음(전체검색)
+	            else {
+	               sql +=" AND "+map.get("Column")+" "
+	                  + " LIKE '%"+map.get("Word")+"%' ";            
+	            }
+	         }
+	         
+	         sql += " and (hotdeal_etime-sysdate) > 0 and hotdeal_sell> 0 ";
+	         
+	         psmt = con.prepareStatement(sql);
+	         rs = psmt.executeQuery();
+	         rs.next();
+	         totalCount = rs.getInt(1);
+	      }
+	      catch(Exception e){}
+	      return totalCount; 
+	   }
+
 	
-	//페이징처리를 위한 select 메소드
-	public List<HotdealDTO> selectPaging(Map<String,Object> map)
-	{
-		List<HotdealDTO> bbs = new Vector<HotdealDTO>();
-		
-		String sql = ""
-				+" SELECT * FROM ("
-				+"    SELECT Tb.*, trunc((hotdeal_stime-sysdate)*24*60*60) AS remain_time_sec, "
-				+ "					trunc((hotdeal_etime-sysdate)*24*60*60) AS start_remain_time_sec, rownum rNum FROM ("
-				+"        SELECT H.*, L.lodge_name,L.lodge_type,R.room_type FROM "
-				+ "			hotdeal H INNER JOIN lodge L"
-				+ "				ON H.lodge_no=L.lodge_no"
-				+ "					INNER JOIN room R"
-				+ "						ON H.room_no = r.room_no WHERE 1=1";
-		
-				//검색어가 없고
-				if(map.get("Word")=="" || map.get("Word")==null) {
-					//검색어 X + 시작 일자
-					if(map.get("search_sday")!=null && map.get("search_eday")=="") {
-						sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
-					}
-					//검색어 X + 종료 일자
-					else if(map.get("search_sday")=="" && map.get("search_eday")!=null) {
-						sql +=" AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
-					}		
-					//검색어 X + 시작/종료일자
-					else if(map.get("search_sday")!=null && map.get("search_eday")!=null) {
-					
-						sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-							+ " AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";													
-					}
-				}
-				
-				//검색어가 있고
-				else if(map.get("Word")!="" || map.get("Word")!=null) {
-					//단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
-					if(map.get("Column").equals("direct_input")) {
-						sql +=" AND (lodge_name LIKE '%" + map.get("Word")+ "%' "
-							+ " OR "
-							+ " lodge_type LIKE '%" + map.get("Word")+ "%' "
-							+ " OR"
-							+ " room_type LIKE '%" + map.get("Word")+ "%') "
-							+ " AND (hotdeal_date >= "
-							+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-							+ " AND hotdeal_date <= "
-							+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
-					}	
-					//검색어  + 시작 일자
-					else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) {
-						sql +=" AND "+map.get("Column")+" "
-							+ " LIKE '%"+map.get("Word")+"%' "
-							+ " AND hotdeal_date >= "
-							+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
-					}
-					//검색어  + 종료 일자 
-					else if(map.get("search_sday")=="" && map.get("search_eday")!="") {
-						sql +=" AND "+map.get("Column")+" "
-							+ " LIKE '%"+map.get("Word")+"%' "
-							+ " AND hotdeal_date <= "
-							+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
-					}				
-					//검색어 + 시작/종료일자
-					else if(map.get("search_sday")!="" && map.get("search_eday")!="") {
-						sql +=" AND "+map.get("Column")+" "
-							+ " LIKE '%"+map.get("Word")+"%' "
-							+ " AND hotdeal_date >= "
-							+ " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
-							+ " AND hotdeal_date <= "
-							+ " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
-					}							
-					//검색어 + 기간 없음(전체검색)
-					else {
-						sql +=" AND "+map.get("Column")+" "
-							+ " LIKE '%"+map.get("Word")+"%' ";				
-					}
-				}				
-				
-				
-				sql += "					AND (hotdeal_etime-sysdate) > 0"
-					+ " 					ORDER BY hotdeal_no DESC"
-					+"    ) Tb"
-					+" )"
-					+" WHERE rNum BETWEEN ? and ?";
-		
-		
-		
-		try{
-			//3.prepare 객체생성 및 실행
-			psmt = con.prepareStatement(sql);
-		
-			psmt.setInt(1, Integer.parseInt(map.get("start").toString()));
-			psmt.setInt(2, Integer.parseInt(map.get("end").toString()));	
-			
-			rs = psmt.executeQuery();
-			
-			while(rs.next())
-			{
-				//4.결과셋을 DTO객체에 담는다.
-				HotdealDTO dto = new HotdealDTO();
-				
-				dto.setHotdeal_no(rs.getString("hotdeal_no"));
-				dto.setHotdeal_stime(rs.getString("hotdeal_stime"));
-				dto.setHotdeal_etime(rs.getString("hotdeal_etime"));
-				dto.setHotdeal_price(rs.getString("hotdeal_price"));
-				dto.setHotdeal_sell(rs.getString("hotdeal_sell"));
-				dto.setHotdeal_date(rs.getString("hotdeal_date"));
-				dto.setHotdeal_sday(rs.getString("hotdeal_sday"));
-				dto.setHotdeal_eday(rs.getString("hotdeal_eday"));
-				dto.setLodge_no(rs.getString("lodge_no"));
-				dto.setLodge_type(rs.getString("lodge_type"));
-				dto.setLodge_name(rs.getString("lodge_name"));
-				dto.setRoom_type(rs.getString("room_type"));
-				dto.setRoom_no(rs.getString("room_no"));
-				dto.setRemain_time_sec(rs.getString("remain_time_sec"));
-				dto.setStart_remain_time_sec(rs.getString("start_remain_time_sec"));
-				
-				//처음에 남은시간을 보여주기
-				int dateVal = (Integer.parseInt(dto.getRemain_time_sec())/(24*60*60)); //총 초에서 날짜뽑기
-				int tempVal = Integer.parseInt(dto.getRemain_time_sec())%(24*60*60); //남은 초 담기
-				int hourVal = tempVal/(60*60);  //남은 총 초에서 시간 뽑기
-				tempVal = tempVal%(60*60);  //남은 초 담기
-				int minVal = tempVal/60; //남은 총 초에서 분 뽑기
-				int secVal = tempVal%60; //남은 초 담기
-				
-				String remain_time = dateVal+"일 "+hourVal+"시간 "+minVal+"분 "+secVal+"초";
-				
-				dto.setTimeView(remain_time);
-				
-				//진행중 경매 처음에 남은시간 보여주기
-				int s_dateVal = (Integer.parseInt(dto.getStart_remain_time_sec())/(24*60*60)); //총 초에서 날짜뽑기
-				int s_tempVal = Integer.parseInt(dto.getStart_remain_time_sec())%(24*60*60); //남은 초 담기
-				int s_hourVal = s_tempVal/(60*60);  //남은 총 초에서 시간 뽑기
-				s_tempVal = s_tempVal%(60*60);  //남은 초 담기
-				int s_minVal = s_tempVal/60; //남은 총 초에서 분 뽑기
-				int s_secVal = s_tempVal%60; //남은 초 담기
-				
-				String s_remain_time = s_dateVal+"일 "+s_hourVal+"시간 "+s_minVal+"분 "+s_secVal+"초";
-				
-				dto.setStart_timeView(s_remain_time);
-				
-				//5.DTO객체를 컬렉션에 추가한다.
-				bbs.add(dto);
-			}
-		}
-		catch(Exception e){
-			System.out.println("Select시 예외발생함");
-			e.printStackTrace();
-		}
-		return bbs;
-	}
+	   //페이징처리를 위한 select 메소드
+	   public List<HotdealDTO> selectPaging(Map<String,Object> map)
+	   {
+	      List<HotdealDTO> bbs = new Vector<HotdealDTO>();
+	      
+	      String sql = ""
+	            +" SELECT * FROM ("
+	            +"    SELECT Tb.*, trunc((hotdeal_stime-sysdate)*24*60*60) AS remain_time_sec, "
+	            + "               trunc((hotdeal_etime-sysdate)*24*60*60) AS start_remain_time_sec, rownum rNum FROM ("
+	            +"        SELECT H.*, L.lodge_name,L.lodge_type,R.room_type FROM "
+	            + "         hotdeal H INNER JOIN lodge L"
+	            + "            ON H.lodge_no=L.lodge_no"
+	            + "               INNER JOIN room R"
+	            + "                  ON H.room_no = r.room_no WHERE 1=1";
+	      
+	            //검색어가 없고
+	            if(map.get("Word")=="" || map.get("Word")==null) {
+	               //검색어 X + 시작 일자
+	               if(map.get("search_sday")!=null && map.get("search_eday")=="") {
+	                  sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+	               }
+	               //검색어 X + 종료 일자
+	               else if(map.get("search_sday")=="" && map.get("search_eday")!=null) {
+	                  sql +=" AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+	               }      
+	               //검색어 X + 시작/종료일자
+	               else if(map.get("search_sday")!=null && map.get("search_eday")!=null) {
+	               
+	                  sql +=" AND hotdeal_date >= TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+	                     + " AND hotdeal_date <= TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";                                       
+	               }
+	            }
+	            
+	            //검색어가 있고
+	            else if(map.get("Word")!="" || map.get("Word")!=null) {
+	               //단어 전체 검색(검색 컬럼 전체) + 시작/종료기간
+	               if(map.get("Column").equals("direct_input")) {
+	                  sql +=" AND (lodge_name LIKE '%" + map.get("Word")+ "%' "
+	                     + " OR "
+	                     + " lodge_type LIKE '%" + map.get("Word")+ "%' "
+	                     + " OR"
+	                     + " room_type LIKE '%" + map.get("Word")+ "%') "
+	                     + " AND (hotdeal_date >= "
+	                     + " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+	                     + " AND hotdeal_date <= "
+	                     + " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9) ";
+	               }   
+	               //검색어  + 시작 일자
+	               else if(map.get("search_sday")!="" && map.get("search_eday")=="" ) {
+	                  sql +=" AND "+map.get("Column")+" "
+	                     + " LIKE '%"+map.get("Word")+"%' "
+	                     + " AND hotdeal_date >= "
+	                     + " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') ";
+	               }
+	               //검색어  + 종료 일자 
+	               else if(map.get("search_sday")=="" && map.get("search_eday")!="") {
+	                  sql +=" AND "+map.get("Column")+" "
+	                     + " LIKE '%"+map.get("Word")+"%' "
+	                     + " AND hotdeal_date <= "
+	                     + " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+	               }            
+	               //검색어 + 시작/종료일자
+	               else if(map.get("search_sday")!="" && map.get("search_eday")!="") {
+	                  sql +=" AND "+map.get("Column")+" "
+	                     + " LIKE '%"+map.get("Word")+"%' "
+	                     + " AND hotdeal_date >= "
+	                     + " TO_DATE('"+map.get("search_sday")+ "', 'yyyy-mm-dd') "
+	                     + " AND hotdeal_date <= "
+	                     + " TO_DATE('"+map.get("search_eday")+ "', 'yyyy-mm-dd')+0.9 ";
+	               }                     
+	               //검색어 + 기간 없음(전체검색)
+	               else {
+	                  sql +=" AND "+map.get("Column")+" "
+	                     + " LIKE '%"+map.get("Word")+"%' ";            
+	               }
+	            }            
+	            
+	            
+	            sql += "               AND (hotdeal_etime-sysdate) > 0 AND hotdeal_sell>0"
+	               + "                ORDER BY hotdeal_no DESC"
+	               +"    ) Tb"
+	               +" )"
+	               +" WHERE rNum BETWEEN ? and ?";
+	      
+	      
+	      
+	      try{
+	         //3.prepare 객체생성 및 실행
+	         psmt = con.prepareStatement(sql);
+	      
+	         psmt.setInt(1, Integer.parseInt(map.get("start").toString()));
+	         psmt.setInt(2, Integer.parseInt(map.get("end").toString()));   
+	         
+	         rs = psmt.executeQuery();
+	         
+	         while(rs.next())
+	         {
+	            //4.결과셋을 DTO객체에 담는다.
+	            HotdealDTO dto = new HotdealDTO();
+	            
+	            dto.setHotdeal_no(rs.getString("hotdeal_no"));
+	            dto.setHotdeal_stime(rs.getString("hotdeal_stime"));
+	            dto.setHotdeal_etime(rs.getString("hotdeal_etime"));
+	            dto.setHotdeal_price(rs.getString("hotdeal_price"));
+	            dto.setHotdeal_sell(rs.getString("hotdeal_sell"));
+	            dto.setHotdeal_date(rs.getString("hotdeal_date"));
+	            dto.setHotdeal_sday(rs.getString("hotdeal_sday"));
+	            dto.setHotdeal_eday(rs.getString("hotdeal_eday"));
+	            dto.setLodge_no(rs.getString("lodge_no"));
+	            dto.setLodge_type(rs.getString("lodge_type"));
+	            dto.setLodge_name(rs.getString("lodge_name"));
+	            dto.setRoom_type(rs.getString("room_type"));
+	            dto.setRoom_no(rs.getString("room_no"));
+	            dto.setRemain_time_sec(rs.getString("remain_time_sec"));
+	            dto.setStart_remain_time_sec(rs.getString("start_remain_time_sec"));
+	            
+	            //처음에 남은시간을 보여주기
+	            int dateVal = (Integer.parseInt(dto.getRemain_time_sec())/(24*60*60)); //총 초에서 날짜뽑기
+	            int tempVal = Integer.parseInt(dto.getRemain_time_sec())%(24*60*60); //남은 초 담기
+	            int hourVal = tempVal/(60*60);  //남은 총 초에서 시간 뽑기
+	            tempVal = tempVal%(60*60);  //남은 초 담기
+	            int minVal = tempVal/60; //남은 총 초에서 분 뽑기
+	            int secVal = tempVal%60; //남은 초 담기
+	            
+	            String remain_time = dateVal+"일 "+hourVal+"시간 "+minVal+"분 "+secVal+"초";
+	            
+	            dto.setTimeView(remain_time);
+	            
+	            //진행중 경매 처음에 남은시간 보여주기
+	            int s_dateVal = (Integer.parseInt(dto.getStart_remain_time_sec())/(24*60*60)); //총 초에서 날짜뽑기
+	            int s_tempVal = Integer.parseInt(dto.getStart_remain_time_sec())%(24*60*60); //남은 초 담기
+	            int s_hourVal = s_tempVal/(60*60);  //남은 총 초에서 시간 뽑기
+	            s_tempVal = s_tempVal%(60*60);  //남은 초 담기
+	            int s_minVal = s_tempVal/60; //남은 총 초에서 분 뽑기
+	            int s_secVal = s_tempVal%60; //남은 초 담기
+	            
+	            String s_remain_time = s_dateVal+"일 "+s_hourVal+"시간 "+s_minVal+"분 "+s_secVal+"초";
+	            
+	            dto.setStart_timeView(s_remain_time);
+	            
+	            //5.DTO객체를 컬렉션에 추가한다.
+	            bbs.add(dto);
+	         }
+	      }
+	      catch(Exception e){
+	         System.out.println("Select시 예외발생함");
+	         e.printStackTrace();
+	      }
+	      return bbs;
+	   }
+	
 // 게시물 작성하기(write)
 	public int insert(HotdealDTO dto) {
 		
