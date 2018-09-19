@@ -610,27 +610,27 @@ public class LodgeDAO {
 	// 숙소명으로 검색하기
 	public List<LodgeDTO> searchLodge(String lodgename) {
 		List<LodgeDTO> lodge = new Vector<LodgeDTO>();
-
+	
 		String sql = " SELECT L.*, R.room_no, R.room_type FROM lodge L"
 				+ " INNER JOIN room R on L.lodge_no = R.lodge_no " + " WHERE lodge_name LIKE ? "
-				+ " ORDER BY room_type ASC";
-
+				+ " ORDER BY L.lodge_no ASC";
+	
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, "%" + lodgename + "%");
 			//System.out.println("lodgename="+lodgename);
 			rs = psmt.executeQuery();
-
+	
 			while (rs.next()) {
 				LodgeDTO dto = new LodgeDTO();
-
+	
 				dto.setLodge_no(rs.getString("lodge_no"));
 				dto.setLodge_name(rs.getString("lodge_name"));
 				dto.setLodge_type(rs.getString("lodge_type"));
 				dto.setLodge_tel(rs.getString("lodge_tel"));
 				dto.setRoom_no(rs.getString("room_no"));
 				dto.setRoom_type(rs.getString("room_type"));
-				System.out.println(rs.getString("room_type"));
+				System.out.print(rs.getString("room_type"));
 				lodge.add(dto);
 			}
 		} catch (Exception e) {
@@ -639,9 +639,9 @@ public class LodgeDAO {
 		}
 		// 콘솔에서 반드시 확인(쿼리문 오류 체크)
 		System.out.println("쿼리문:" + sql);
-
+	
 		return lodge;
-		}
+	}
 	
    public int getTotalRecordCount(String lodge_type) {
          

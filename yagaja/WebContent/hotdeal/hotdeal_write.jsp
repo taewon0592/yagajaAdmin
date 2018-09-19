@@ -296,39 +296,47 @@ $( document ).ready( function() {
 	<script src="../dist/js/sb-admin-2.js"></script>
 
 	<script>
-$(function(){
-    // 검색버튼 눌렸을 때 함수 실행( LodgeSearch에서 쿼리를 이너조인해주면 숙소일련번호와 연결된 룸타입의 모든갯수가 나오므로 따로 ajax실행)
-    $("#searchBtn").click(function(e){
+	$(function(){
+	    // 검색버튼 눌렸을 때 함수 실행( LodgeSearch에서 쿼리를 이너조인해주면 숙소일련번호와 연결된 룸타입의 모든갯수가 나오므로 따로 ajax실행)
+	    $("#searchBtn").click(function(e){
 
-        //ajax
-        $.ajax({
-        	url : "../HotDeal/LodgeSearch",
-        	data : { lodgename :$('#lodgename').val() },
-        	type : "get",
-        	async: false,
-        	dataType : "json",
-        	contentType:"application/json; charset=UTF-8", 
-        	error : function(e){
-        		alert("오류발생:"+e.status+":"+e.statusText );
-        	},
-        	
-        	success : function(data){
-        		
-        		//객실타입 셀렉트박스 초기화 
+	        //ajax
+	        $.ajax({
+	        	url : "../HotDeal/LodgeSearch",
+	        	data : { lodgename :$('#lodgename').val() },
+	        	type : "get",
+	        	async: false,
+	        	dataType : "json",
+	        	contentType:"application/json; charset=UTF-8", 
+	        	error : function(e){
+	        		alert("오류발생:"+e.status+":"+e.statusText );
+	        	},
+	        	
+	        	success : function(data){
+	        		
+	        		//숙소이름 검색 모달창 초기화
+	        		$('#lodge_searchList').empty();
+	        		
+	        		//객실타입 셀렉트박스 초기화
 					$('#room_type').empty();
-        		
-        		//숙소를 검색해서 모달창내에 리스트를띄우고 선택시 부모창에 값이 들어갈수있게 설정
-        		$.each(data, function(index, jsonArr){
-        			//alert("룸넘버:"+jsonArr.room_no+"룸타입:"+jsonArr.room_type+"숙소번호:"+jsonArr.lodge_no);
-        			
-					$('#lodge_searchList').html("<tr><td>"+jsonArr.lodge_no+"</td><td><a href='javascript:lodgeInfo(\""+jsonArr.lodge_no+"\",\""+jsonArr.lodge_name+"\",\""+jsonArr.lodge_type+"\",\""+jsonArr.room_no+"\",\""+jsonArr.room_type+"\");'>" +jsonArr.lodge_name+"</a></td><td>"+jsonArr.lodge_type+"</td><td>"+jsonArr.lodge_tel+"</td></tr>");
-					//모달창에 나타난 숙박업소명을 클릭하면 해당 숙박업소에 해당하는 객실타입이 셀렉트박스로 나옴
-					$('#room_type').append("<option value='"+jsonArr.room_type+"||"+jsonArr.room_no+"'>"+jsonArr.room_type+"</option>");
-        		});
-        	}
-        });
+	        		
+	        		//숙소를 검색해서 모달창내에 리스트를띄우고 선택시 부모창에 값이 들어갈수있게 설정
+	        		$.each(data, function(index, jsonArr){
+	        			
+						$('#lodge_searchList').append("<tr><td>"+jsonArr.lodge_no+"</td><td>"
+							+"<a href='javascript:lodgeInfo(\""+jsonArr.lodge_no+"\",\""+jsonArr.lodge_name+"\",\""+jsonArr.lodge_type+"\",\""+jsonArr.room_no+"\",\""+jsonArr.room_type+"\");'>"
+							+jsonArr.lodge_name+"</a></td><td>"
+							+jsonArr.lodge_type+"</td><td>"
+							+jsonArr.room_type+"</td><td>"
+							+jsonArr.lodge_tel+"</td></tr>");
+						
+						//모달창에 나타난 숙박업소명을 클릭하면 해당 숙박업소에 해당하는 객실타입이 셀렉트박스로 나옴
+						$('#room_type').append("<option value='"+jsonArr.room_type+"||"+jsonArr.room_no+"'>"+jsonArr.room_type+"</option>");
+	        		});
+	        	}
+	        });
+		});
 	});
-});
 /*
 
 싱글쿼테이션 더블쿼테이션 주의할것
@@ -386,10 +394,12 @@ function typeChange(val)
 							<table class="table text-center">
 								<thead>
 									<tr>
-										<th style="width: 20%; text-align:center">등록번호</th>
-										<th style="width: 30%; text-align:center">숙박업소명</th>
+										<th style="width: 15%; text-align:center">등록번호</th>
+										<th style="width: 25%; text-align:center">숙박업소명</th>
 										<th style="width: 20%; text-align:center">업소종류</th>
-										<th style="width: 30%; text-align:center">대표번호</th>
+										<th style="width: 20%; text-align:center">객실종류</th> 
+										<th style="width: 20%; text-align:center">대표번호</th>
+
 									</tr>
 								</thead>
 								<tbody id="lodge_searchList"></tbody>
